@@ -1,7 +1,6 @@
-version: '2'
+version: '3.1'
 services:
   app:
-    restart: always
     build: .
     environment:
       NODE_ENV: dev
@@ -12,13 +11,14 @@ services:
     depends_on:
       - mysql
     volumes:
-      - .:/home/banana/banana_tcc
-      - /home/banana/banana_tcc/node_modules
+      - .:/home/banana/banana_tcc:delegated
+      - notused:/home/banana/banana_tcc/node_modules
   mysql:
     image: mysql
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: banana
       MYSQL_PASSWORD: senha_banana
       MYSQL_DATABASE: teste
+volumes:
+    notused:

@@ -47,7 +47,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, '../client/dist/')));
 
 //API routes goes here
-
+app.get('/', (req, res) => {
+    res.json({status: 'ok'});
+})
 
 //Call Angular
 app.all('*', (req, res) => {
