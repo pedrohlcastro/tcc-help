@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "dev": "nodemon --legacy-watch server/server.js --exec babel-node --presets es2015,stage-2"
+    "dev": "sleep 30&&nodemon --legacy-watch server/server.js --exec babel-node --presets es2015,stage-2"
   },
   "repository": {
     "type": "git",

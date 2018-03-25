@@ -11,10 +11,12 @@ import path from 'path';
 import compress from 'shrink-ray';
 import helmet from 'helmet';
 
-
-import configEnv from '../config/configEnv';
+import configEnv from './config/configEnv';
+import db from './config/db';
 
 const app = express();
+
+db(app);
 
 //config gzip compress
 if (ENV != 'test'){
