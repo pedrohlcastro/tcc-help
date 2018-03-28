@@ -6,13 +6,25 @@ services:
       NODE_ENV: dev
     command: npm run dev
     ports:
-      - '8000:8000'
+      - 8000:8000
     tty: true
     depends_on:
       - mysql
     volumes:
       - .:/home/banana/banana_tcc:delegated
       - notused:/home/banana/banana_tcc/node_modules
+  angular:
+    build: client/
+    environment:
+      NODE_ENV: dev
+    command: npm run dev
+    ports:
+      - 4200:4200
+    tty: true
+    depends_on:
+      - app
+    volumes:
+      - notused:/home/banana/banana_tcc/client/node_modules
   mysql:
     image: mysql
     environment:

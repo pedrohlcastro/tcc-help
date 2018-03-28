@@ -10,4 +10,6 @@ RUN npm install --silent && npm cache clean --force
 
 COPY . $HOME/banana_tcc/
 
+EXPOSE 8000
+
 CMD ["npm", "start"]

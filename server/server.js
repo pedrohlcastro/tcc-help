@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, '../client/dist/')));
 
 //API routes goes here
 app.get('/', (req, res) => {
-    res.json({status: 'ok'});
+    res.json({status: 'oks'});
 })
 
 //Call Angular
