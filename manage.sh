@@ -34,7 +34,7 @@ do
                 echo "FLW ANIMAL...."
                 exit;
                 ;;
-            *) echo "OOO JUMENTO.... TEM ESSA OPCAO NAO PORRA";;
+            *) echo "OOO JUMENTO.... NAOO TEM ESSA OPCAO NAO PORRA";;
         esac
     done
 done
