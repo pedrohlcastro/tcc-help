@@ -9,8 +9,7 @@ WORKDIR $HOME/banana_tcc/client/
 RUN npm install --silent && npm cache clean --force
 
 COPY . $HOME/banana_tcc/client/
-RUN npm i -g @angular/cli \
-    && npm i -g typescript
+RUN npm i -g @angular/cli
 
 EXPOSE 4200
-CMD ["npm", "start"]
+CMD npm start
