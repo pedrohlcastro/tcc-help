@@ -17,14 +17,13 @@ services:
     build: client/
     environment:
       NODE_ENV: dev
-    command: npm run dev
     ports:
       - 4200:4200
     tty: true
     depends_on:
       - app
     volumes:
-      - notused:/home/banana/banana_tcc/client/node_modules
+      - notused2:/home/banana/banana_tcc/client/node_modules
   mysql:
     image: mysql
     environment:
@@ -42,3 +41,4 @@ services:
       PMA_HOST: mysql
 volumes:
     notused:
+    notused2:

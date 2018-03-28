@@ -12,4 +12,4 @@ COPY . $HOME/banana_tcc/client/
 RUN npm i -g @angular/cli
 
 EXPOSE 4200
-CMD npm start
+CMD npm run dev
