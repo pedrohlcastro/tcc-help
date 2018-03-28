@@ -1,15 +1,24 @@
 #! /bin/bash
 
-# Bash Menu Script Example
-
 while [[ true ]]
 do
     clear
     PS3='[ANIMAL] oq deseja fazer? '
-    options=("Instalar algo no Backend" "Instalar algo no Frontend" "Gerar component do Frontend" "Gerar service do Frontend" "Sair dessa merda...")
+    options=("Rodar Ambiente Docker" "Forçar Stop ambiente Docker" "Instalar algo no Backend" "Instalar algo no Frontend" "Gerar component do Frontend" "Gerar service do Frontend" "Sair dessa merda...")
     select opt in "${options[@]}"
     do
         case $opt in
+            "Rodar Ambiente Docker")
+                docker-compose down
+                docker image rm -f tcchelp_app
+                docker image rm -f tcchelp_angular
+                docker-compose up
+                break
+                ;;
+            "Forçar Stop ambiente Docker")
+                docker stop tcchelp_app_1 tcchelp_phpmyadmin_1 tcchelp_mysql_1 tcchelp_angular_1
+                break
+                ;;
             "Instalar algo no Backend")
                 read -p "Nome do pacote : " PACOTE
                 docker exec tcchelp_app_1 npm install --save "$PACOTE"
