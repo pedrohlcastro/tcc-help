@@ -4,12 +4,12 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -H 0.0.0.0",
+    "start": "ng serve --host 0.0.0.0 --poll=2000",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev": "ng serve -H 0.0.0.0 --proxy-config proxy.json"
+    "dev": "ng serve --host 0.0.0.0 --poll=2000 --proxy-config proxy.json"
   },
   "private": true,
   "dependencies": {

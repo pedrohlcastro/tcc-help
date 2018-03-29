@@ -19,6 +19,7 @@ services:
       NODE_ENV: dev
     ports:
       - 4200:4200
+      - 49153:49153
     tty: true
     depends_on:
       - app
