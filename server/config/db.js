@@ -12,10 +12,8 @@ let db = null;
 const createModels = (sequelize) => {
     let importedModels = [];
     const modelsDir = path.join(__dirname, '../models');
-    console.log(modelsDir);
     fs.readdirSync(modelsDir).forEach((modelFile) => {
         const modelFilePath = path.join(modelsDir, modelFile);
-        console.log(modelFilePath);
         const newModel = sequelize.import(modelFilePath);
 
         importedModels[newModel.name] = newModel;
@@ -45,7 +43,7 @@ export default (app) => {
 
         db.models = createModels(sequelize);
 
-        sequelize.sync({force: true}).done(() => {
+        sequelize.sync().done(() => {
             return db;
         });
     }

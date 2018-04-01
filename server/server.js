@@ -1,6 +1,5 @@
 'use strict';
 
-const PORT =  ( process.env.PORT || 8000 );
 const ENV = process.env.NODE_ENV;
 
 import express from 'express';
@@ -16,7 +15,7 @@ import db from './config/db';
 
 const app = express();
 
-db(app);
+app.db = db(app);
 
 //config gzip compress
 if (ENV != 'test'){
@@ -50,8 +49,18 @@ app.use(express.static(path.join(__dirname, '../client/dist/')));
 
 //API routes goes here
 app.get('/', (req, res) => {
-    res.json({status: 'ok'});
-})
+    res.json({status: 'oks'});
+});
+
+app.get('/users', (req, res) => {
+    const User = app.db.models.User;
+    res.json([{
+        id: 1
+    }]);
+    /*User.findAll({})
+        .then(result => res.json(result))
+        .catch(err => res.sendStatus(412));*/
+});
 
 //Call Angular
 app.all('*', (req, res) => {
@@ -60,10 +69,5 @@ app.all('*', (req, res) => {
 
 //manage config per environment
 configEnv(app);
-
-app.listen(PORT, (err) => {
-    if (err) throw err;
-    else console.log('[BackEnd] -> http://0.0.0.0:' + PORT);
-});
 
 export default app;

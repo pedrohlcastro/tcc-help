@@ -6,7 +6,7 @@ COPY package.json $HOME/banana_tcc/client/
 
 WORKDIR $HOME/banana_tcc/client/
 
-RUN npm install --silent && npm cache clean --force
+RUN npm install --silent --progress=false && npm cache clean --force
 
 COPY . $HOME/banana_tcc/client/
 RUN npm i -g @angular/cli

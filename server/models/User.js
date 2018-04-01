@@ -1,24 +1,37 @@
-export default (sequelize, DataTypes) => {
-    return sequelize.define('user', {
+export default (sequelize, DataType) => {
+    return sequelize.define('User', {
+        id: {
+            type: DataType.INTEGER,
+            primaryKey: true,
+            autoIncrement:true
+        },
         name: {
-            type: DataTypes.STRING(50),
+            type: DataType.STRING(50),
             allowNull: false
         },
         email:{
-            type: DataTypes.STRING(50),
-            allowNull: false
+            type: DataType.STRING(50),
+            allowNull: false,
         },
         password: {
-            type: DataTypes.STRING(40),
+            type: DataType.STRING(40),
             allowNull: false
         },
         type: {
-            type: DataTypes.TINYINT(1),
+            type: DataType.TINYINT(2),
             allowNull: false
         },
-        professor: {
-            type: DataTypes.TINYINT(1),
+        validate_professor: {
+            type: DataType.TINYINT(1),
             allowNull: false
+        },
+        perfil_image: {
+            type: DataType.STRING(45),
+            allowNull:false
         }
-    }, { timestamps: false });
+    }, 
+    { 
+        timestamps: false,
+        freezeTableName: true 
+    });
 };;

@@ -32,7 +32,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: banana
       MYSQL_PASSWORD: senha_banana
-      MYSQL_DATABASE: teste
+      MYSQL_DATABASE: tcc_help
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
