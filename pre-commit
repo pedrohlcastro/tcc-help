@@ -1,6 +1,6 @@
 #! /bin/bash
 
-docker exec -it -e "TERM=xterm-256color" tcchelp_app_1 npm run lint
+docker exec -e "TERM=xterm-256color" tcchelp_app_1 npm run lint
 return=$?
 
 echo
@@ -9,7 +9,7 @@ echo
 if [[ $return == 0 ]]; then
     echo -e "\e[32mCOMMIT REALIZADO COM SUCESSO"
 else
-    echo -e "\e[31mCOMMIT NAO REALIZADO, ARRUME OS ERROS ACIMA\e[0m"
+    echo -e "\e[31mCOMMIT NAO REALIZADO, ARRUME OS ERROS ACIMA, E REEXECUTE GIT ADD E GIT COMMIT\e[0m"
 fi
 echo
 echo
