@@ -1,5 +1,13 @@
 #! /bin/bash
 
+fileName='pre-commit.sh'
+filePath=".git/hooks/$fileName"
+touch "$filePath"
+echo "echo 'Belo Commit'   " >> "$filePath"
+
+chmod +x "$filePath"
+
+
 while [[ true ]]
 do
     clear
