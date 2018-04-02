@@ -1,6 +1,6 @@
 #! /bin/bash
 
-fileName='pre-commit.sh'
+fileName='pre-commit'
 filePath=".git/hooks/$fileName"
 touch "$filePath"
 echo "echo 'Belo Commit'   " >> "$filePath"
