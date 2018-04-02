@@ -1,4 +1,5 @@
 # tcc-help
+[![Build Status](https://travis-ci.org/pedrohlcastro/tcc-help.svg?branch=master)](https://travis-ci.org/pedrohlcastro/tcc-help)
 
 ## Como rodar e gerenciar Docker
 
