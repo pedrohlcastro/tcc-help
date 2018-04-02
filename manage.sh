@@ -2,8 +2,7 @@
 
 fileName='pre-commit'
 filePath=".git/hooks/$fileName"
-touch "$filePath"
-echo "echo 'Belo Commit'   " >> "$filePath"
+cp pre-commit "$filePath"
 
 chmod +x "$filePath"
 
