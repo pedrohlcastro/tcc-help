@@ -6,7 +6,6 @@ cp pre-commit "$filePath"
 
 chmod +x "$filePath"
 
-
 while [[ true ]]
 do
     clear

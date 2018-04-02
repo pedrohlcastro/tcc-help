@@ -1,5 +1,10 @@
 #! /bin/bash
 
+checkDocker=$(docker ps | grep tcchelp_app_1);
+if [[ -z checkDocker ]]; then
+    echo -e "\e[31mSE FUDEU! A APLICACAO DEVE ESTA RODANDO...\e[0m"
+    exit 1;
+fi
 docker exec -e "TERM=xterm-256color" tcchelp_app_1 npm run lint
 return=$?
 
