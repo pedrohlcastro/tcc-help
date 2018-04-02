@@ -51,16 +51,35 @@ app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.get('/', (req, res) => {
     res.json({status: 'oks'});
 });
-
-app.get('/users', (req, res) => {
-    const User = app.db.models.User;
-    res.json([{
-        id: 1
-    }]);
-    /*User.findAll({})
+const User = app.db.models.User;
+app.route('/users')
+    .get((req, res) => {
+        User.findAll({})
+            .then(result => res.json(result))
+            .catch(err => res.sendStatus(412));
+    })
+    .post((req, res) => {
+        User.create(req.body)
         .then(result => res.json(result))
-        .catch(err => res.sendStatus(412));*/
-});
+        .catch(err => res.sendStatus(412));
+    });
+
+app.route('/users/:id')
+    .get( (req, res) => {
+        User.findOne({where: req.params})
+            .then(result => res.json(result))
+            .catch(err => res.sendStatus(412));
+    })
+    .put( (req, res) => {
+        User.update(req.body, {where: req.params})
+            .then(result => res.json(result))
+            .catch(err => res.sendStatus(412));
+    })
+    .delete( (req, res) => {
+        User.destroy({where: req.params})
+            .then(result => res.sendStatus(204))
+            .catch(err => res.sendStatus(412));
+    });
 
 //Call Angular
 app.all('*', (req, res) => {

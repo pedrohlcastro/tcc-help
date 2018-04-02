@@ -25,7 +25,7 @@ export default (sequelize, DataType) => {
             type: DataType.TINYINT(1),
             allowNull: false
         },
-        perfil_image: {
+        profile_image_path: {
             type: DataType.STRING(45),
             allowNull:false
         }
