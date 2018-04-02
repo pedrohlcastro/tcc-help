@@ -24,7 +24,7 @@ install:
   - gcc --version
 
 before_script:
-  - ./run.sh
+  - ./run.sh "-d"
 
 script:
   - ./pre-commit
