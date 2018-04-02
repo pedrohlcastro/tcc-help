@@ -7,8 +7,10 @@ echo
 echo
 echo
 if [[ $return == 0 ]]; then
+    echo -e "\e[32mQUE ISSO EM FILHAO..."
     echo -e "\e[32mCOMMIT REALIZADO COM SUCESSO"
 else
+    echo -e "\e[31mSE FUDEU!\e[0m"
     echo -e "\e[31mCOMMIT NAO REALIZADO, ARRUME OS ERROS ACIMA, E REEXECUTE GIT ADD E GIT COMMIT\e[0m"
 fi
 echo
