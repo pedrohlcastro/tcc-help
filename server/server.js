@@ -8,6 +8,7 @@ import helmet from 'helmet';
 
 import configEnv from './config/configEnv';
 import db from './config/db';
+import userRouter from './routes/user';
 
 const ENV = process.env.NODE_ENV;
 
@@ -45,17 +46,10 @@ app.use(express.static(path.join(__dirname, '../client/dist/')));
 
 // API routes goes here
 app.get('/', (req, res) => {
-  res.json({ status: 'oks' });
+  res.json({status: 'oks'});
 });
-
-app.get('/users', (req, res) => {
-  res.json([{
-    id: 1,
-  }]);
-  /* User.findAll({})
-        .then(result => res.json(result))
-        .catch(err => res.sendStatus(412)); */
-});
+const User = app.db.models.User;
+userRouter(app, User);
 
 // Call Angular
 app.all('*', (req, res) => {

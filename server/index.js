@@ -5,3 +5,4 @@ app.listen('8000', () => {
   console.log('app is running!');
   /* eslint-enable */
 });
+module.exports = app;
