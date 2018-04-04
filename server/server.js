@@ -46,9 +46,10 @@ app.use(express.static(path.join(__dirname, '../client/dist/')));
 
 // API routes goes here
 app.get('/', (req, res) => {
-  res.json({status: 'oks'});
+  res.json({ status: 'oks' });
 });
-const User = app.db.models.User;
+//const User = app.db.models.User;
+const {User: User} = app.db.models;
 userRouter(app, User);
 
 // Call Angular

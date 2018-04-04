@@ -6,7 +6,7 @@ cp pre-commit "$filePath"
 
 chmod +x "$filePath"
 
-docker-compose down
+docker-compose down -v
 docker image rm -f tcchelp_app
 docker image rm -f tcchelp_angular
 docker-compose up $1

@@ -15,7 +15,7 @@ do
     do
         case $opt in
             "Rodar Ambiente Docker")
-                docker-compose down
+                docker-compose down -v
                 docker image rm -f tcchelp_app
                 docker image rm -f tcchelp_angular
                 docker-compose up

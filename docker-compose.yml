@@ -28,6 +28,8 @@ services:
       - notused2:/home/banana/banana_tcc/client/node_modules
   mysql:
     image: mysql
+    volumes:
+      - ./database:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: banana
@@ -44,3 +46,4 @@ services:
 volumes:
     notused:
     notused2:
+    database:
