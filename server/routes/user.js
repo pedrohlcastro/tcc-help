@@ -1,4 +1,4 @@
-//import UserController from '../controllers/user';
+// import UserController from '../controllers/user';
 
 export default (app, User) => {
   app.route('/users')

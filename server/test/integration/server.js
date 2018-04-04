@@ -1,5 +1,5 @@
 describe('Routes User', () => {
-  const {User: User} = app.db.models;
+  const { User } = app.db.models;
   const defaultUser = {
     id: 1,
     name: 'admin',
