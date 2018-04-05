@@ -1,35 +1,36 @@
-import UserController from '../controllers/user';
-var express = require('express');
-var router = express.Router();
-const UserCon = new UserController();
+import { Router } from 'express';
+
+import UserController from '../controllers/UserController';
+
+const router = new Router();
 
 router.route('/')
-  .get((req, res) => {
-    UserCon.User.findAll({})
+  .get((req, res, next) => {
+    UserController.getAll()
       .then(result => res.json(result))
-      .catch(() => res.sendStatus(412));
+      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   })
   .post((req, res) => {
-    UserCon.User.create(req.body)
+    UserController.User.create(req.body)
       .then(result => res.json(result))
       .catch(() => res.sendStatus(412));
   });
 
 router.route('/:id')
   .get((req, res) => {
-    UserCon.User.findOne({ where: req.params })
+    UserController.User.findOne({ where: req.params })
       .then(result => res.json(result))
       .catch(() => res.sendStatus(412));
   })
   .put((req, res) => {
-    UserCon.User.update(req.body, { where: req.params })
+    UserController.User.update(req.body, { where: req.params })
       .then(result => res.json(result))
       .catch(() => res.sendStatus(412));
   })
   .delete((req, res) => {
-    UserCon.User.destroy({ where: req.params })
+    UserController.User.destroy({ where: req.params })
       .then(() => res.sendStatus(204))
       .catch(() => res.sendStatus(412));
   });
 
-module.exports = router;
+export default router;

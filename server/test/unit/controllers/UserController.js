@@ -1,4 +1,4 @@
-import UserController from '../../../controllers/user';
+import UserController from '../../../controllers/UserController';
 
 describe('Controllers: User', () => {
   describe('Get all users: getAll()', () => {

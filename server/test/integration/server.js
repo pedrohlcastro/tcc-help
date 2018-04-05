@@ -1,7 +1,6 @@
-import UserController from '../../controllers/user';
+import UserController from '../../controllers/UserController';
 
 describe('Routes User', () => {
-  const UserCon = new UserController();
   const defaultUser = {
     id: 1,
     name: 'admin',
@@ -13,12 +12,16 @@ describe('Routes User', () => {
   };
 
   beforeEach((done) => {
-    UserCon.User
+    UserController.User
       .destroy({ where: {} })
-      .then(() => UserCon.User.create(defaultUser))
       .then(() => {
-        done();
-      });
+        UserController.User.create(defaultUser)
+          .then(() => {
+            done();
+          })
+          .catch(err => done(err));
+      })
+      .catch(err => done(err));
   });
 
   describe('Route GET /users', () => {

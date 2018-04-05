@@ -7,9 +7,10 @@ import compress from 'shrink-ray';
 import helmet from 'helmet';
 
 import configEnv from './config/configEnv';
+import UserRoutes from './routes/UserRoutes';
 
 const ENV = process.env.NODE_ENV;
-var user = require('./routes/user');
+
 const app = express();
 
 // config gzip compress
@@ -44,7 +45,8 @@ app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.get('/', (req, res) => {
   res.json({ status: 'oks' });
 });
-app.use('/users', user);
+
+app.use('/users', UserRoutes);
 
 // Call Angular
 app.all('*', (req, res) => {

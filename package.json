@@ -2,7 +2,6 @@
   "name": "tcc-help",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.js",
   "scripts": {
     "dev": "sleep 45&&nodemon --legacy-watch server/index.js --exec babel-node --presets es2015,stage-2",
     "test-integration": "mocha --opts server/test/integration/mocha.opts server/test/integration/*.js",
