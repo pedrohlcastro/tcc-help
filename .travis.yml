@@ -24,7 +24,7 @@ install:
   - gcc --version
 
 before_script:
-  - ./run.sh "-d"
+  - ./manage.sh --travis
 
 script:
   - ./pre-commit

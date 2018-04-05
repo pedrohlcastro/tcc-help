@@ -58,9 +58,10 @@ if [[ $# -gt 0 ]]; then
             docker-compose -f docker-compose.test-integration.yml up
         ;;
         --travis)
-            echo "Todo"
+            docker-compose up -d
         ;;
     esac
+    exit 0;
 else
     while [[ true ]] 
     do
