@@ -1,8 +1,9 @@
+import db from '../config/db';
 class UserController {
-  constructor(User) {
-    this.User = User;
+  constructor() {
+    this.User = db().models.User;
   }
-
+  
   getAll() {
     return this.User.findAll({})
       .then(result => result);

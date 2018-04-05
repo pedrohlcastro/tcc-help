@@ -1,5 +1,7 @@
+import UserController from '../../controllers/user';
+
 describe('Routes User', () => {
-  const { User } = app.db.models;
+  const UserCon = new UserController();
   const defaultUser = {
     id: 1,
     name: 'admin',
@@ -11,9 +13,9 @@ describe('Routes User', () => {
   };
 
   beforeEach((done) => {
-    User
+    UserCon.User
       .destroy({ where: {} })
-      .then(() => User.create(defaultUser))
+      .then(() => UserCon.User.create(defaultUser))
       .then(() => {
         done();
       });
