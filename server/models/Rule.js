@@ -1,26 +1,23 @@
-module.exports = (sequelize, DataType) => {
-  const Rule = sequelize.define(
-    'Rule', {
-      id: {
-        type: DataType.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      regex: {
-        type: DataType.STRING(20),
-        allowNull: false,
-      },
-      message: {
-        type: DataType.STRING(250),
-        allowNull: false,
-      },
+export default function (sequelize, DataType) {
+  const Rule = sequelize.define('Rule', {
+    id: {
+      type: DataType.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    {
-      timestamps: false,
-      freezeTableName: true,
+    regex: {
+      type: DataType.STRING(20),
+      allowNull: false,
     },
-  );
-  Rule.associate = function (models) {
+    message: {
+      type: DataType.STRING(250),
+      allowNull: false,
+    },
+  }, {
+    timestamps: false,
+    freezeTableName: true,
+  });
+  Rule.associate = (models) => {
     models.Rule.belongsTo(models.User, {
       foreignKey: {
         allowNull: false,
@@ -28,4 +25,4 @@ module.exports = (sequelize, DataType) => {
     });
   };
   return Rule;
-};
+}

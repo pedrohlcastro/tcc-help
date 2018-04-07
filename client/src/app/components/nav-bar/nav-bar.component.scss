@@ -1,0 +1,70 @@
+.nav-bar {
+    width: 300px;
+    height: 100vh;
+    background-color: black;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    a{
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        color: white;
+        display: block;
+        font-size: 25px;
+        transition: 0.5s;
+        &:nth-child(2) {
+            margin-top: 35vh;
+        }
+        i {
+            margin-right: 30px;
+            position: relative;
+            top: 2px;
+            font-size: 20px;
+        }
+    } :hover{
+        color: yellow;
+    } 
+    .closebtn {
+        font-size: 50px;
+        margin-left: 210px;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+.top-header{
+    width: 100%;
+    background-color: black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    a{
+        text-decoration: none;
+    }
+    #btnmenu{
+        font-size: 45px;
+        margin: 10px;
+        margin-left: 55px;
+        color: white;
+        text-decoration: none;
+        position: relative;
+        top: 2px;
+        transition: 0.5s;
+        &:hover{
+            color: yellow;
+        }
+    }
+    .title{
+        text-align: center;
+        font-size: 40px;
+        font-weight: 100;
+        color: white;
+        margin-left: 40%;
+        position: relative;
+        bottom: 3px;
+    }
+}
