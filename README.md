@@ -15,6 +15,8 @@ ___________________________________________
 -tu Roda teste unitáro
 -ti Roda teste de integração
 --travis Roda Ambiente Travis
+--runNode Run Resetando somente NodeJS
+--start Roda imagens ja armazenadas
 ___________________________________________
 *******************************************
 ````
