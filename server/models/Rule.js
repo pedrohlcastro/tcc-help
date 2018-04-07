@@ -1,4 +1,4 @@
-export default (function (sequelize, DataType) {
+export default (sequelize, DataType) => {
   const Rule = sequelize.define(
     'Rule', {
       id: {
@@ -37,4 +37,4 @@ export default (function (sequelize, DataType) {
     });
   };
   return Rule;
-});
+};
