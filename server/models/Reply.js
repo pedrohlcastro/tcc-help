@@ -1,40 +1,40 @@
 export default (sequelize, DataType) => {
-  var Rule = sequelize.define(
-    'Rule', {
+  var Reply = sequelize.define(
+    'Reply', {
       id: {
         type: DataType.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      regex: {
-        type: DataType.STRING(20),
+      comment: {
+        type: DataType.STRING(300),
         allowNull: false,
       },
-      message: {
-        type: DataType.STRING(250),
+      date: {
+        type: DataType.DATE,
         allowNull: false,
-      },
+      }
     },
     {
       timestamps: false,
       freezeTableName: true,
     },
   );
-  Rule.associate = function (models) {
-    models.Rule.belongsTo(models.User, { 
-      as: 'RuleProfessor',
+  Reply.associate = function (models) {
+    models.Reply.belongsTo(models.User, { 
+      as: 'ReplyUser',
       foreignKey: {
-        name: 'professor_id',
+        name: 'user_id',
         allowNull: false,
       }
     });
-    models.Rule.hasMany(models.CheckRule, { 
-      as: 'RuleCheckRule',
+    models.Reply.belongsTo(models.Topic, { 
+      as: 'ReplyTopic',
       foreignKey: {
-        name: 'rule_id',
+        name: 'topic_id',
         allowNull: false,
       }
     });
   };
-  return Rule;
+  return Reply;
 };

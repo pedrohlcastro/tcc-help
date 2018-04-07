@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataType) => {
-  const User = sequelize.define(
+export default (sequelize, DataType) => {
+  var User = sequelize.define(
     'User', {
       id: {
         type: DataType.INTEGER,
@@ -37,7 +37,50 @@ module.exports = (sequelize, DataType) => {
     },
   );
   User.associate = function (models) {
-    models.User.hasMany(models.Rule);
+    models.User.hasMany(models.Rule, {
+      as: 'UserRule',
+      foreignKey: {
+        name: 'professor_id',
+        allowNull: false,
+      }
+    });
+    models.User.belongsToMany(models.User, {
+      as: 'UserStudent',
+      through: 'StudentProfessor',
+      foreignKey: {
+        name: 'student_id',
+        allowNull: false
+      }
+    });
+    models.User.belongsToMany(models.User, {
+      as: 'UserProfessor',
+      through: 'StudentProfessor',
+      foreignKey: {
+        name: 'professor_id',
+        allowNull: false
+      }
+    });
+    models.User.hasMany(models.Reply, { 
+      as: 'UserReply',
+      foreignKey: {
+        name: 'user_id',
+        allowNull: false,
+      }
+    });
+    models.User.hasMany(models.Topic, { 
+      as: 'UserTopic',
+      foreignKey: {
+        name: 'user_id',
+        allowNull: false,
+      }
+    });
+    models.User.hasMany(models.Comment, { 
+      as: 'UserComment',
+      foreignKey: {
+        name: 'user_id',
+        allowNull: false,
+      }
+    });
   };
   return User;
 };
