@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataType) => {
-  var User = sequelize.define(
+  const User = sequelize.define(
     'User', {
       id: {
         type: DataType.INTEGER,
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  User.associate = function(models){
+  User.associate = function (models) {
     models.User.hasMany(models.Rule);
   };
   return User;

@@ -30,7 +30,7 @@ export default () => {
         host: 'mysql',
         dialect: 'mysql',
         operatorsAliases: false,
-        query:{raw:true}
+        query: { raw: true },
       },
     );
 
@@ -42,8 +42,8 @@ export default () => {
 
     db.models = createModels(sequelize);
 
-    Object.keys(db.models).forEach(modelName => {
-      if(db.models[modelName].associate){
+    Object.keys(db.models).forEach((modelName) => {
+      if (db.models[modelName].associate) {
         db.models[modelName].associate(db.models);
       }
     });

@@ -16,7 +16,7 @@ describe('Controllers: User', () => {
         profile_image_path: 'path',
       }];
       td.when(User.findAll({})).thenResolve(expectedResponse);
-      
+
       return UserController.getAll()
         .then(response => expect(response).to.be.eql(expectedResponse));
     });
