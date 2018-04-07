@@ -9,6 +9,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { AuthService } from './services/auth.service';
+import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
 
 
 @NgModule({
@@ -16,16 +17,18 @@ import { AuthService } from './services/auth.service';
     AppComponent,
     HomePageComponent,
     NavBarComponent,
-    SignUpPageComponent
+    SignUpPageComponent,
+    SignInPageComponent
   ],
   imports: [
   BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AppMaterialModule,
-    AuthService
+    AppMaterialModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
