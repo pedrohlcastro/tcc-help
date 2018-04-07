@@ -1,5 +1,5 @@
 export default (sequelize, DataType) => {
-  var CheckRule = sequelize.define(
+  const CheckRule = sequelize.define(
     'CheckRule', {
       id: {
         type: DataType.INTEGER,
@@ -25,19 +25,19 @@ export default (sequelize, DataType) => {
     },
   );
   CheckRule.associate = function (models) {
-    models.CheckRule.belongsTo(models.Rule, { 
+    models.CheckRule.belongsTo(models.Rule, {
       as: 'CheckRuleRule',
       foreignKey: {
         name: 'rule_id',
         allowNull: false,
-      }
+      },
     });
-    models.CheckRule.belongsTo(models.Tcc, { 
+    models.CheckRule.belongsTo(models.Tcc, {
       as: 'CheckRuleTcc',
       foreignKey: {
         name: 'tcc_id',
         allowNull: false,
-      }
+      },
     });
   };
   return CheckRule;

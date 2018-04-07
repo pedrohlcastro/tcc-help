@@ -1,5 +1,5 @@
-export default (sequelize, DataType) => {
-  var Rule = sequelize.define(
+export default (function (sequelize, DataType) {
+  const Rule = sequelize.define(
     'Rule', {
       id: {
         type: DataType.INTEGER,
@@ -21,20 +21,20 @@ export default (sequelize, DataType) => {
     },
   );
   Rule.associate = function (models) {
-    models.Rule.belongsTo(models.User, { 
+    models.Rule.belongsTo(models.User, {
       as: 'RuleProfessor',
       foreignKey: {
         name: 'professor_id',
         allowNull: false,
-      }
+      },
     });
-    models.Rule.hasMany(models.CheckRule, { 
+    models.Rule.hasMany(models.CheckRule, {
       as: 'RuleCheckRule',
       foreignKey: {
         name: 'rule_id',
         allowNull: false,
-      }
+      },
     });
   };
   return Rule;
-};
+});

@@ -1,5 +1,5 @@
 export default (sequelize, DataType) => {
-  var Topic = sequelize.define(
+  const Topic = sequelize.define(
     'Topic', {
       id: {
         type: DataType.INTEGER,
@@ -17,7 +17,7 @@ export default (sequelize, DataType) => {
       date: {
         type: DataType.DATE,
         allowNull: false,
-      }
+      },
     },
     {
       timestamps: false,
@@ -25,19 +25,19 @@ export default (sequelize, DataType) => {
     },
   );
   Topic.associate = function (models) {
-    models.Topic.belongsTo(models.User, { 
+    models.Topic.belongsTo(models.User, {
       as: 'TopicUser',
       foreignKey: {
         name: 'user_id',
         allowNull: false,
-      }
+      },
     });
-    models.Topic.hasMany(models.Reply, { 
+    models.Topic.hasMany(models.Reply, {
       as: 'TopicReply',
       foreignKey: {
         name: 'topic_id',
         allowNull: false,
-      }
+      },
     });
   };
   return Topic;

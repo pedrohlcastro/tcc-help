@@ -1,5 +1,5 @@
 export default (sequelize, DataType) => {
-  var Tcc = sequelize.define(
+  const Tcc = sequelize.define(
     'Tcc', {
       id: {
         type: DataType.INTEGER,
@@ -21,7 +21,7 @@ export default (sequelize, DataType) => {
       date: {
         type: DataType.DATE,
         allowNull: false,
-      }
+      },
     },
     {
       timestamps: false,
@@ -29,26 +29,26 @@ export default (sequelize, DataType) => {
     },
   );
   Tcc.associate = function (models) {
-    models.Tcc.belongsTo(models.StudentProfessor, { 
+    models.Tcc.belongsTo(models.StudentProfessor, {
       as: 'TccStudentProfessor',
       foreignKey: {
         name: 'student_professor_id',
         allowNull: false,
-      }
+      },
     });
-    models.Tcc.hasMany(models.CheckRule, { 
+    models.Tcc.hasMany(models.CheckRule, {
       as: 'TccCheckRule',
       foreignKey: {
         name: 'tcc_id',
         allowNull: false,
-      }
+      },
     });
-    models.Tcc.hasMany(models.Comment, { 
+    models.Tcc.hasMany(models.Comment, {
       as: 'TccComment',
       foreignKey: {
         name: 'tcc_id',
         allowNull: false,
-      }
+      },
     });
   };
   return Tcc;

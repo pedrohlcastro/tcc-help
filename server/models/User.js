@@ -1,5 +1,5 @@
 export default (sequelize, DataType) => {
-  var User = sequelize.define(
+  const User = sequelize.define(
     'User', {
       id: {
         type: DataType.INTEGER,
@@ -42,44 +42,44 @@ export default (sequelize, DataType) => {
       foreignKey: {
         name: 'professor_id',
         allowNull: false,
-      }
+      },
     });
     models.User.belongsToMany(models.User, {
       as: 'UserStudent',
       through: 'StudentProfessor',
       foreignKey: {
         name: 'student_id',
-        allowNull: false
-      }
+        allowNull: false,
+      },
     });
     models.User.belongsToMany(models.User, {
       as: 'UserProfessor',
       through: 'StudentProfessor',
       foreignKey: {
         name: 'professor_id',
-        allowNull: false
-      }
+        allowNull: false,
+      },
     });
-    models.User.hasMany(models.Reply, { 
+    models.User.hasMany(models.Reply, {
       as: 'UserReply',
       foreignKey: {
         name: 'user_id',
         allowNull: false,
-      }
+      },
     });
-    models.User.hasMany(models.Topic, { 
+    models.User.hasMany(models.Topic, {
       as: 'UserTopic',
       foreignKey: {
         name: 'user_id',
         allowNull: false,
-      }
+      },
     });
-    models.User.hasMany(models.Comment, { 
+    models.User.hasMany(models.Comment, {
       as: 'UserComment',
       foreignKey: {
         name: 'user_id',
         allowNull: false,
-      }
+      },
     });
   };
   return User;

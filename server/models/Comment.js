@@ -1,5 +1,5 @@
 export default (sequelize, DataType) => {
-  var Comment = sequelize.define(
+  const Comment = sequelize.define(
     'Comment', {
       id: {
         type: DataType.INTEGER,
@@ -13,7 +13,7 @@ export default (sequelize, DataType) => {
       date: {
         type: DataType.DATE,
         allowNull: false,
-      }
+      },
     },
     {
       timestamps: false,
@@ -21,19 +21,19 @@ export default (sequelize, DataType) => {
     },
   );
   Comment.associate = function (models) {
-    models.Comment.belongsTo(models.User, { 
+    models.Comment.belongsTo(models.User, {
       as: 'CommentUser',
       foreignKey: {
         name: 'user_id',
         allowNull: false,
-      }
+      },
     });
-    models.Comment.belongsTo(models.Tcc, { 
+    models.Comment.belongsTo(models.Tcc, {
       as: 'CommentTcc',
       foreignKey: {
         name: 'tcc_id',
         allowNull: false,
-      }
+      },
     });
   };
   return Comment;
