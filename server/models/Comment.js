@@ -20,7 +20,7 @@ export default (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  Comment.associate = function (models) {
+  Comment.associate = (models) => {
     models.Comment.belongsTo(models.User, {
       as: 'CommentUser',
       foreignKey: {

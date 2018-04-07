@@ -28,7 +28,7 @@ export default (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  Tcc.associate = function (models) {
+  Tcc.associate = (models) => {
     models.Tcc.belongsTo(models.StudentProfessor, {
       as: 'TccStudentProfessor',
       foreignKey: {

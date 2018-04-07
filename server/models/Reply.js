@@ -20,7 +20,7 @@ export default (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  Reply.associate = function (models) {
+  Reply.associate = (models) => {
     models.Reply.belongsTo(models.User, {
       as: 'ReplyUser',
       foreignKey: {

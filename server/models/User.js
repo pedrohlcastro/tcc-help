@@ -36,7 +36,7 @@ export default (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  User.associate = function (models) {
+  User.associate = (models) => {
     models.User.hasMany(models.Rule, {
       as: 'UserRule',
       foreignKey: {

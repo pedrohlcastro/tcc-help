@@ -24,7 +24,7 @@ export default (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  CheckRule.associate = function (models) {
+  CheckRule.associate = (models) => {
     models.CheckRule.belongsTo(models.Rule, {
       as: 'CheckRuleRule',
       foreignKey: {

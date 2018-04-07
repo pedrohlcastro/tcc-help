@@ -20,7 +20,7 @@ export default (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  StudentProfessor.associate = function (models) {
+  StudentProfessor.associate = (models) => {
     models.StudentProfessor.hasMany(models.Tcc, {
       as: 'StudentProfessorTcc',
       foreignKey: {
@@ -28,22 +28,6 @@ export default (sequelize, DataType) => {
         allowNull: false,
       },
     });
-    /* models.StudentProfessor.belongsToMany(models.User, {
-        as: 'Student',
-        through: 'StudentProfessor',
-        foreignKey: {
-          name: 'student_id',
-          allowNull: false
-        }
-      });
-      models.StudentProfessor.belongsToMany(models.User, {
-        as: 'Professor',
-        through: 'StudentProfessor',
-        foreignKey: {
-          name: 'professor_id',
-          allowNull: false
-        }
-      }); */
   };
   return StudentProfessor;
 };

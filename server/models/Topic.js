@@ -24,7 +24,7 @@ export default (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  Topic.associate = function (models) {
+  Topic.associate = (models) => {
     models.Topic.belongsTo(models.User, {
       as: 'TopicUser',
       foreignKey: {
