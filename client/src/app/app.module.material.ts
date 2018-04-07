@@ -1,9 +1,9 @@
 import 'hammerjs';
 import { NgModule } from '@angular/core';
-import {MatButtonModule, MatCheckboxModule, MatSidenavModule} from '@angular/material';
+import {MatButtonModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule} from '@angular/material';
 
 @NgModule({
-  imports: [MatButtonModule, MatCheckboxModule, MatSidenavModule],
-  exports: [MatButtonModule, MatCheckboxModule, MatSidenavModule],
+  imports: [MatButtonModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule],
+  exports: [MatButtonModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule],
 })
 export class AppMaterialModule { }
