@@ -20,7 +20,7 @@ export default (sequelize, DataType) => {
       freezeTableName: true,
     },
   );
-  Rule.associate = function (models) {
+  Rule.associate = (models) => {
     models.Rule.belongsTo(models.User, {
       as: 'RuleProfessor',
       foreignKey: {
