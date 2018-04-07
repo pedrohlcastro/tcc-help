@@ -30,6 +30,7 @@ export default () => {
         host: 'mysql',
         dialect: 'mysql',
         operatorsAliases: false,
+        query:{raw:true}
       },
     );
 
