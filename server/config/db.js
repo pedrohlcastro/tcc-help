@@ -42,6 +42,12 @@ export default () => {
 
     db.models = createModels(sequelize);
 
+    Object.keys(db.models).forEach(modelName => {
+      if(db.models[modelName].associate){
+        db.models[modelName].associate(db.models);
+      }
+    });
+
     sequelize.sync().done(() => db);
   }
   return db;
