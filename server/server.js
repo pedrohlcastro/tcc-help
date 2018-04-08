@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../client/dist/')));
 
 // API routes goes here
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ status: 'oks' });
 });
 
