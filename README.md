@@ -17,7 +17,7 @@ ___________________________________________
 --travis Roda Ambiente Travis
 --runNode Run Resetando somente NodeJS
 --start Roda imagens ja armazenadas
--up Run Sem resetar imagens somente NodeJS
+-up Run Sem resetar imagens
 ___________________________________________
 *******************************************
 ````
