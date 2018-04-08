@@ -31,6 +31,7 @@ export default () => {
         dialect: 'mysql',
         operatorsAliases: false,
         query: { raw: true },
+        logging: false
       },
     );
 

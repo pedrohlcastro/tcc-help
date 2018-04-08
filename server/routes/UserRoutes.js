@@ -10,27 +10,27 @@ router.route('/')
       .then(result => res.json(result))
       .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   })
-  .post((req, res) => {
-    UserController.User.create(req.body)
+  .post((req, res, next) => {
+    UserController.create(req.body)
       .then(result => res.json(result))
-      .catch(() => res.sendStatus(412));
+      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   });
 
 router.route('/:id')
-  .get((req, res) => {
-    UserController.User.findOne({ where: req.params })
+  .get((req, res, next) => {
+    UserController.getById(req.params)
       .then(result => res.json(result))
-      .catch(() => res.sendStatus(412));
+      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   })
-  .put((req, res) => {
-    UserController.User.update(req.body, { where: req.params })
+  .put((req, res, next) => {
+    UserController.update(req.body, req.params)
       .then(result => res.json(result))
-      .catch(() => res.sendStatus(412));
+      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   })
-  .delete((req, res) => {
-    UserController.User.destroy({ where: req.params })
+  .delete((req, res, next) => {
+    UserController.delete(req.params )
       .then(() => res.sendStatus(204))
-      .catch(() => res.sendStatus(412));
+      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   });
 
 export default router;
