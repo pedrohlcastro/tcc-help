@@ -15,7 +15,7 @@ class UserController {
 
   getById(params) {
     return new Promise((resolve, reject) => {
-      this.User.findOne({where: params})
+      this.User.findOne({ where: params })
         .then(result => resolve(result))
         .catch(err => reject(err));
     });
@@ -32,7 +32,7 @@ class UserController {
   update(data, params) {
     return new Promise((resolve, reject) => {
       this.User.update(data, {
-        where: params
+        where: params,
       })
         .then(result => resolve(result))
         .catch(err => reject(err));
@@ -42,7 +42,7 @@ class UserController {
   delete(params) {
     return new Promise((resolve, reject) => {
       this.User.destroy({
-        where: params
+        where: params,
       })
         .then(result => resolve(result))
         .catch(err => reject(err));

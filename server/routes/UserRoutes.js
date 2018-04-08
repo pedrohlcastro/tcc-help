@@ -28,7 +28,7 @@ router.route('/:id')
       .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   })
   .delete((req, res, next) => {
-    UserController.delete(req.params )
+    UserController.delete(req.params)
       .then(() => res.sendStatus(204))
       .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   });

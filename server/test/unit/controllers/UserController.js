@@ -23,17 +23,13 @@ describe('Controllers: User', () => {
       .catch(err => done(err));
   });
   describe('Get all users: getAll()', () => {
-    it('should return a list of users', () => {
-      return UserController.getAll()
-        .then(response => Array.isArray(response));
-    });
+    it('should return a list of users', () => UserController.getAll()
+      .then(response => Array.isArray(response)));
   });
 
   describe('Get a user: getById()', () => {
-    it('should return a user', () => {
-      return UserController.getById({id: 1})
-        .then(response => expect(response).to.be.eql(defaultUser));
-    });
+    it('should return a user', () => UserController.getById({ id: 1 })
+      .then(response => expect(response).to.be.eql(defaultUser)));
   });
 
   describe('Create a user: create()', () => {
@@ -57,19 +53,16 @@ describe('Controllers: User', () => {
     it('should update a user', () => {
       const requestUser = {
         id: 1,
-        name: 'Test user updated'
+        name: 'Test user updated',
       };
 
-      return UserController.update(requestUser, {id: 1})
+      return UserController.update(requestUser, { id: 1 })
         .then(response => expect(parseInt(response, 10)).to.be.above(0));
     });
   });
 
   describe('Delete a user: delete()', () => {
-    it('should delete a user', () => {
-
-      return UserController.delete({id: 1})
-        .then(response => expect(parseInt(response, 10)).to.be.above(0));
-    });
+    it('should delete a user', () => UserController.delete({ id: 1 })
+      .then(response => expect(parseInt(response, 10)).to.be.above(0)));
   });
 });
