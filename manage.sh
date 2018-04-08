@@ -27,10 +27,15 @@ if [[ $# -gt 0 ]]; then
             echo "-tu Roda teste unitáro"
             echo "-ti Roda teste de integração"
             echo "--runNode Run Resetando somente NodeJS"
+            echo "-up Run Sem resetar imagens somente NodeJS"
             echo "--start Roda imagens ja armazenadas"
             echo "--travis Roda Ambiente Travis"
             echo "___________________________________________"
             echo "*******************************************"
+        ;;
+        -up)
+            docker-compose down -v
+            docker-compose up
         ;;
         -r|--run)
             docker-compose down -v

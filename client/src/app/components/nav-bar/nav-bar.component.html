@@ -1,13 +1,13 @@
 <div class="nav-bar">
-  <a href="#" class="closebtn" (click)="changeNavBar(false)"matTooltip="Fechar Menu" matTooltipPosition="above">&times;</a>
+  <a class="closebtn" (click)="changeNavBar(false)"matTooltip="Fechar Menu" matTooltipPosition="above">&times;</a>
 
-  <a href="#"><i class="material-icons">vpn_key</i>Login</a>
-  <a href="#"><i class="material-icons">input</i>Cadastro</a>
+  <a [routerLink]="['sign-in']"><i class="material-icons">vpn_key</i>Login</a>
+  <a [routerLink]="['sign-up']"><i class="material-icons">input</i>Cadastro</a>
 </div>
 
 <div class="top-header">
-  <a href="#" (click)="changeNavBar(true)" matTooltip="Abrir Menu" matTooltipPosition="right">
+  <a (click)="changeNavBar(true)" matTooltip="Abrir Menu" matTooltipPosition="right">
     <i class="material-icons" id="btnmenu">menu</i>
   </a>
-  <span class="title">TCC Help</span>
+  <span [routerLink]="['/']" class="title">TCC Help</span>
 </div>

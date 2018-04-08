@@ -1,3 +1,5 @@
+@import '~variables.scss';
+
 .main-text{
     margin-top: 32vh;
     text-align: center;
@@ -7,7 +9,7 @@
     margin-top: 30px;
     button{
         width: 300px;
-        background-color: black;
+        background-color: $second-color-ligth;
         padding-bottom: 5px;
         padding-top: 5px;
         a{
@@ -26,7 +28,8 @@
             top: 2px;
             font-size: 20px;
         }
-    } :hover{
-        color: yellow;
+        :hover{
+            color: $primary-color-ligth;
+        } 
     } 
 }

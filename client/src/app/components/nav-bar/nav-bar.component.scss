@@ -1,7 +1,9 @@
+@import '~variables.scss';
+
 .nav-bar {
     width: 300px;
     height: 100vh;
-    background-color: black;
+    background-color: $primary-color;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -9,6 +11,7 @@
     overflow-x: hidden;
     transition: 0.5s;
     a{
+        cursor: pointer;
         padding: 8px 8px 8px 32px;
         text-decoration: none;
         color: white;
@@ -25,7 +28,7 @@
             font-size: 20px;
         }
     } :hover{
-        color: yellow;
+        color: $primary-color-ligth;
     } 
     .closebtn {
         font-size: 50px;
@@ -39,10 +42,11 @@
 }
 .top-header{
     width: 100%;
-    background-color: black;
+    background-color: $primary-color;
     padding-top: 5px;
     padding-bottom: 5px;
     a{
+        cursor: pointer;
         text-decoration: none;
     }
     #btnmenu{
@@ -55,10 +59,11 @@
         top: 2px;
         transition: 0.5s;
         &:hover{
-            color: yellow;
+            color: $primary-color-ligth;
         }
     }
     .title{
+        cursor: pointer;
         text-align: center;
         font-size: 40px;
         font-weight: 100;
