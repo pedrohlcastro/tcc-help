@@ -1,5 +1,15 @@
-<p>
-  sign-in-page works!
+<form class="sign-in-form">
+  <label>
+    <input type="email" name="email" placeholder="E-mail" ng-model="user.email" required>
+    <br>
+    <input type="password" name="password" placeholder="Password" ng-model="user.password" required>
+    <br>
 
-  Essa é a reposta: {{responseFromServer}}
+    <button (click)="onClickMe()">SIGN-IN</button>
+  </label>
+</form>
+<p>
+
+
+  sign-in-page works! Essa é a reposta: {{responseFromServer}}
 </p>
