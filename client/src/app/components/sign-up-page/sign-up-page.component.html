@@ -1,19 +1,57 @@
-<form class="sign-in-form">
-  <label>
-    <input type="text" name="username" placeholder="Username" ng-model="user.name" required>
-    <br>
-    <input type="email" name="email" placeholder="E-mail" ng-model="user.email" required>
-    <br>
-    <input type="password" name="password" placeholder="Password" ng-model="user.password" required>
-    <br>
-    <input type="password" name="confirmPassword" placeholder="Confirm password" ng-model="user.password" required>
-    <br>
+<div class="card-content">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
 
-    <button (click)="onClickMe()">SIGN-UP</button>
 
-  </label>
-</form>
+    <mat-card-content>
+        <form class="register-form">
+                        
+          <mat-form-field class="input">
+              <input matInput placeholder="Username" [formControl]="usernameFormControl">
+              <mat-error *ngIf="usernameFormControl.hasError('required')">
+                Username is <strong>required</strong>
+              </mat-error>
+          </mat-form-field>
 
-<p>
-  sign-up-page works!
-</p>
+          <mat-form-field class="input">
+              <input matInput placeholder="Email" [formControl]="emailFormControl">
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="input">
+              <input matInput type="password" placeholder="Password" [formControl]="passwordFormControl">
+              <mat-error *ngIf="passwordFormControl.hasError('required')">
+                  Password is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="passwordFormControl.hasError('minlength')">
+                  A senha precisa ter mais de 6 caracteres 
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="input">
+              <input matInput type="password" placeholder="Confirm your password" [formControl]="confirmPasswordFormControl">
+              <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
+                  Password is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="confirmPasswordFormControl.hasError('minlength')">
+                  A senha precisa ter mais de 6 caracteres 
+              </mat-error>
+          </mat-form-field>
+                          
+          <button mat-button (click)="register()">SIGN IN</button>
+
+        </form>
+
+
+      </mat-card-content>
+      
+  </mat-card>
+</div>
+

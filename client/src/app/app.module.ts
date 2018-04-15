@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app.module.routes';
 import { AppMaterialModule } from './app.module.material';
@@ -26,7 +27,9 @@ import { SignInPageComponent } from './components/sign-in-page/sign-in-page.comp
     BrowserAnimationsModule,
     AppRoutingModule,
     AppMaterialModule,
-    HttpModule
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,

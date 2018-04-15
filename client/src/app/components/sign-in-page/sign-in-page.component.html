@@ -1,15 +1,42 @@
-<form class="sign-in-form">
-  <label>
-    <input type="email" name="email" placeholder="E-mail" ng-model="user.email" required>
-    <br>
-    <input type="password" name="password" placeholder="Password" ng-model="user.password" required>
-    <br>
-
-    <button (click)="onClickMe()">SIGN-IN</button>
-  </label>
-</form>
-<p>
+<div class="card-content">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
 
 
-  sign-in-page works! Essa é a reposta: {{responseFromServer}}
-</p>
+    <mat-card-content>
+        <form class="login-form">
+            
+          <mat-form-field class="input">
+              <input matInput placeholder="Email" [formControl]="emailFormControl">
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="input">
+              <input matInput type="password" placeholder="Password" [formControl]="passwordFormControl">
+              <mat-error *ngIf="passwordFormControl.hasError('required')">
+                  Password is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="passwordFormControl.hasError('minlength')">
+                  A senha precisa ter mais de 6 caracteres 
+              </mat-error>
+          </mat-form-field>
+            
+          <mat-checkbox>Keep me in</mat-checkbox>
+            
+          <br><a [routerLink]="['/sign-up']"><i class="material-icons">input</i>Create account</a>
+          <button mat-button (click)="login()">SIGN IN</button>
+
+        </form>
+
+
+      </mat-card-content>
+    
+  </mat-card>
+</div>
