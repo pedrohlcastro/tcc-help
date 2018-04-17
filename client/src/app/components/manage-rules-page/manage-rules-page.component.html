@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row" >
+    <div class="col-xl-3" *ngFor="let rule of rules; let i = index;">
+      <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar class="avatar"></div>
+            <mat-card-title>{{rule.regex}}</mat-card-title>
+            <mat-card-subtitle><br></mat-card-subtitle>
+          </mat-card-header>
+          <div mat-card-image class="card-middle"></div>
+          <mat-card-content>
+            <p>
+                {{ (rule.message.length>125)? (rule.message | slice:0:125)+'..':(rule.message) }}
+            </p>
+          </mat-card-content>
+          <div class="mat-card-actions btn-group">
+            <button mat-raised-button class="edit" color="primary" (click)="edit(i)">
+              <i class="material-icons">edit</i> Editar
+            </button>
+            <button mat-raised-button class="delete" color="warn" (click)="remove(i)">
+              <i class="material-icons">delete</i> Deletar
+            </button>
+          </div>
+        </mat-card>
+    </div>
+  </div>
+</div>
+  
+  
