@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import {FormControl, Validators} from '@angular/forms';
-
+import { AppPage } from '../../../../e2e/app.po';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -11,6 +11,7 @@ import {FormControl, Validators} from '@angular/forms';
 
 export class SignInPageComponent implements OnInit {
   responseFromServer;
+  result;
   constructor(private authService:AuthService) { }
 
   ngOnInit() {
@@ -19,7 +20,6 @@ export class SignInPageComponent implements OnInit {
         this.responseFromServer = res.status
       });
   }
-  
 
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -33,14 +33,17 @@ export class SignInPageComponent implements OnInit {
 
 
   login = function(){
-    // check errors 
-    var hasError = (this.emailFormControl.errors ? true : false) && 
-                    (this.passwordFormControl.errors ? true : false);
+    // check errors
+    var hasError = (this.emailFormControl.errors ? false : true) && 
+                    (this.passwordFormControl.errors ? false : true);
 
-    if (hasError){
-      // 
-      console.log("estou tentando logar");
-    }
+    //if (hasError){
+      const requestUser = {
+        email: this.emailFormControl.value,
+        password: this.passwordFormControl.value,
+      };
+      this.authService.loginUser(requestUser);
+      
+    //}
   }
-
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -8,7 +9,7 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class SignUpPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -38,10 +39,17 @@ export class SignUpPageComponent implements OnInit {
                     (this.passwordFormControl.errors ? false : true) &&
                     (this.confirmPasswordFormControl.errors ? false : true);
 
-    if (hasError){
-      // 
-      console.log("estou tentando cadastrar");
+    //if (hasError){
+      const requestUser = {
+        name: this.usernameFormControl.value,
+        email: this.emailFormControl.value,
+        password: this.passwordFormControl.value,
+        type: 0,
+        validate_professor: 0,
+        profile_image_path: 'path',
+      };
+      this.authService.createUser(requestUser);
     }
-  }
+  //}
 
 }
