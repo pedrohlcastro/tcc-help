@@ -1,7 +1,23 @@
 <div class="container">
-  <div class="row" >
-    <div class="col-xl-3" *ngFor="let rule of rules; let i = index;">
-      <mat-card>
+  <div class="header-bar">
+    <div class="row">
+      <div class="col-xl-8">
+        <mat-form-field class="search-input">
+          <input #myInput type="text" matInput placeholder="Buscar" (input)="filterItem(myInput.value)">
+          <i class="material-icons" matSuffix>search</i>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-4">
+        <button mat-raised-button class="create-btn" color="primary" (click)="create()">
+          <i class="material-icons">add</i> Criar Regra
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="rules">
+    <div class="row" >
+      <div class="col-xl-3" *ngFor="let rule of filteredRules; let i = index;">
+        <mat-card>
           <mat-card-header>
             <div mat-card-avatar class="avatar"></div>
             <mat-card-title>{{rule.regex}}</mat-card-title>
@@ -14,14 +30,15 @@
             </p>
           </mat-card-content>
           <div class="mat-card-actions btn-group">
-            <button mat-raised-button class="edit" color="primary" (click)="edit(i)">
+            <button mat-raised-button class="edit-btn" color="primary" (click)="edit(i)">
               <i class="material-icons">edit</i> Editar
             </button>
-            <button mat-raised-button class="delete" color="warn" (click)="remove(i)">
+            <button mat-raised-button class="delete-btn" color="warn" (click)="remove(i)">
               <i class="material-icons">delete</i> Deletar
             </button>
           </div>
         </mat-card>
+      </div>
     </div>
   </div>
 </div>

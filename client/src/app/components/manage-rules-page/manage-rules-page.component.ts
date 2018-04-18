@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material';
 
+import { RuleDialogComponent } from '../rule-dialog/rule-dialog.component';
 @Component({
   selector: 'app-manage-rules-page',
   templateUrl: './manage-rules-page.component.html',
@@ -15,18 +17,50 @@ export class ManageRulesPageComponent implements OnInit {
       regex: 'Regex 1',
       message:'Se hoje é o dia das crianças... Ontem eu disse: o dia da criança é o dia da mãe, dos pais, das professoras, mas também é o dia dos animais, sempre que você olha uma criança, há sempre uma figura oculta, que é um cachorro atrás. O que é algo muito importante?'
     }
+
   ]
-  constructor() { }
+  filteredRules;
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.filteredRules = Object.assign([], this.rules);;
+  }
+
+  create() {
+    let dialogRef = this.dialog.open(RuleDialogComponent, {
+      width: '75%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   edit(index){
-    console.log(index);
+    let item = this.rules[index];
+    let dialogRef = this.dialog.open(RuleDialogComponent, {
+      width: '75%',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   remove(index){
     console.log(index);
+  }
+
+  filterItem(value){
+    if(!value)
+      this.filteredRules = this.rules;
+    else {
+      this.filteredRules = Object.assign([], this.rules).filter(
+        item => item.message.toLowerCase().indexOf(value.toLowerCase()) > -1
+      )
+    }
   }
 
 }

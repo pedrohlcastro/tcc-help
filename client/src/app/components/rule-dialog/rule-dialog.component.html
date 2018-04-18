@@ -1,0 +1,17 @@
+<form #ruleForm="ngForm">
+  <mat-form-field class="fullwidth">
+    <input matInput placeholder="Regex" name="regex" [(ngModel)]="rule.regex" #regex="ngModel">
+  </mat-form-field>
+
+  <mat-form-field class="fullwidth">
+    <textarea matInput placeholder="Mensagem/Descriçao" name="message" [(ngModel)]="rule.message" #message="ngModel"></textarea>
+  </mat-form-field>
+  <div class="btn-area">
+    <button mat-raised-button class="edit-btn" color="primary" (click)="confirm(ruleForm.value)">
+      <i class="material-icons">check</i> Confirmar
+    </button>
+    <button mat-raised-button class="delete-btn" color="warn" (click)="exit()">
+      <i class="material-icons">cancel</i> Cancelar
+    </button>
+  </div>
+</form>

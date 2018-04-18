@@ -1,40 +1,61 @@
 @import '~variables.scss';
 
-mat-card{
-    padding-bottom: 0;
-    margin-bottom: 40px;
-    .avatar{
-        background-color: $second-color-ligth;
-    }
-    .card-middle{
-        background-color: $second-color-ligth;
-        padding-top: 50px;
-        width: calc(100% + 48px);;
-        margin: 0 -24px 16px -24px;
-    }
+button{
+    font-weight: bold;
+}
 
-    mat-card-content{
-        max-height: 115px;
-        min-height: 115px;
-        text-align: justify;
+.header-bar{
+    width: 100%;
+    margin-bottom: 35px;
+    margin-top: 15px;
+    .search-input{
+        width: 100%;
     }
+    .create-btn{
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        top: 7px;
+    }
+}
 
-    .mat-card-actions{
-        width: calc(100% + 48px);;
-        margin: 0px -24px 0px -24px;
-        padding: 0;
-        position: relative;
-        .delete{
-            width: 49.1%;
-            margin:0;
-            padding: 0;
-            //background-color: red;
+.rules{
+    mat-card{
+        padding-bottom: 0;
+        margin-bottom: 20px;
+        .avatar{
+            background-color: $second-color-ligth;
         }
-        .edit{
-            width: 49.1%;
-            margin:0;
+        .card-middle{
+            background-color: $second-color-ligth;
+            padding-top: 50px;
+            width: calc(100% + 48px);;
+            margin: 0 -24px 16px -24px;
+        }
+    
+        mat-card-content{
+            max-height: 115px;
+            min-height: 115px;
+            text-align: justify;
+        }
+    
+        .mat-card-actions{
+            width: calc(100% + 48px);;
+            margin: 0px -24px 0px -24px;
             padding: 0;
-            //background-color: yellow;
+            position: relative;
+            .delete-btn{
+                width: 49%;
+                margin:0;
+                padding: 0;
+                //background-color: red;
+            }
+            .edit-btn{
+                width: 49%;
+                margin:0;
+                padding: 0;
+                //background-color: yellow;
+            }
         }
     }
 }
