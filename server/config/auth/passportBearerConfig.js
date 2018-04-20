@@ -9,6 +9,7 @@ const { User } = db().models;
 const configBearerStrategy = (passport) => {
   // anyone can access
   passport.use('BasicBearer', new BearerStrategy((token, done) => {
+    /* eslint-disable */
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if (err) { return done({ status: 401, msg: 'Unauthorized', err }); }
       User.findById(decoded.id)
@@ -20,12 +21,13 @@ const configBearerStrategy = (passport) => {
           return done(null, reqUser);
         })
         .catch(er => done({ status: 401, msg: 'Unauthorized', er }));
-      return done({ status: 401, msg: 'Unauthorized' }, err);
     });
+    /* eslint-enable */
   }));
 
   // only  ADMIN users can access
   passport.use('AdminBearer', new BearerStrategy((token, done) => {
+    /* eslint-disable */
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if (err) { return done({ status: 401, msg: 'Unauthorized', err }); }
       User.findById(decoded.id)
@@ -38,12 +40,13 @@ const configBearerStrategy = (passport) => {
           return done({ status: 401, msg: 'Unauthorized', err });
         })
         .catch(er => done({ status: 401, msg: 'Unauthorized', er }));
-      return done({ status: 401, msg: 'Unauthorized', err });
     });
+    /* eslint-enable */
   }));
 
   // only Professor users can access
   passport.use('ProfessorBearer', new BearerStrategy((token, done) => {
+    /* eslint-disable */
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if (err) { return done({ status: 401, msg: 'Unauthorized', err }); }
       User.findById(decoded.id)
@@ -56,12 +59,13 @@ const configBearerStrategy = (passport) => {
           return done({ status: 401, msg: 'Unauthorized', err });
         })
         .catch(er => done({ status: 401, msg: 'Unauthorized', er }));
-      return done({ status: 401, msg: 'Unauthorized', err });
     });
+    /* eslint-enable */
   }));
 
   // only Student users can access
   passport.use('StudentBearer', new BearerStrategy((token, done) => {
+    /* eslint-disable */
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if (err) { return done({ status: 401, msg: 'Unauthorized', err }); }
       User.findById(decoded.id)
@@ -74,8 +78,8 @@ const configBearerStrategy = (passport) => {
           return done({ status: 401, msg: 'Unauthorized', err });
         })
         .catch(er => done({ status: 401, msg: 'Unauthorized', er }));
-      return done({ status: 401, msg: 'Unauthorized', err });
     });
+    /* eslint-enable */
   }));
 };
 

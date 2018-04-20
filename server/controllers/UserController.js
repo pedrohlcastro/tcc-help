@@ -50,8 +50,8 @@ class UserController {
         .catch(err => reject(err));
     });
   }
-
-  static signIn(err, users, info) {
+/* eslint-disable */
+  signIn(err, users, info) {
     return new Promise((resolve, reject) => {
       if (err) {
         reject(err);
@@ -71,7 +71,7 @@ class UserController {
     });
   }
 
-  static checkToken(users) {
+  checkToken(users) {
     return new Promise((resolve, reject) => {
       if (users) {
         const resJSON = {
@@ -83,6 +83,7 @@ class UserController {
       reject(new Error('Unauthorized'));
     });
   }
+/* eslint-enable */
 }
 
 export default new UserController();
