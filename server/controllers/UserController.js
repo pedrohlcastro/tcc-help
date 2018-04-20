@@ -1,4 +1,6 @@
+import jwt from 'jsonwebtoken';
 import db from '../config/db';
+import config from '../config/config.json';
 
 class UserController {
   constructor() {
@@ -46,6 +48,39 @@ class UserController {
       })
         .then(result => resolve(result))
         .catch(err => reject(err));
+    });
+  }
+
+  static signIn(err, users, info) {
+    return new Promise((resolve, reject) => {
+      if (err) {
+        reject(err);
+      }
+      if (!users) {
+        reject(new Error(info));
+      }
+      const payload = {
+        id: users.id,
+      };
+      const options = {
+        expiresIn: '1d',
+      };
+      let token = 'Bearer ';
+      token += jwt.sign(payload, config.jwtSecret, options);
+      resolve({ result: 'Success', token, type: users.type });
+    });
+  }
+
+  static checkToken(users) {
+    return new Promise((resolve, reject) => {
+      if (users) {
+        const resJSON = {
+          result: 'Success',
+          type: users.type,
+        };
+        resolve(resJSON);
+      }
+      reject(new Error('Unauthorized'));
     });
   }
 }

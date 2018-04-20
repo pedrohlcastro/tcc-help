@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "sleep 45&&nodemon --legacy-watch server/index.js --exec babel-node --presets es2015,stage-2",
-    "test-integration": "mocha --opts server/test/integration/mocha.opts server/test/integration/*.js",
+    "test-integration": "mocha --opts server/test/integration/mocha.opts server/test/integration/**/*.js",
     "test-unit": "mocha --opts server/test/unit/mocha.opts server/test/unit/**/*.js",
     "lint": "eslint 'server/**/*.js' --fix",
     "pre-commit-control": "docker exec tcchelp_app_1 npm run lint"
@@ -40,14 +40,20 @@
   "dependencies": {
     "async": "^2.5.0",
     "babel-runtime": "^6.26.0",
+    "bcrypt": "^2.0.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "helmet": "^3.9.0",
     "jsonwebtoken": "^7.4.1",
+    "jwt-simple": "^0.5.1",
     "morgan": "^1.8.2",
     "mysql2": "^1.5.2",
+    "passport": "^0.4.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "sequelize": "^4.35.2",
     "shrink-ray": "^0.1.3"
   }

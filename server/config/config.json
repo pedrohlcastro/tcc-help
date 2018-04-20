@@ -1,5 +1,7 @@
 {
     "db": "tcc_help",
     "db_user": "banana",
-    "db_password": "senha_banana"
+    "db_password": "senha_banana",
+    "jwtSecret": "b4n4n4",
+    "jwtSession": "{session: false}"
 }
