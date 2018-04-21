@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 export default (sequelize, DataType) => {
   const User = sequelize.define(
     'User', {
@@ -15,7 +17,7 @@ export default (sequelize, DataType) => {
         allowNull: false,
       },
       password: {
-        type: DataType.STRING(40),
+        type: DataType.STRING(60),
         allowNull: false,
       },
       type: {
@@ -34,8 +36,15 @@ export default (sequelize, DataType) => {
     {
       timestamps: false,
       freezeTableName: true,
+      hooks: {
+        beforeCreate: (user) => {
+          const salt = bcrypt.genSaltSync();
+          user.set('password', bcrypt.hashSync(user.password, salt));
+        },
+      },
     },
   );
+  User.comparePassword = (encondedPsd, password) => bcrypt.compareSync(password, encondedPsd);
   User.associate = (models) => {
     models.User.hasMany(models.Rule, {
       as: 'UserRule',
