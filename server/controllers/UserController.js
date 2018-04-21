@@ -152,7 +152,7 @@ class UserController {
           .then(result => resolve(result))
           .catch(err => reject(err));
       } else {
-        reject(new Error("Password and Confirm Password does not match"));
+        reject(new Error('Password and Confirm Password does not match'));
       }
     });
   }
