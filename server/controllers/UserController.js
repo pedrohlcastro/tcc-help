@@ -68,7 +68,7 @@ class UserController {
         .catch(err => reject(err));
     });
   }
-/* eslint-disable */
+
   signIn(err, users, info) {
     return new Promise((resolve, reject) => {
       if (err) {
@@ -101,7 +101,6 @@ class UserController {
       reject(new Error('Unauthorized'));
     });
   }
-  /* eslint-enable */
 
   forgotPassword(req) {
     return new Promise((resolve, reject) => {
