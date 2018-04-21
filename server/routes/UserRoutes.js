@@ -55,4 +55,18 @@ router.get('/checktoken', passport.authenticate('BasicBearer', { session: false 
     .catch(er => next({ er, msg: 'Unauthorized', status: 401 })))(req, res, next);
 });
 
+router.route('/forgot_password')
+  .post((req, res, next) => {
+    UserController.forgotPassword(req.body)
+      .then(result => res.json(result))
+      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+  });
+
+router.route('/reset_password/:token')
+  .post((req, res, next) => {
+    UserController.resetPassword(req.body, req.params)
+      .then(result => res.json(result))
+      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+  });
+
 export default router;

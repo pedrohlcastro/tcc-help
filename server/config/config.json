@@ -3,5 +3,10 @@
     "db_user": "banana",
     "db_password": "senha_banana",
     "jwtSecret": "b4n4n4",
-    "jwtSession": "{session: false}"
+    "jwtSession": "{session: false}",
+    "jwtSecretForgotPassword" : "tccforgot",
+    "project_name": "TCC Help",
+    "email": "contatotcchelp@gmail.com",
+    "email_password": "senha_b4n4n4",
+    "email_service": "Gmail"
 }
