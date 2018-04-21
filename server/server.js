@@ -5,9 +5,11 @@ import cors from 'cors';
 import path from 'path';
 import compress from 'shrink-ray';
 import helmet from 'helmet';
-
+import passport from 'passport';
 import configEnv from './config/configEnv';
 import UserRoutes from './routes/UserRoutes';
+import configBearerStrategy from './config/auth/passportBearerConfig';
+import configPassportLocalStrategy from './config/auth/passportLocalConfig';
 
 const ENV = process.env.NODE_ENV;
 
@@ -28,6 +30,11 @@ if (ENV !== 'test') {
 
 app.use(morgan(ENV));
 app.use(cors());
+app.use(passport.initialize());
+configPassportLocalStrategy(passport);
+configBearerStrategy(passport);
+app.use(passport.session({ session: false }));
+
 
 app.use(helmet());
 app.use(helmet.hidePoweredBy({ setTo: 'PHP 5.5.14' }));
@@ -47,6 +54,7 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/users', UserRoutes);
+
 
 // Call Angular
 app.all('*', (req, res) => {
