@@ -12,6 +12,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { AuthService } from './services/auth.service';
 import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
+import { AccountPageComponent } from './components/account-page/account-page.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SignInPageComponent } from './components/sign-in-page/sign-in-page.comp
     HomePageComponent,
     NavBarComponent,
     SignUpPageComponent,
-    SignInPageComponent
+    SignInPageComponent,
+    AccountPageComponent
   ],
   imports: [
     BrowserModule,
