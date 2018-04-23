@@ -13,7 +13,8 @@ import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.comp
 import { AuthService } from './services/auth.service';
 import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
 import { AccountPageComponent } from './components/account-page/account-page.component';
-
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { AccountPageComponent } from './components/account-page/account-page.com
     NavBarComponent,
     SignUpPageComponent,
     SignInPageComponent,
-    AccountPageComponent
+    AccountPageComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -59,14 +59,16 @@ router.route('/forgot_password')
   .post((req, res, next) => {
     UserController.forgotPassword(req.body)
       .then(result => res.json(result))
-      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+      .catch((err) => {
+        next({ err, msg: err.message, status: 412 });
+      });
   });
 
-router.route('/reset_password/:token')
+router.route('/reset_password/')
   .post((req, res, next) => {
-    UserController.resetPassword(req.body, req.params)
+    UserController.resetPassword(req.body)
       .then(result => res.json(result))
-      .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+      .catch(err => next({ err, msg: err.message, status: 500 }));
   });
 
 export default router;

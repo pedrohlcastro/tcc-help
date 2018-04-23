@@ -9,7 +9,7 @@
         <form class="login-form">
             
           <mat-form-field class="input">
-              <input matInput placeholder="Email" [formControl]="emailFormControl">
+              <input matInput placeholder="Email" [formControl]="emailFormControl" required>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                 Please enter a valid email address
               </mat-error>
@@ -19,7 +19,7 @@
           </mat-form-field>
 
           <mat-form-field class="input">
-              <input matInput type="password" placeholder="Password" [formControl]="passwordFormControl">
+              <input matInput type="password" placeholder="Password" [formControl]="passwordFormControl" required>
               <mat-error *ngIf="passwordFormControl.hasError('required')">
                   Password is <strong>required</strong>
               </mat-error>
@@ -27,10 +27,11 @@
                   A senha precisa ter mais de 6 caracteres 
               </mat-error>
           </mat-form-field>
-            
+          <!--  
           <mat-checkbox>Keep me in</mat-checkbox>
-            
+          -->  
           <br><a [routerLink]="['/sign-up']"><i class="material-icons">input</i>Create account</a>
+          <br/><a [routerLink]="['/forgot-password']"><i class="material-icons"></i>Forgot password?</a>
           <button mat-button (click)="login()">SIGN IN</button>
 
         </form>

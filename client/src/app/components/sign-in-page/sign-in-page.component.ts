@@ -15,10 +15,10 @@ export class SignInPageComponent implements OnInit {
   constructor(private authService:AuthService) { }
 
   ngOnInit() {
-    this.authService.dumpExample()
+    /*this.authService.dumpExample()
       .subscribe((res) => {
         this.responseFromServer = res.status
-      });
+      });*/
   }
 
   emailFormControl = new FormControl('', [

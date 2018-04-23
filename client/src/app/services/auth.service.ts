@@ -29,4 +29,18 @@ export class AuthService {
       return res.json();
     });
   }
+
+  forgotPassword(userEmail){
+    return this.http.post(`${this.baseUrl}/users/forgot_password`, userEmail)
+    .map((res)=> {
+      return res.json();
+    });
+  }
+
+  resetPassword(userData){
+    return this.http.post(`${this.baseUrl}/users/reset_password`, userData)
+    .map((res)=> {
+      return res.json();
+    });
+  }
 }
