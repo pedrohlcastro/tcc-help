@@ -36,8 +36,8 @@ const configBearerStrategy = (passport) => {
             id: result.id,
             type: result.type,
           };
-          if (reqUser.type === '0') { return done(null, reqUser); }
-          return done({ status: 401, msg: 'Unauthorized', err });
+          if (reqUser.type === 0) { return done(null, reqUser); }
+          else done({ status: 401, msg: 'Unauthorized', err });
         })
         .catch(er => done({ status: 401, msg: 'Unauthorized', er }));
     });

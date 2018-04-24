@@ -11,7 +11,7 @@ router.route('/')
       .then(result => res.json(result))
       .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   })
-  .post(passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  .post((req, res, next) => {
     UserController.create(req.body)
       .then(result => res.json(result))
       .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
@@ -28,12 +28,11 @@ router.route('/:id')
       UserController.update(req.body, req.params)
         .then(result => res.json(result))
         .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
-    }
-    return next({ msg: 'Unauthorized', status: 401 });
+    } else { next({ msg: 'Unauthorized', status: 401 }); }
   })
   .delete(passport.authenticate('AdminBearer', { session: false }), (req, res, next) => {
     UserController.delete(req.params)
-      .then(() => res.sendStatus(204))
+      .then(result => res.json(result))
       .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   });
 

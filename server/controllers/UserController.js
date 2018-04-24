@@ -44,7 +44,11 @@ class UserController {
   create(data) {
     return new Promise((resolve, reject) => {
       this.User.create(data)
-        .then(result => resolve(result))
+        .then((result) => {
+          /* eslint-disable */
+          if (result._options.isNewRecord) { resolve({ msg: 'User created', status: 200 }); } else { reject(new Error('Error running DB query')); }
+          /* eslint-enable */
+        })
         .catch(err => reject(err));
     });
   }
@@ -54,7 +58,9 @@ class UserController {
       this.User.update(data, {
         where: params,
       })
-        .then(result => resolve(result))
+        .then((result) => {
+          if (result) { resolve({ msg: 'User updated', status: 200 }); } else { reject(new Error('Error running DB query')); }
+        })
         .catch(err => reject(err));
     });
   }
@@ -64,7 +70,9 @@ class UserController {
       this.User.destroy({
         where: params,
       })
-        .then(result => resolve(result))
+        .then((result) => {
+          if (result) { resolve({ msg: 'User deleted', status: 200 }); } else { reject(new Error('Error running DB query')); }
+        })
         .catch(err => reject(err));
     });
   }

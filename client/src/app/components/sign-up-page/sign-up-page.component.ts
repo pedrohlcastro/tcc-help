@@ -9,7 +9,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SignUpPageComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+    this.userTypeFormControl.value = "1";
+   }
 
   ngOnInit() {
   }
@@ -20,6 +22,9 @@ export class SignUpPageComponent implements OnInit {
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email
+  ]);
+  userTypeFormControl = new FormControl('', [
+    Validators.required,
   ]);
   passwordFormControl = new FormControl('', [
     Validators.required,
@@ -44,11 +49,18 @@ export class SignUpPageComponent implements OnInit {
         name: this.usernameFormControl.value,
         email: this.emailFormControl.value,
         password: this.passwordFormControl.value,
-        type: 0,
+        type: this.userTypeFormControl.value,
         validate_professor: 0,
         profile_image_path: 'path',
       };
-      this.authService.createUser(requestUser);
+      this.authService.createUser(requestUser)
+        .subscribe((res) => {
+          console.log(res.msg);
+        },
+        error => {
+          console.log(error.statusText);
+        }
+      );
     }
   //}
 
