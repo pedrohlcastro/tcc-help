@@ -8,7 +8,7 @@ WORKDIR $HOME/banana_tcc/client/
 
 RUN npm install --silent --progress=false && npm cache clean --force
 
-RUN npm i -g --silent --progress=false @angular/cli
+RUN npm i -g --silent --progress=false --unsafe-perm --verbose @angular/cli
 
 COPY . $HOME/banana_tcc/client/
 
