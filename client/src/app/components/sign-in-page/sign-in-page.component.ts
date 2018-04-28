@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import {FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppPage } from '../../../../e2e/app.po';
+import { ActivatedRoute } from "@angular/router";
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -11,39 +13,45 @@ import { AppPage } from '../../../../e2e/app.po';
 
 export class SignInPageComponent implements OnInit {
   responseFromServer;
-  result;
-  constructor(private authService:AuthService) { }
+  token;
+  constructor(private route: ActivatedRoute, private authService:AuthService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    /*this.authService.dumpExample()
-      .subscribe((res) => {
-        this.responseFromServer = res.status
-      });*/
   }
 
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email
-  ]);
-  passwordFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-    Validators.maxLength(50)
-  ]);
+  loginForm = new FormGroup({
+    email: new FormControl('',[
+      Validators.required,
+      Validators.email
+    ]),
+    password: new FormControl('',[
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(50)
+    ])
+  });
 
-
+  
   login = function(){
-    // check errors
-    var hasError = (this.emailFormControl.errors ? false : true) && 
-                    (this.passwordFormControl.errors ? false : true);
+    if (this.loginForm.invalid){
+      this.snackBar.open("Não foi possível efetuar o login, favor tentar novamente.", 'Ok', {duration: 3000});
+      return;
+    }
 
-    //if (hasError){
-      const requestUser = {
-        email: this.emailFormControl.value,
-        password: this.passwordFormControl.value,
-      };
-      this.authService.loginUser(requestUser);
-      
-    //}
+    const requestUser = {
+      username: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+    };
+    this.authService.loginUser(requestUser)
+    .subscribe((res) => {
+      console.log(res.msg);
+      this.route.params.subscribe( params => this.token = res.token );
+      this.snackBar.open("Login efetuado com sucesso.", 'Ok', {duration: 3000});
+    },
+    error => {
+      console.log(error.statusText);
+      this.snackBar.open("Não foi possível efetuar login, favor tentar novamente.", 'Ok', {duration: 3000});
+    }
+  );
   }
 }

@@ -17,14 +17,21 @@ export class AuthService {
   }
   
   createUser(userData){
-    return this.http.post(`${this.baseUrl}/users/`, userData)
+    return this.http.post(`${this.baseUrl}/users`, userData)
       .map((res)=> {
         return res.json();
       });
   }
 
   loginUser(userData){
-    return this.http.get(`${this.baseUrl}/users/`)
+    return this.http.post(`${this.baseUrl}/users/signIn`, userData)
+    .map((res)=> {
+      return res.json();
+    });
+  }
+
+  updateUser(userData){
+    return this.http.post(`${this.baseUrl}/users/`, userData, userData.id)
     .map((res)=> {
       return res.json();
     });

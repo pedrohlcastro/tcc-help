@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -9,59 +10,69 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SignUpPageComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
-    this.userTypeFormControl.value = "1";
-   }
+  constructor(private authService: AuthService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
 
-  usernameFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email
-  ]);
-  userTypeFormControl = new FormControl('', [
-    Validators.required,
-  ]);
-  passwordFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-    Validators.maxLength(50)
-  ]);
-  confirmPasswordFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-    Validators.maxLength(50)
-  ]);
+  registerForm = new FormGroup({
+    username: new FormControl('', [
+      Validators.required
+    ]),
+    email: new FormControl('',[
+      Validators.required,
+      Validators.email
+    ]),
+    userType: new FormControl('', [
+      Validators.required,
+    ]),
+    password: new FormControl('',[
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(50)
+    ]),
+    confirmPassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(50)
+    ])
+  }, this.passwordMatchValidator);
 
-  register = function(){
-    // check errors
-    var hasError =  (this.usernameFormControl.errors ? false : true) &&
-                    (this.emailFormControl.errors ? false : true)  && 
-                    (this.passwordFormControl.errors ? false : true) &&
-                    (this.confirmPasswordFormControl.errors ? false : true);
-
-    //if (hasError){
-      const requestUser = {
-        name: this.usernameFormControl.value,
-        email: this.emailFormControl.value,
-        password: this.passwordFormControl.value,
-        type: this.userTypeFormControl.value,
-        validate_professor: 0,
-        profile_image_path: 'path',
-      };
-      this.authService.createUser(requestUser)
-        .subscribe((res) => {
-          console.log(res.msg);
-        },
-        error => {
-          console.log(error.statusText);
-        }
-      );
+  passwordMatchValidator(g: FormGroup) {
+    if (g.get('password').value === g.get('confirmPassword').value){
+      g.get('confirmPassword').setErrors(null);
+      return null;
     }
-  //}
+    else {
+      g.get('confirmPassword').setErrors({MatchPassword: true});
+      return {'MatchPassword': true}
+    }
+  }
+ 
+  register = function(){
+    if (this.registerForm.invalid){
+      this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Ok', {duration: 3000});
+      return;
+    }
+    const requestUser = {
+      name: this.registerForm.value.username,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      type: this.registerForm.value.userType,
+      validate_professor: 0,
+      profile_image_path: 'path',
+    };
+    
+    this.authService.createUser(requestUser)
+      .subscribe((res) => {
+        console.log(res.msg);
+        this.snackBar.open("Usuário cadastrado com sucesso.", 'Ok', {duration: 3000});
+      },
+      error => {
+        console.log(error.statusText);
+        this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Ok', {duration: 3000});
+      }
+    );
+  }
 
 }

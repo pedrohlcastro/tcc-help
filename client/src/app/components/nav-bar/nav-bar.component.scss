@@ -48,6 +48,7 @@
     a{
         cursor: pointer;
         text-decoration: none;
+        color: white;
     }
     #btnmenu{
         font-size: 45px;
@@ -57,19 +58,23 @@
         text-decoration: none;
         position: relative;
         top: 2px;
+        z-index: 2;
         transition: 0.5s;
         &:hover{
             color: $primary-color-ligth;
         }
     }
     .title{
-        cursor: pointer;
+        width: 100%;
+        height: 10%;
+        top: 1%;
+        left: 0px;
+        color: white;
+        position: absolute;
+        bottom: 3px;
+
         text-align: center;
         font-size: 40px;
         font-weight: 100;
-        color: white;
-        margin-left: 40%;
-        position: relative;
-        bottom: 3px;
     }
 }

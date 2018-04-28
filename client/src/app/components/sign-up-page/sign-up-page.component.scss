@@ -1,62 +1,49 @@
 @import '~variables.scss';
 
-
 .card-content{
+	position: relative;
+	padding-top: 50px;
+	
+	.card {
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 400px;
+		height: 450px;
+	}
+
+    button {
         position: absolute;
-        background-color: $primary-color-ligth;
-        padding-top: 30px;
-        width: 100%;
-        height: 85%;
+        margin-left: 10%;
+        background-color: $second-color;
+        right: 7%;
+        color: white;
+
+        i {
+            font-size: 20px;
+        }
+        :hover{
+            color: $second-color-ligth;
+        } 
+	}
+
+	.text {
+        color: $primary-color;
+        text-decoration: none;
+        padding-top: 10px;
         
-        .card {
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 400px;
+        i {
+            margin-right: 2%;
+            position: relative;
+            top: 2px;
+            font-size: 20px;
+			&:hover{
+				color: $primary-color-ligth;
+			}
         }
-
-        mat-card-header {
-                border-bottom: 10px;
-                width: 100%;
-                border-top: 0px;
-                margin-left: auto;
-                margin-right: -25px;
-        }
-
-
-        button {
-                position: relative;
-                margin-left: 10%;
-                width: 300px;
-                background-color: $second-color;
-                padding-bottom: 5px;
-                padding-top: 5px;
-                i {
-                    margin-right: 30px;
-                    position: relative;
-                    top: 2px;
-                    font-size: 20px;
-                }
-                :hover{
-                    color: $second-color-ligth;
-                } 
-        }
-      
-}
-
-
-.example-header-image {
-        background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-        background-size: cover;
-}
-
-
-// form css
-.example-form {
-        min-width: 150px;
-        max-width: 500px;
-        width: 100%;
+    }
 }
 
 .input {
-        width: 100%;
+	padding: 0.5%;
+	width: 100%;
 }
