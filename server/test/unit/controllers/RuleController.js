@@ -66,10 +66,45 @@ describe('Controllers: Rule', () => {
         done(`Catch was called: ${err}`);
       });
   });
-  // it('should update a rule', (done) => {
 
-  // });
-  // it('should delete a rule', (done) => {
+  it('should update a rule', (done) => {
+    const data = {
+      regex: 'NOVO',
+      message: 'Nova Regra',
+    };
+    RuleController.update(data, 1)
+      .then((res) => {
+        expect(res.status).to.be.eql('Success');
+        RuleController.get(1)
+          .then((rule) => {
+            expect(rule.regex).to.be.eql(data.regex);
+            expect(rule.message).to.be.eql(data.message);
+            done();
+          })
+          .catch((err) => {
+            done(`Catch was called: ${err}`);
+          });
+      })
+      .catch((err) => {
+        done(`Catch was called: ${err}`);
+      });
+  });
 
-  // });
+  it('should delete a rule', (done) => {
+    RuleController.delete(1)
+      .then((res) => {
+        expect(res.status).to.be.eql('Success');
+        RuleController.get(1)
+          .then((rule) => {
+            expect(rule).to.be.eql(null);
+            done();
+          })
+          .catch((err) => {
+            done(`Catch was called: ${err}`);
+          });
+      })
+      .catch((err) => {
+        done(`Catch was called: ${err}`);
+      });
+  });
 });

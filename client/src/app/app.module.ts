@@ -2,8 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { UserSignedInGuard } from './guards/user-signed-in-guard';
 
 import { AppRoutingModule } from './app.module.routes';
 import { AppMaterialModule } from './app.module.material';
@@ -16,6 +17,9 @@ import { SignInPageComponent } from './components/sign-in-page/sign-in-page.comp
 import { ManageRulesPageComponent } from './components/manage-rules-page/manage-rules-page.component';
 import { RuleDialogComponent } from './components/rule-dialog/rule-dialog.component';
 
+import { AccountPageComponent } from './components/account-page/account-page.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,10 @@ import { RuleDialogComponent } from './components/rule-dialog/rule-dialog.compon
     SignUpPageComponent,
     SignInPageComponent,
     ManageRulesPageComponent,
-    RuleDialogComponent
+    RuleDialogComponent,
+    AccountPageComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   entryComponents: [
     RuleDialogComponent
@@ -36,10 +43,12 @@ import { RuleDialogComponent } from './components/rule-dialog/rule-dialog.compon
     AppRoutingModule,
     AppMaterialModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,
+    UserSignedInGuard
   ],
   bootstrap: [AppComponent]
 })

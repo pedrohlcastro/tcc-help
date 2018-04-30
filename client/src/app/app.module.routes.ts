@@ -5,12 +5,19 @@ import { SignInPageComponent } from './components/sign-in-page/sign-in-page.comp
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ManageRulesPageComponent } from './components/manage-rules-page/manage-rules-page.component';
+import { AccountPageComponent } from './components/account-page/account-page.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { UserSignedInGuard } from './guards/user-signed-in-guard';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
     { path: 'sign-in', component: SignInPageComponent},
     { path: 'sign-up', component: SignUpPageComponent},
-    { path: 'manage-rules', component: ManageRulesPageComponent}
+    { path: 'manage-rules', component: ManageRulesPageComponent},
+    { path: 'account-page', component: AccountPageComponent, canActivate: [UserSignedInGuard]},
+    { path: 'forgot-password', component: ForgotPasswordComponent},
+    { path: 'reset-password/:token', component: ResetPasswordComponent}
   ];
   
 @NgModule({

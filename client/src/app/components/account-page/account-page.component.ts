@@ -2,30 +2,34 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sign-up-page',
-  templateUrl: './sign-up-page.component.html',
-  styleUrls: ['./sign-up-page.component.scss']
+  selector: 'app-account-page',
+  templateUrl: './account-page.component.html',
+  styleUrls: ['./account-page.component.scss']
 })
-export class SignUpPageComponent implements OnInit {
-
-  constructor(private authService: AuthService, private snackBar: MatSnackBar, private router: Router) { }
+export class AccountPageComponent implements OnInit {
+  constructor(private authService: AuthService, private snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
   }
 
-  registerForm = new FormGroup({
-    username: new FormControl('', [
+  accountForm = new FormGroup({
+    username: new FormControl('Teste', [
       Validators.required
     ]),
-    email: new FormControl('',[
+    email: new FormControl({value: 'teste@teste', disabled: true},[
       Validators.required,
       Validators.email
     ]),
     userType: new FormControl('1', [
       Validators.required,
+    ]),
+    oldPassword: new FormControl('',[
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(50)
     ]),
     password: new FormControl('',[
       Validators.required,
@@ -49,30 +53,28 @@ export class SignUpPageComponent implements OnInit {
       return {'MatchPassword': true}
     }
   }
- 
-  register(){
-    if (this.registerForm.invalid){
-      this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Ok', {duration: 3000});
+  save() {
+    if (this.accountForm.invalid){
+      this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Ok', {duration: 3000});
       return;
     }
     const requestUser = {
-      name: this.registerForm.value.username,
-      email: this.registerForm.value.email,
-      password: this.registerForm.value.password,
-      type: this.registerForm.value.userType,
-      validate_professor: 0,
-      profile_image_path: 'path',
+      id: 2,
+      name: this.accountForm.value.username,
+      email: this.accountForm.value.email,
+      password: this.accountForm.value.password,
+      type: this.accountForm.value.userType
     };
-    this.authService.createUser(requestUser)
+    
+    this.authService.updateUser(requestUser)
       .subscribe((res) => {
         console.log(res.msg);
-        this.snackBar.open("Usuário cadastrado com sucesso.", 'Ok', {duration: 3000});
-        this.router.navigateByUrl('/sign-in');
+        this.snackBar.open("Dados salvos com sucesso.", 'Ok', {duration: 3000});
       },
       error => {
         console.log(error.statusText);
-        this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Ok', {duration: 3000});
-      });
+        this.snackBar.open("Não foi possível salvar os dadso, favor tentar novamente.", 'Ok', {duration: 3000});
+      }
+    );
   }
-
 }

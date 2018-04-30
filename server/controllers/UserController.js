@@ -44,7 +44,11 @@ class UserController {
   create(data) {
     return new Promise((resolve, reject) => {
       this.User.create(data)
-        .then(result => resolve(result))
+        .then((result) => {
+          /* eslint-disable */
+          if (result._options.isNewRecord) { resolve({ msg: 'User created', status: 200 }); } else { reject(new Error('Error running DB query')); }
+          /* eslint-enable */
+        })
         .catch(err => reject(err));
     });
   }
@@ -54,7 +58,9 @@ class UserController {
       this.User.update(data, {
         where: params,
       })
-        .then(result => resolve(result))
+        .then((result) => {
+          if (result) { resolve({ msg: 'User updated', status: 200 }); } else { reject(new Error('Error running DB query')); }
+        })
         .catch(err => reject(err));
     });
   }
@@ -64,7 +70,9 @@ class UserController {
       this.User.destroy({
         where: params,
       })
-        .then(result => resolve(result))
+        .then((result) => {
+          if (result) { resolve({ msg: 'User deleted', status: 200 }); } else { reject(new Error('Error running DB query')); }
+        })
         .catch(err => reject(err));
     });
   }
@@ -115,20 +123,20 @@ class UserController {
               expiresIn: '1d',
             };
 
-            const token = jwt.sign(payload, config.jwtSecret, options);
+            const token = jwt.sign(payload, config.jwtSecretForgotPassword, options);
             const data = {
               to: req.email,
               from: `"${config.project_name}" <${config.email}>`,
               template: 'forgot-password-email',
               subject: 'TCC Help - Recuperação de senha',
               context: {
-                url: `http://localhost:8000/users/reset_password/${token}`,
+                url: `http://localhost:4200/reset-password/${token}`,
                 name: result.name,
               },
             };
 
             this.smtpTransport.sendMail(data)
-              .then(resultST => resolve(resultST))
+              .then(() => resolve({ msg: 'Email sent', status: 200 }))
               .catch(er => reject(er));
           }
         })
@@ -136,20 +144,24 @@ class UserController {
     });
   }
 
-  resetPassword(data, params) {
+  resetPassword(data) {
     return new Promise((resolve, reject) => {
       if (data.password === data.confirmPassword) {
-        const payload = jwt.decode(params.token, config.jwtSecretForgotPassword);
-        const salt = bcrypt.genSaltSync();
-        const encriptedPassword = bcrypt.hashSync(data.password, salt);
-        const user = {
-          password: encriptedPassword,
-        };
-        this.User.update(user, {
-          where: { id: payload.id },
-        })
-          .then(result => resolve(result))
-          .catch(err => reject(err));
+        const payload = jwt.decode(data.token, config.jwtSecretForgotPassword);
+        if (payload) {
+          const salt = bcrypt.genSaltSync();
+          const encriptedPassword = bcrypt.hashSync(data.password, salt);
+          const userPassword = {
+            password: encriptedPassword,
+          };
+          this.User.update(userPassword, {
+            where: { id: payload.id },
+          })
+            .then(() => resolve({ msg: 'Password was changed', status: 200 }))
+            .catch(err => reject(err));
+        } else {
+          reject(new Error('Error'));
+        }
       } else {
         reject(new Error('Password and Confirm Password does not match'));
       }

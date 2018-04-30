@@ -1,13 +1,14 @@
 <div class="nav-bar">
-  <a class="closebtn" (click)="changeNavBar(false)"matTooltip="Fechar Menu" matTooltipPosition="above">&times;</a>
+  <a class="closebtn" (click)="changeNavBar(false)" matTooltip="Fechar Menu" matTooltipPosition="above">&times;</a>
 
-  <a [routerLink]="['sign-in']"><i class="material-icons">vpn_key</i>Login</a>
-  <a [routerLink]="['sign-up']"><i class="material-icons">input</i>Cadastro</a>
+  <a [routerLink]="['sign-in']" *ngIf="!isAuthenticated"><i class="material-icons">vpn_key</i>Login</a>
+  <a [routerLink]="['sign-up']" *ngIf="!isAuthenticated"><i class="material-icons">input</i>Cadastro</a>
+  <a (click)="signOut()" *ngIf="isAuthenticated"><i class="material-icons">input</i>Sair</a>
 </div>
 
 <div class="top-header">
   <a (click)="changeNavBar(true)" matTooltip="Abrir Menu" matTooltipPosition="right">
-    <i class="material-icons" id="btnmenu">menu</i>
+    <i class="material-icons" id="btnmenu" [hidden]="navBarOpen">menu</i>
   </a>
-  <span [routerLink]="['/']" class="title">TCC Help</span>
+  <span class="title"><a [routerLink]="['/']">TCC Help</a></span>
 </div>

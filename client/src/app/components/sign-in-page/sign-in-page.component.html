@@ -1,5 +1,43 @@
-<p>
-  sign-in-page works!
+<div class="card-content">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
 
-  Essa é a reposta: {{responseFromServer}}
-</p>
+
+    <mat-card-content>
+        <form class="login-form" [formGroup]="loginForm">
+            
+          <mat-form-field class="input">
+              <input matInput placeholder="Email" formControlName="email" required>
+              <mat-error *ngIf="loginForm.get('email').hasError('email') && !loginForm.get('email').hasError('required')">
+                Insira um e-mail válido
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                Digite um e-mail
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="input">
+            <input matInput type="password" placeholder="Password" formControlName="password" required>
+            <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                Digite sua senha
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('password').hasError('minlength')">
+                A senha precisa ter mais de 6 caracteres 
+            </mat-error>
+          </mat-form-field>
+          <!--  
+          <mat-checkbox>Keep me in</mat-checkbox>
+          -->
+          <br/><br/><a [routerLink]="['/forgot-password']" class="text"><i class="material-icons"></i>Esqueceu sua senha?</a>
+          <br/><br/><a [routerLink]="['/sign-up']" class="text"><i class="material-icons">input</i>Criar conta</a>
+          <button mat-button (click)="login()">LOGIN</button>
+
+        </form>
+
+
+      </mat-card-content>
+    
+  </mat-card>
+</div>
