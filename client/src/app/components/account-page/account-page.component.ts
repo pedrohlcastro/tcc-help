@@ -9,21 +9,36 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./account-page.component.scss']
 })
 export class AccountPageComponent implements OnInit {
+  user;
   constructor(private authService: AuthService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
+    this.authService.getUserFromToken()
+      .subscribe((res) => {
+        this.user = res;
+        this.accountForm.patchValue({
+          username: res.name,
+          email: res.email,
+          userType: res.type
+        });
+      },
+      error => {
+        console.log(error.statusText);
+        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Ok', {duration: 3000});
+      }
+    );
   }
-
+  
   accountForm = new FormGroup({
-    username: new FormControl('Teste', [
+    username: new FormControl('', [
       Validators.required
     ]),
-    email: new FormControl({value: 'teste@teste', disabled: true},[
+    email: new FormControl({value: '', disabled: true},[
       Validators.required,
       Validators.email
     ]),
-    userType: new FormControl('1', [
+    userType: new FormControl('', [
       Validators.required,
     ]),
     oldPassword: new FormControl('',[

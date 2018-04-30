@@ -89,6 +89,15 @@ export class AuthService {
     });
   }
 
+  getUserFromToken(){
+    const options = this.addAuthHeader(true);
+
+    return this.http.get(`${this.baseUrl}/users/get_user`, options)
+    .map((res)=> {
+      return res.json();
+    });
+  }
+
   // logout method
   logout(): void {
     // clear token remove user from local storage to log user out
