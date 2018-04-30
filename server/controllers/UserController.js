@@ -43,22 +43,37 @@ class UserController {
 
   create(data) {
     return new Promise((resolve, reject) => {
-      this.User.create(data)
-        .then((result) => {
-          /* eslint-disable */
-          if (result._options.isNewRecord) { resolve({ msg: 'User created', status: 200 }); } else { reject(new Error('Error running DB query')); }
-          /* eslint-enable */
-        })
-        .catch(err => reject(err));
+      this.User.findOne({ where: { email: data.email } })
+        .then((user) => {
+          if (user) { reject(new Error('E-mail already exists!')); } else {
+            this.User.create(data)
+              .then((result) => {
+              /* eslint-disable */
+              if (result._options.isNewRecord) { resolve({ msg: 'User created', status: 200 }); } else { reject(new Error('Error running DB query')); }
+              /* eslint-enable */
+              }).catch(err => reject(err));
+          }
+        }).catch(err => reject(err));
     });
   }
 
   update(data, params) {
+    let newData = data;
+    
     return new Promise((resolve, reject) => {
-      this.User.update(data, {
+      if (newData.password === newData.confirmPassword) {
+        const salt = bcrypt.genSaltSync();
+        const encriptedPassword = bcrypt.hashSync(newData.password, salt);
+        newData.password = encriptedPassword;
+        newData.confirmPassword = encriptedPassword;
+      } else {
+        reject(new Error('Password and Confirm Password does not match'));
+      }
+
+      this.User.update(newData, {
         where: params,
       })
-        .then((result) => {
+        .then((result) => { 
           if (result) { resolve({ msg: 'User updated', status: 200 }); } else { reject(new Error('Error running DB query')); }
         })
         .catch(err => reject(err));

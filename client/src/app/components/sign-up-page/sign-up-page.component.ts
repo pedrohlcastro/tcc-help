@@ -52,26 +52,29 @@ export class SignUpPageComponent implements OnInit {
  
   register(){
     if (this.registerForm.invalid){
-      this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Ok', {duration: 3000});
+      this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Fechar', {duration: 3000});
       return;
     }
     const requestUser = {
-      name: this.registerForm.value.username,
-      email: this.registerForm.value.email,
-      password: this.registerForm.value.password,
-      type: this.registerForm.value.userType,
+      name: this.registerForm.get('username').value,
+      email: this.registerForm.get('email').value,
+      password: this.registerForm.get('password').value,
+      type: this.registerForm.get('userType').value,
       validate_professor: 0,
       profile_image_path: 'path',
     };
     this.authService.createUser(requestUser)
       .subscribe((res) => {
         console.log(res.msg);
-        this.snackBar.open("Usuário cadastrado com sucesso.", 'Ok', {duration: 3000});
+        this.snackBar.open("Usuário cadastrado com sucesso.", 'Fechar', {duration: 3000});
         this.router.navigateByUrl('/sign-in');
       },
       error => {
         console.log(error.statusText);
-        this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Ok', {duration: 3000});
+        if (error._body.includes("already exists"))
+          this.snackBar.open("O e-mail já existe, favor inserir um diferente.", 'Fechar', {duration: 3000});
+        else
+          this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Fechar', {duration: 3000});
       });
   }
 

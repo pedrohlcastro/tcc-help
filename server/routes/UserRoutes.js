@@ -26,7 +26,7 @@ router.get('/', passport.authenticate('BasicBearer', { session: false }), (req, 
 router.post('/', ((req, res, next) => {
   UserController.create(req.body)
     .then(result => res.json(result))
-    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+    .catch(err => next({ err, msg: err.message, status: 500 }));
 }));
 
 router.put('/:id', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
@@ -71,15 +71,14 @@ router.route('/reset_password/')
 
 router.get('/get_user', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
   passport.authenticate('BasicBearer', { session: false }, (error, user) => {
-    UserController.getById({id: user.id})
+    UserController.getById({ id: user.id })
       .then(result => res.json(result))
       .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
   })(req, res, next);
 });
 
 
-
-//DANGER
+// DANGER
 router.get('/:id', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
   UserController.getById(req.params)
     .then(result => res.json(result))
