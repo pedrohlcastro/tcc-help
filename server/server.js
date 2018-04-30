@@ -10,6 +10,7 @@ import configEnv from './config/configEnv';
 import UserRoutes from './routes/UserRoutes';
 import configBearerStrategy from './config/auth/passportBearerConfig';
 import configPassportLocalStrategy from './config/auth/passportLocalConfig';
+import RuleRoutes from './routes/RuleRoutes';
 
 const ENV = process.env.NODE_ENV;
 
@@ -54,6 +55,7 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/users', UserRoutes);
+app.use('/rules', RuleRoutes);
 
 
 // Call Angular
