@@ -2,29 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material';
 
 import { RuleDialogComponent } from '../rule-dialog/rule-dialog.component';
+import { RuleService } from '../../services/rule.service';
+import { MatSnackBar } from '@angular/material';
+
 @Component({
   selector: 'app-manage-rules-page',
   templateUrl: './manage-rules-page.component.html',
   styleUrls: ['./manage-rules-page.component.scss']
 })
 export class ManageRulesPageComponent implements OnInit {
-  rules = [
-    {
-      regex: 'Regex 1',
-      message:'Ai você fala o seguinte: "- Mas vocês acabaram isso?" Vou te falar: -"Não, está em andamento!" Tem obras que "vai" durar pra depois de 2010. Agora, por isso, nós já não desenhamos, não começamos a fazer projeto do que nós "podêmo fazê"? 11, 12, 13, 14... Por que é que não?'
-    },
-    {
-      regex: 'Regex 1',
-      message:'Se hoje é o dia das crianças... Ontem eu disse: o dia da criança é o dia da mãe, dos pais, das professoras, mas também é o dia dos animais, sempre que você olha uma criança, há sempre uma figura oculta, que é um cachorro atrás. O que é algo muito importante?'
-    }
-
-  ]
+  rules = [];
   filteredRules;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private ruleService: RuleService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.filteredRules = Object.assign([], this.rules);;
+    
+    this.ruleService.getRules()
+      .subscribe((res) => {
+        this.rules = res;
+        this.filteredRules = Object.assign([], this.rules);
+      });
   }
 
   create() {
@@ -33,7 +31,16 @@ export class ManageRulesPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      if(result) {
+        this.ruleService.createRule(result)
+          .subscribe((res) => {
+            this.snackBar.open("Regra criada com sucesso.", 'Fechar', {duration: 5000});
+            this.rules.push(res);
+            this.filteredRules = Object.assign([], this.rules);
+          }, (err) => {
+            this.snackBar.open("Não foi possível criar regra, favor tentar novamente.", 'Fechar', {duration: 5000});
+          });
+      }
     });
   }
 
@@ -45,12 +52,39 @@ export class ManageRulesPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      if(result) {
+        this.ruleService.updateRule(result, item.id)
+          .subscribe((res) => {
+            this.rules[index].regex = result.regex;
+            this.rules[index].message = result.message;
+            this.filteredRules = Object.assign([], this.rules);
+            this.snackBar.open("Regra atualizada com sucesso.", 'Fechar', {duration: 5000});
+          }, (err) => {
+            this.snackBar.open("Não foi possível atualizar regra, favor tentar novamente.", 'Fechar', {duration: 5000});
+          })
+      }
     });
   }
 
   remove(index){
-    console.log(index);
+    let item = this.rules[index];
+    let dialogRef = this.dialog.open(RuleDialogComponent, {
+      width: '75%',
+      data: {warning: 'Tem certeza que deseja deletar essa regra?', regex: item.regex, message: item.message},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.ruleService.deleteRule(item.id)
+          .subscribe((res) => {
+            this.rules.splice(index, 1);
+            this.filteredRules = Object.assign([], this.rules);
+            this.snackBar.open("Regra Removida com sucesso.", 'Fechar', {duration: 5000});
+          }, (err) => {
+            this.snackBar.open("Não foi possível remover regra, favor tentar novamente.", 'Fechar', {duration: 5000});
+          });
+      }
+    });
   }
 
   filterItem(value){

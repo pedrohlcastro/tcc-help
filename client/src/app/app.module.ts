@@ -20,6 +20,7 @@ import { RuleDialogComponent } from './components/rule-dialog/rule-dialog.compon
 import { AccountPageComponent } from './components/account-page/account-page.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { RuleService } from './services/rule.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
   ],
   providers: [
     AuthService,
+    RuleService,
     UserSignedInGuard
   ],
   bootstrap: [AppComponent]

@@ -14,7 +14,7 @@ const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
     { path: 'sign-in', component: SignInPageComponent},
     { path: 'sign-up', component: SignUpPageComponent},
-    { path: 'manage-rules', component: ManageRulesPageComponent},
+    { path: 'manage-rules', component: ManageRulesPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'account-page', component: AccountPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'forgot-password', component: ForgotPasswordComponent},
     { path: 'reset-password/:token', component: ResetPasswordComponent}

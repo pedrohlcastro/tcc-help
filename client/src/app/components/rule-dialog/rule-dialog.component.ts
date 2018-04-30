@@ -18,9 +18,13 @@ export class RuleDialogComponent implements OnInit {
     if (dataReceive) {
       this.rule.regex = dataReceive.regex;
       this.rule.message = dataReceive.message;
+      if(dataReceive.warning){
+        this.warning = dataReceive.warning;
+      }
     }
   }
 
+  warning;
   rule = {
     regex: '',
     message: ''
@@ -34,16 +38,21 @@ export class RuleDialogComponent implements OnInit {
   }
 
   confirm(value){
-    if(value){
-      if(value.regex && value.message){
-        this.dialogRef.close(value);
+    if(!this.warning){
+      if(value){
+        if(value.regex && value.message){
+          this.dialogRef.close(value);
+        }
+        else{
+          this.snackBar.open('Os dois campos são obrigatórios', 'Fechar', {
+            duration: 7000
+          });
+        }
       }
-      else{
-        this.snackBar.open('Os dois campos são obrigatórios', 'Fechar', {
-          duration: 7000
-        });
-      }
+    } else {
+      this.dialogRef.close(true);
     }
+    
   }
 
 }
