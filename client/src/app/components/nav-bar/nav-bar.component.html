@@ -1,8 +1,9 @@
 <div class="nav-bar">
   <a class="closebtn" (click)="changeNavBar(false)"matTooltip="Fechar Menu" matTooltipPosition="above">&times;</a>
 
-  <a [routerLink]="['sign-in']"><i class="material-icons">vpn_key</i>Login</a>
-  <a [routerLink]="['sign-up']"><i class="material-icons">input</i>Cadastro</a>
+  <a [routerLink]="['sign-in']" *ngIf="!isAuthenticated"><i class="material-icons">vpn_key</i>Login</a>
+  <a [routerLink]="['sign-up']" *ngIf="!isAuthenticated"><i class="material-icons">input</i>Cadastro</a>
+  <a (click)="signOut()" *ngIf="isAuthenticated"><i class="material-icons">input</i>Sair</a>
 </div>
 
 <div class="top-header">

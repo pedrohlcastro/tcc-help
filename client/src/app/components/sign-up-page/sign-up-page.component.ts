@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -10,7 +11,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class SignUpPageComponent implements OnInit {
 
-  constructor(private authService: AuthService, private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
   }
@@ -23,7 +24,7 @@ export class SignUpPageComponent implements OnInit {
       Validators.required,
       Validators.email
     ]),
-    userType: new FormControl('', [
+    userType: new FormControl('1', [
       Validators.required,
     ]),
     password: new FormControl('',[
@@ -49,7 +50,7 @@ export class SignUpPageComponent implements OnInit {
     }
   }
  
-  register = function(){
+  register(){
     if (this.registerForm.invalid){
       this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Ok', {duration: 3000});
       return;
@@ -62,17 +63,16 @@ export class SignUpPageComponent implements OnInit {
       validate_professor: 0,
       profile_image_path: 'path',
     };
-    
     this.authService.createUser(requestUser)
       .subscribe((res) => {
         console.log(res.msg);
         this.snackBar.open("Usuário cadastrado com sucesso.", 'Ok', {duration: 3000});
+        this.router.navigateByUrl('/sign-in');
       },
       error => {
         console.log(error.statusText);
         this.snackBar.open("Não foi possível efetuar cadastro, favor tentar novamente.", 'Ok', {duration: 3000});
-      }
-    );
+      });
   }
 
 }

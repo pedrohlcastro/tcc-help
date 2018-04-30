@@ -4,6 +4,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { UserSignedInGuard } from './guards/user-signed-in-guard';
+
 import { AppRoutingModule } from './app.module.routes';
 import { AppMaterialModule } from './app.module.material';
 import { AppComponent } from './app.component';
@@ -38,6 +40,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
   ],
   providers: [
     AuthService,
+    UserSignedInGuard
   ],
   bootstrap: [AppComponent]
 })

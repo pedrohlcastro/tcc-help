@@ -4,6 +4,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppPage } from '../../../../e2e/app.po';
 import { ActivatedRoute } from "@angular/router";
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-sign-in-page',
@@ -14,7 +16,12 @@ import { MatSnackBar } from '@angular/material';
 export class SignInPageComponent implements OnInit {
   responseFromServer;
   token;
-  constructor(private route: ActivatedRoute, private authService:AuthService, private snackBar: MatSnackBar) { }
+  constructor(
+    private route: ActivatedRoute,
+    private authService:AuthService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -32,7 +39,7 @@ export class SignInPageComponent implements OnInit {
   });
 
   
-  login = function(){
+  login(){
     if (this.loginForm.invalid){
       this.snackBar.open("Não foi possível efetuar o login, favor tentar novamente.", 'Ok', {duration: 3000});
       return;
@@ -43,15 +50,14 @@ export class SignInPageComponent implements OnInit {
       password: this.loginForm.value.password,
     };
     this.authService.loginUser(requestUser)
-    .subscribe((res) => {
-      console.log(res.msg);
-      this.route.params.subscribe( params => this.token = res.token );
-      this.snackBar.open("Login efetuado com sucesso.", 'Ok', {duration: 3000});
-    },
-    error => {
-      console.log(error.statusText);
-      this.snackBar.open("Não foi possível efetuar login, favor tentar novamente.", 'Ok', {duration: 3000});
-    }
-  );
+      .subscribe((res) => {
+        console.log(res.msg);
+        this.snackBar.open("Login efetuado com sucesso.", 'Ok', {duration: 3000});
+        this.router.navigateByUrl('/account-page');
+      },
+      error => {
+        console.log(error.statusText);
+        this.snackBar.open("Não foi possível efetuar login, favor tentar novamente.", 'Ok', {duration: 3000});
+      });
   }
 }
