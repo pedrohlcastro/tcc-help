@@ -25,7 +25,9 @@ describe('Controllers: Rule', () => {
       await RuleController.Rule.create(defaultRule);
       // done();
     } catch (err) {
+      /*eslint-disable */
       console.log(err);
+      /* eslint-enable */
     }
   });
 
