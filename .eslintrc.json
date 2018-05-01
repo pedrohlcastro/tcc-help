@@ -14,6 +14,8 @@
       "app": true,
       "td": true,
       "beforeEach": true,
-      "request": true
+      "request": true,
+      "done": true,
+      "before": true
     }
   }
