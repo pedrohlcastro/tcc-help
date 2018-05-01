@@ -41,7 +41,7 @@ export class SignInPageComponent implements OnInit {
   
   login(){
     if (this.loginForm.invalid){
-      this.snackBar.open("Não foi possível efetuar o login, favor tentar novamente.", 'Ok', {duration: 3000});
+      this.snackBar.open("Não foi possível efetuar o login, favor tentar novamente.", 'Fechar', {duration: 3000});
       return;
     }
 
@@ -52,12 +52,12 @@ export class SignInPageComponent implements OnInit {
     this.authService.loginUser(requestUser)
       .subscribe((res) => {
         console.log(res.msg);
-        this.snackBar.open("Login efetuado com sucesso.", 'Ok', {duration: 3000});
+        this.snackBar.open("Login efetuado com sucesso.", 'Fechar', {duration: 3000});
         this.router.navigateByUrl('/account-page');
       },
       error => {
         console.log(error.statusText);
-        this.snackBar.open("Não foi possível efetuar login, favor tentar novamente.", 'Ok', {duration: 3000});
+        this.snackBar.open("Não foi possível efetuar login, favor tentar novamente.", 'Fechar', {duration: 3000});
       });
   }
 }

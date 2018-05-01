@@ -59,11 +59,11 @@ export class ResetPasswordComponent implements OnInit {
     this.authService.resetPassword(requestUser)
       .subscribe((res) => {
         console.log(res.msg);
-        this.snackBar.open("Senha recuperada com sucesso.", 'Ok', {duration: 3000});
+        this.snackBar.open("Senha recuperada com sucesso.", 'Fechar', {duration: 3000});
       },
       error => {
         console.log(error.statusText);
-        this.snackBar.open("Não foi possível recuperar a senha, favor tentar novamente.", 'Ok', {duration: 3000});
+        this.snackBar.open("Não foi possível recuperar a senha, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
   }

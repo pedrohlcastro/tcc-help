@@ -30,11 +30,11 @@ export class ForgotPasswordComponent implements OnInit {
     this.authService.forgotPassword(userEmail)
       .subscribe((res) => {
         console.log(res.msg);
-        this.snackBar.open("O link de recuperação foi enviado para seu e-mail.", 'Ok', {duration: 3000});
+        this.snackBar.open("O link de recuperação foi enviado para seu e-mail.", 'FecharOk', {duration: 3000});
       },
       error => {
         console.log(error.statusText);
-        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Ok', {duration: 3000});
+        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
   }

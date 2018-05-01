@@ -65,11 +65,9 @@ export class AuthService {
       });
   }
   
-  // PQP OQ É ISSO?
   updateUser(userData){
-    const options = this.addAuthHeader(true); //tem que adicionar isso aqui.... mas que porra ta aqui?
-
-    return this.http.post(`${this.baseUrl}/users/`, userData, userData.id)
+    const options = this.addAuthHeader(true);
+    return this.http.put(`${this.baseUrl}/users/${userData.id}`, userData, options)
     .map((res)=> {
       return res.json();
     });
@@ -84,6 +82,15 @@ export class AuthService {
 
   resetPassword(userData){
     return this.http.post(`${this.baseUrl}/users/reset_password`, userData)
+    .map((res)=> {
+      return res.json();
+    });
+  }
+
+  getUserFromToken(){
+    const options = this.addAuthHeader(true);
+
+    return this.http.get(`${this.baseUrl}/users/get_user`, options)
     .map((res)=> {
       return res.json();
     });
