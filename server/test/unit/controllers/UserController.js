@@ -1,5 +1,7 @@
+import jwt from 'jsonwebtoken';
 import RuleController from '../../../controllers/RuleController';
 import UserController from '../../../controllers/UserController';
+import config from '../../../config/config.json';
 
 describe('Controller: User', () => {
   const defaultUser = {
@@ -15,7 +17,7 @@ describe('Controller: User', () => {
     try {
       await RuleController.Rule.destroy({ where: {} });
       await UserController.User.destroy({ where: {} });
-      await UserController.User.create(defaultUser);
+      //await UserController.User.create(defaultUser);
       // done();
     } catch (err) {
       /*eslint-disable */
@@ -24,7 +26,7 @@ describe('Controller: User', () => {
     }
   });
 
-  it('should create a user', () => {
+  it('should create a user', (done) => {
     UserController.create(defaultUser)
       .then((response) => {
         expect(response.status).to.be.eql(200);
@@ -35,10 +37,10 @@ describe('Controller: User', () => {
       });
   });
 
-  it('should return a list of users', () => {
+  it('should return a list of users', (done) => {
     UserController.getAll()
       .then((response) => {
-        expect(response.status).to.be.eql(2);
+        expect(response.length).to.be.eql(1);
         done();
       })
       .catch((err) => {
@@ -46,10 +48,12 @@ describe('Controller: User', () => {
       });
   });
 
-  it('should return a user', () => {
+  it('should return a user', (done) => {
     UserController.getById({ id: 1 })
       .then((response) => {
-        expect(response).to.be.eql(defaultUser);
+        expect(response.name).to.be.eql(defaultUser.name);
+        expect(response.email).to.be.eql(defaultUser.email);
+        expect(response.type).to.be.eql(defaultUser.type);
         done();
       })
       .catch((err) => {
@@ -57,24 +61,17 @@ describe('Controller: User', () => {
       });
   });
 
-  it('should update a user', () => {
-    UserController.update(defaultUser, { id: 1 })
-      .then((response) => {
-        expect(response.status).to.be.eql(200);
-        done();
-      })
-      .catch((err) => {
-        done(`Catch was called: ${err}`);
-      });
-  });
+  let updatedUser = {
+    name: 'Update user'
+  }
 
-  it('should delete a user', () => {
-    UserController.delete({ id: 2 })
+  it('should update a user', (done) => {
+    UserController.update(updatedUser, { id: 1 })
       .then((response) => {
         expect(response.status).to.be.eql(200);
-        UserController.getById({id: 2})
-          .then((user) => {
-            expect(user).to.be.eql(null);
+        UserController.getById({ id: 1 })
+          .then((res) => {
+            expect(res.name).to.be.eql(updatedUser.name);
             done();
           })
           .catch((err) => {
@@ -86,7 +83,7 @@ describe('Controller: User', () => {
       });
   });
 
-  it('should return a token', () => {
+  it('should return a token', (done) => {
     UserController.signIn(null, defaultUser, null)
       .then((response) => {
         expect(response.result).to.be.eql('Success');
@@ -97,7 +94,7 @@ describe('Controller: User', () => {
       });
   });
 
-  it('should check the token', () => {
+  it('should check the token', (done) => {
     UserController.checkToken(defaultUser)
       .then((response) => {
         expect(response.result).to.be.eql('Success');
@@ -108,8 +105,33 @@ describe('Controller: User', () => {
       });
   });
 
-/*it('should send an email', () => {
-    UserController.forgotPassword(defaultUser)
+  // it('should send an email', (done) => {
+  //   UserController.forgotPassword(defaultUser)
+  //     .then(async (response) => {
+  //       await expect(response.status).to.be.eql(200);
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       done(`Catch was called: ${err}`);
+  //     });
+  // });
+
+  const payload = {
+    id: defaultUser.id,
+  };
+  const options = {
+    expiresIn: '1d',
+  };
+
+  const token = jwt.sign(payload, config.jwtSecretForgotPassword, options);
+
+  it('should reset the password', (done) => {
+    let data = {
+      password: '654321',
+      confirmPassword: '654321',
+      token: token,
+    }
+    UserController.resetPassword(data)
       .then((response) => {
         expect(response.status).to.be.eql(200);
         done();
@@ -117,17 +139,20 @@ describe('Controller: User', () => {
       .catch((err) => {
         done(`Catch was called: ${err}`);
       });
-  });*/
+  });
 
-  it('should reset the password', () => {
-    let data = {
-      password: '654321',
-      confirmPassword: '654321'
-    }
-    UserController.forgotPassword(data)
+  it('should delete a user', (done) => {
+    UserController.delete({ id: 1 })
       .then((response) => {
         expect(response.status).to.be.eql(200);
-        done();
+        UserController.getById({id: 1})
+          .then((user) => {
+            expect(user).to.be.eql(null);
+            done();
+          })
+          .catch((err) => {
+            done(`Catch was called: ${err}`);
+          });
       })
       .catch((err) => {
         done(`Catch was called: ${err}`);

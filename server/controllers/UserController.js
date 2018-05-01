@@ -61,13 +61,15 @@ class UserController {
     let newData = data;
     
     return new Promise((resolve, reject) => {
-      if (newData.password === newData.confirmPassword) {
-        const salt = bcrypt.genSaltSync();
-        const encriptedPassword = bcrypt.hashSync(newData.password, salt);
-        newData.password = encriptedPassword;
-        newData.confirmPassword = encriptedPassword;
-      } else {
-        reject(new Error('Password and Confirm Password does not match'));
+      if(data.password){
+        if (newData.password === newData.confirmPassword) {
+          const salt = bcrypt.genSaltSync();
+          const encriptedPassword = bcrypt.hashSync(newData.password, salt);
+          newData.password = encriptedPassword;
+          newData.confirmPassword = encriptedPassword;
+        } else {
+          reject(new Error('Password and Confirm Password does not match'));
+        }
       }
 
       this.User.update(newData, {
@@ -175,7 +177,7 @@ class UserController {
             .then(() => resolve({ msg: 'Password was changed', status: 200 }))
             .catch(err => reject(err));
         } else {
-          reject(new Error('Error'));
+          reject(new Error('Token error'));
         }
       } else {
         reject(new Error('Password and Confirm Password does not match'));
