@@ -1,0 +1,24 @@
+<div class="fullwidth">
+  <br><br>
+  <span class="title">Help</span>
+  <br><br>
+  <mat-form-field class="search-input">
+    <input #myInput type="text" matInput placeholder="Buscar" (input)="filterItem(myInput.value)">
+    <i class="material-icons" matSuffix>search</i>
+  </mat-form-field>
+
+  <div *ngFor="let help of filteredHelps; let i = index;">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+        <mat-panel-title>
+        {{help.nome}}
+        </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{help.descricao}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+</div>

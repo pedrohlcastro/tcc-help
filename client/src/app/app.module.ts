@@ -26,6 +26,7 @@ import { ForumDialogComponent } from './components/forum-dialog/forum-dialog.com
 import { ForumService } from './services/forum.service';
 import { TopicPageComponent } from './components/topic-page/topic-page.component';
 
+import { HelpPageComponent } from './components/help-page/help-page.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TopicPageComponent } from './components/topic-page/topic-page.component
     ResetPasswordComponent,
     ForumPageComponent,
     ForumDialogComponent,
-    TopicPageComponent
+    TopicPageComponent,
+    HelpPageComponent
   ],
   entryComponents: [
     RuleDialogComponent,

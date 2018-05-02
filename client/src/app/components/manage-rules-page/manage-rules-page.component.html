@@ -7,7 +7,7 @@
           <i class="material-icons" matSuffix>search</i>
         </mat-form-field>
       </div>
-      <div class="col-xl-4">
+      <div class="col-xl-4 col-lg-4">
         <button mat-raised-button class="create-btn" color="primary" (click)="create()">
           <i class="material-icons">add</i> Criar Regra
         </button>
@@ -16,7 +16,7 @@
   </div>
   <div class="rules">
     <div class="row" >
-      <div class="col-xl-3" *ngFor="let rule of filteredRules; let i = index;">
+      <div class="col-xl-4 col-lg-4" *ngFor="let rule of filteredRules; let i = index;">
         <mat-card>
           <mat-card-header>
             <div mat-card-avatar class="avatar"></div>
