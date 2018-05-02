@@ -13,25 +13,16 @@ import { ForumDialogComponent } from '../forum-dialog/forum-dialog.component';
   styleUrls: ['./forum-page.component.scss']
 })
 export class ForumPageComponent implements OnInit {
-  topics = [{
-      title: 'titulo',
-      comment: 'cometarip2',
-      date: 'data',
-      id: 1
-  }, {
-    title: 'titulo2',
-    comment: 'cometarip2',
-    date: 'data2',
-    id: 2
-}];
-
+  topics = [];
+  filteredRules;
   constructor(private snackBar: MatSnackBar, private forumService:ForumService, public dialog: MatDialog,) { }
   
   ngOnInit() {
-    //   this.forumService.getTopic()
-    //     .subscribe((res) => {
-    //         this.topics = res;
-    //     });
+    this.forumService.getTopic()
+      .subscribe((res) => {
+        this.topics = res;
+        this.filteredRules = Object.assign([], this.topics);
+      });
   }
 
   createNewTopic(){
@@ -40,11 +31,11 @@ export class ForumPageComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
         if(result){
             this.forumService.createTopic(result)
                 .subscribe((res) => {
                     this.topics.push(res);
+                    this.filteredRules = Object.assign([], this.topics);
                 })
         } 
     });
@@ -53,6 +44,16 @@ export class ForumPageComponent implements OnInit {
   accessTopic(index){
     const item = this.topics[index];
     
+  }
+
+  filterItem(value){
+    if(!value)
+      this.filteredRules = this.topics;
+    else {
+      this.filteredRules = Object.assign([], this.topics).filter(
+        item => item.title.toLowerCase().indexOf(value.toLowerCase()) > -1
+      )
+    }
   }
 
 }
