@@ -1,0 +1,33 @@
+<h2>Fórum</h2>
+<section class="container">
+    <div class="row header-bar">
+        <div class="col-xl-8 col-lg-8">
+            <mat-form-field class="search-input">
+                <input #myInput type="text" matInput placeholder="Buscar" (input)="filterItem(myInput.value)">
+                <i class="material-icons" matSuffix>search</i>
+            </mat-form-field>
+        </div>
+        <div class="col-xl-4 col-lg-4">
+            <button mat-raised-button class="create-btn" color="primary" (click)="createNewTopic()">
+                <i class="material-icons">add</i> Criar Tópico
+            </button>
+        </div>
+    </div>
+</section>
+<section class="container" *ngFor="let topic of topics; let i = index;">
+    <mat-card class="fullwidth-card" >
+        <div class="row">
+            <div class="col-lg-4 title">
+                {{topic.title}}
+            </div>
+            <div class="col-lg-5 date">
+                {{topic.date}}
+            </div>
+            <div class="col-lg-3 buttons">
+                <button mat-raised-button (click)="accessTopic(i)">
+                    Acessar    <i class="material-icons">send</i>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</section>

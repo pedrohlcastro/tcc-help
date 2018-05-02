@@ -21,6 +21,11 @@ import { AccountPageComponent } from './components/account-page/account-page.com
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { RuleService } from './services/rule.service';
+import { ForumPageComponent } from './components/forum-page/forum-page.component';
+import { ForumDialogComponent } from './components/forum-dialog/forum-dialog.component';
+import { ForumService } from './services/forum.service';
+import { TopicPageComponent } from './components/topic-page/topic-page.component';
+
 
 @NgModule({
   declarations: [
@@ -33,10 +38,14 @@ import { RuleService } from './services/rule.service';
     RuleDialogComponent,
     AccountPageComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ForumPageComponent,
+    ForumDialogComponent,
+    TopicPageComponent
   ],
   entryComponents: [
-    RuleDialogComponent
+    RuleDialogComponent,
+    ForumDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +59,7 @@ import { RuleService } from './services/rule.service';
   providers: [
     AuthService,
     RuleService,
+    ForumService,
     UserSignedInGuard
   ],
   bootstrap: [AppComponent]
