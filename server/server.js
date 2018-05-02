@@ -11,6 +11,8 @@ import UserRoutes from './routes/UserRoutes';
 import configBearerStrategy from './config/auth/passportBearerConfig';
 import configPassportLocalStrategy from './config/auth/passportLocalConfig';
 import RuleRoutes from './routes/RuleRoutes';
+import TopicRoutes from './routes/TopicRoutes';
+import ReplyRoutes from './routes/ReplyRoutes';
 
 const ENV = process.env.NODE_ENV;
 
@@ -56,6 +58,8 @@ app.get('/api', (req, res) => {
 
 app.use('/users', UserRoutes);
 app.use('/rules', RuleRoutes);
+app.use('/topic', TopicRoutes);
+app.use('/reply', ReplyRoutes);
 
 
 // Call Angular
