@@ -58,10 +58,10 @@ class UserController {
   }
 
   update(data, params) {
-    let newData = data;
-    
+    const newData = data;
+
     return new Promise((resolve, reject) => {
-      if(data.password){
+      if (data.password) {
         if (newData.password === newData.confirmPassword) {
           const salt = bcrypt.genSaltSync();
           const encriptedPassword = bcrypt.hashSync(newData.password, salt);
@@ -75,7 +75,7 @@ class UserController {
       this.User.update(newData, {
         where: params,
       })
-        .then((result) => { 
+        .then((result) => {
           if (result) { resolve({ msg: 'User updated', status: 200 }); } else { reject(new Error('Error running DB query')); }
         })
         .catch(err => reject(err));

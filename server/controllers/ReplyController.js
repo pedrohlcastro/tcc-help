@@ -18,7 +18,7 @@ class ReplyController {
   get(params) {
     return new Promise((resolve, reject) => {
       if (params) {
-        this.Reply.findOne({ where: params })
+        this.Reply.findAll({ where: params })
           .then(res => resolve(res))
           .catch(err => reject(err));
       } else {

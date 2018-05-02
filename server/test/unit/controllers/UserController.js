@@ -17,7 +17,7 @@ describe('Controller: User', () => {
     try {
       await RuleController.Rule.destroy({ where: {} });
       await UserController.User.destroy({ where: {} });
-      //await UserController.User.create(defaultUser);
+      // await UserController.User.create(defaultUser);
       // done();
     } catch (err) {
       /*eslint-disable */
@@ -61,9 +61,9 @@ describe('Controller: User', () => {
       });
   });
 
-  let updatedUser = {
-    name: 'Update user'
-  }
+  const updatedUser = {
+    name: 'Update user',
+  };
 
   it('should update a user', (done) => {
     UserController.update(updatedUser, { id: 1 })
@@ -126,11 +126,11 @@ describe('Controller: User', () => {
   const token = jwt.sign(payload, config.jwtSecretForgotPassword, options);
 
   it('should reset the password', (done) => {
-    let data = {
+    const data = {
       password: '654321',
       confirmPassword: '654321',
-      token: token,
-    }
+      token,
+    };
     UserController.resetPassword(data)
       .then((response) => {
         expect(response.status).to.be.eql(200);
@@ -145,7 +145,7 @@ describe('Controller: User', () => {
     UserController.delete({ id: 1 })
       .then((response) => {
         expect(response.status).to.be.eql(200);
-        UserController.getById({id: 1})
+        UserController.getById({ id: 1 })
           .then((user) => {
             expect(user).to.be.eql(null);
             done();
