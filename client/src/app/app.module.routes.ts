@@ -9,6 +9,7 @@ import { AccountPageComponent } from './components/account-page/account-page.com
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { UserSignedInGuard } from './guards/user-signed-in-guard';
+import { HelpPageComponent } from './components/help-page/help-page.component';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
@@ -17,7 +18,8 @@ const ROUTES: Routes = [
     { path: 'manage-rules', component: ManageRulesPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'account-page', component: AccountPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'forgot-password', component: ForgotPasswordComponent},
-    { path: 'reset-password/:token', component: ResetPasswordComponent}
+    { path: 'reset-password/:token', component: ResetPasswordComponent},
+    { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]}
   ];
   
 @NgModule({

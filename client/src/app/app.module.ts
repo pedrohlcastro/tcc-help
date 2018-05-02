@@ -21,6 +21,7 @@ import { AccountPageComponent } from './components/account-page/account-page.com
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { RuleService } from './services/rule.service';
+import { HelpPageComponent } from './components/help-page/help-page.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RuleService } from './services/rule.service';
     RuleDialogComponent,
     AccountPageComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    HelpPageComponent
   ],
   entryComponents: [
     RuleDialogComponent

@@ -3,6 +3,7 @@
 
   <a [routerLink]="['sign-in']" *ngIf="!isAuthenticated"><i class="material-icons">vpn_key</i>Login</a>
   <a [routerLink]="['sign-up']" *ngIf="!isAuthenticated"><i class="material-icons">input</i>Cadastro</a>
+  <a [routerLink]="['help-page']" *ngIf="isAuthenticated"><i class="material-icons">help</i>Ajuda</a>
   <a (click)="signOut()" *ngIf="isAuthenticated"><i class="material-icons">input</i>Sair</a>
 </div>
 
