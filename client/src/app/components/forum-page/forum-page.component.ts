@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {MatDialog} from '@angular/material';
+import {Router} from '@angular/router';
 
 import { ForumService } from '../../services/forum.service';
 import { ForumDialogComponent } from '../forum-dialog/forum-dialog.component';
@@ -14,14 +15,14 @@ import { ForumDialogComponent } from '../forum-dialog/forum-dialog.component';
 })
 export class ForumPageComponent implements OnInit {
   topics = [];
-  filteredRules;
-  constructor(private snackBar: MatSnackBar, private forumService:ForumService, public dialog: MatDialog,) { }
+  filteredTopics;
+  constructor(private snackBar: MatSnackBar, private forumService:ForumService, public dialog: MatDialog, private router: Router) { }
   
   ngOnInit() {
     this.forumService.getTopic()
       .subscribe((res) => {
         this.topics = res;
-        this.filteredRules = Object.assign([], this.topics);
+        this.filteredTopics = Object.assign([], this.topics);
       });
   }
 
@@ -35,7 +36,7 @@ export class ForumPageComponent implements OnInit {
             this.forumService.createTopic(result)
                 .subscribe((res) => {
                     this.topics.push(res);
-                    this.filteredRules = Object.assign([], this.topics);
+                    this.filteredTopics = Object.assign([], this.topics);
                 })
         } 
     });
@@ -43,14 +44,14 @@ export class ForumPageComponent implements OnInit {
 
   accessTopic(index){
     const item = this.topics[index];
-    
+    this.router.navigate(['/forum-answers', item.id]);
   }
 
   filterItem(value){
     if(!value)
-      this.filteredRules = this.topics;
+      this.filteredTopics = this.topics;
     else {
-      this.filteredRules = Object.assign([], this.topics).filter(
+      this.filteredTopics = Object.assign([], this.topics).filter(
         item => item.title.toLowerCase().indexOf(value.toLowerCase()) > -1
       )
     }

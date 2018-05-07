@@ -3,6 +3,7 @@ import db from '../config/db';
 class ReplyController {
   constructor() {
     this.Reply = db().models.Reply;
+    this.User = db().models.User;
   }
   create(userId, topicId, data) {
     const newReply = data;
@@ -18,11 +19,11 @@ class ReplyController {
   get(params) {
     return new Promise((resolve, reject) => {
       if (params) {
-        this.Reply.findAll({ where: params })
+        this.Reply.findAll({ where: params, include: [{ model:this.User, as: "ReplyUser"}] })
           .then(res => resolve(res))
           .catch(err => reject(err));
       } else {
-        this.Reply.findAll({})
+        this.Reply.findAll({ include: [{ model:this.User, as: "ReplyUser"}]})
           .then(res => resolve(res))
           .catch(err => reject(err));
       }

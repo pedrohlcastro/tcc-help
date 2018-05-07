@@ -9,6 +9,7 @@ router.post('/', passport.authenticate('BasicBearer', { session: false }), (req,
   const userId = req.user.id;
   const topicId = req.body.topic.id;
   const newReply = req.body.data;
+
   ReplyController.create(userId, topicId, newReply)
     .then(data => res.json(data))
     .catch(err => next({ err, msg: 'Error ao criar regra', status: 500 }));

@@ -1,14 +1,17 @@
-    <section class="container" *ngFor="let answer of answers">
+<section class="container" >
+    <div class="title">
+        <h2 *ngIf='topic'>
+            {{topic.title}}
+        </h2>
+    </div>
+    <div *ngFor = 'let answer of answers'>
         <mat-card classclass="answer-card">
-            <mat-card-header>
-                <b>{{answer.id}} </b>
-            </mat-card-header>
             <mat-card-content>
-                {{answer.text}}
+                {{answer.comment}}
             </mat-card-content>
-        </mat-card> 
-    </section>
-
+         </mat-card>
+    </div>
+</section>
 
 <button mat-raised-button class="answerButton" color="primary" (click)="createNewAnswer()">
         <i class="material-icons">add</i> Adicionar Resposta

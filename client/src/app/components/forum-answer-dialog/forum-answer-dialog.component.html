@@ -1,11 +1,20 @@
-<p>
-  forum-answer-dialog works!
-</p>
 
 <form #answerForm="ngForm">
-    <mat-form-field>
-        <textarea matInput placeholder="Insira o texto aqui"></textarea>
-      </mat-form-field>
+  <div class="text-area">
+      <mat-form-field>
+          <textarea matInput placeholder="Insira sua resposta:" [(ngModel)]="answer.comment" name="comment" #comment="ngModel"></textarea>
+    </mat-form-field>
+  
+  </div>  
+  
+    <div class="btn-area">
+        <button mat-raised-button class="delete-btn" color="warn" (click)="exit()">
+          <i class="material-icons">cancel</i> Cancelar
+        </button>
+        <button mat-raised-button class="edit-btn" color="primary" (click)="confirm(answerForm.value)">
+          <i class="material-icons">check</i> Criar
+        </button>
+      </div>
 </form>
 
 

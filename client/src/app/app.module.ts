@@ -51,7 +51,8 @@ import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/for
   ],
   entryComponents: [
     RuleDialogComponent,
-    ForumDialogComponent
+    ForumDialogComponent,
+    ForumAnswerDialogComponent
   ],
   imports: [
     BrowserModule,

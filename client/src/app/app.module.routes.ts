@@ -23,9 +23,8 @@ const ROUTES: Routes = [
     { path: 'forgot-password', component: ForgotPasswordComponent},
     { path: 'reset-password/:token', component: ResetPasswordComponent},
     { path: 'forum', component: ForumPageComponent, canActivate: [UserSignedInGuard]},
-    { path: 'topic/{id}', component: TopicPageComponent },
     { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
-    { path: 'forum-answers', component: ForumAnswersComponent},
+    { path: 'forum-answers/:id', component: ForumAnswersComponent},
   ];
   
 @NgModule({
