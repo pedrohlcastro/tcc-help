@@ -2,9 +2,8 @@
 <form #answerForm="ngForm">
   <div class="text-area">
       <mat-form-field>
-          <textarea matInput placeholder="Insira sua resposta:" [(ngModel)]="answer.comment" name="comment" #comment="ngModel"></textarea>
+          <textarea matInput placeholder="Insira sua resposta:" [(ngModel)]="answer.comment" name="comment" #comment="ngModel" [required]="answer.comment"></textarea>
     </mat-form-field>
-  
   </div>  
   
     <div class="btn-area">

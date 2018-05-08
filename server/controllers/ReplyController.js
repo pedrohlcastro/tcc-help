@@ -17,13 +17,21 @@ class ReplyController {
   }
 
   get(params) {
+    const queryParams = {
+      where: params,
+      include: [{
+        model: this.User,
+        as: 'ReplyUser',
+        attributes: ['name', 'email', 'type', 'validate_professor'],
+      }],
+    };
     return new Promise((resolve, reject) => {
       if (params) {
-        this.Reply.findAll({ where: params, include: [{ model:this.User, as: "ReplyUser"}] })
+        this.Reply.findAll(queryParams)
           .then(res => resolve(res))
           .catch(err => reject(err));
       } else {
-        this.Reply.findAll({ include: [{ model:this.User, as: "ReplyUser"}]})
+        this.Reply.findAll(queryParams)
           .then(res => resolve(res))
           .catch(err => reject(err));
       }

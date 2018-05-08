@@ -24,7 +24,6 @@ import { RuleService } from './services/rule.service';
 import { ForumPageComponent } from './components/forum-page/forum-page.component';
 import { ForumDialogComponent } from './components/forum-dialog/forum-dialog.component';
 import { ForumService } from './services/forum.service';
-import { TopicPageComponent } from './components/topic-page/topic-page.component';
 
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
@@ -44,7 +43,6 @@ import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/for
     ResetPasswordComponent,
     ForumPageComponent,
     ForumDialogComponent,
-    TopicPageComponent,
     HelpPageComponent,
     ForumAnswersComponent,
     ForumAnswerDialogComponent

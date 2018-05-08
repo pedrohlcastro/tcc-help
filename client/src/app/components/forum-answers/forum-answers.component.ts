@@ -31,13 +31,12 @@ export class ForumAnswersComponent implements OnInit {
       });
     });
 
-   // this.getAnswers();
+    this.getAnswers();
   }
 
   getAnswers(){
     this.forumService.getReply().subscribe(res => {
       this.answers = res;
-      console.log(res);
     });
   }
   

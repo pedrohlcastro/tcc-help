@@ -1,3 +1,5 @@
+@import '~variables.scss';
+
 .answerButton{
     position: absolute;
     bottom: 0;
@@ -6,6 +8,20 @@
 }
 mat-card{
     margin-bottom: 20px;
+    mat-card-header{
+        font-size: 20px;
+        border-bottom: 4px solid $second-color-ligth;
+        font-weight: bold;
+        span{
+            font-weight: normal;
+            font-style: italic;
+            font-size: 16px;
+        }
+    }
+    mat-card-content{
+        margin-top: 20px;
+        font-size: 18px;
+    }
 }
 
 h2{
