@@ -1,0 +1,22 @@
+<section class="container" >
+    <div class="title">
+        <h2 *ngIf='topic'>
+            {{topic.title}}
+        </h2>
+    </div>
+    <div *ngFor = 'let answer of answers'>
+        <mat-card classclass="answer-card">
+            <mat-card-header>
+                <p>Enviado por: {{answer.ReplyUser.name}} - {{answer.ReplyUser.email}}  <span>às {{answer.date | date:'dd-MM-yyyy HH:mm': '+0000'}}</span></p> 
+            </mat-card-header>
+            <mat-card-content>
+                {{answer.comment}}
+            </mat-card-content>
+         </mat-card>
+    </div>
+</section>
+
+<button mat-raised-button class="answerButton" color="primary" (click)="createNewAnswer()">
+        <i class="material-icons">add</i> Adicionar Resposta
+</button>
+    

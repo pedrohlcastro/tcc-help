@@ -17,7 +17,7 @@ class RuleController {
   get(params) {
     return new Promise((resolve, reject) => {
       if (params) {
-        this.Rule.findOne({ where: params })
+        this.Rule.findOne({ where: params, raw: true })
           .then(res => resolve(res))
           .catch(err => reject(err));
       } else {

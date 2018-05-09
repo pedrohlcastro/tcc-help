@@ -10,8 +10,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { UserSignedInGuard } from './guards/user-signed-in-guard';
 import { ForumPageComponent } from './components/forum-page/forum-page.component';
-import { TopicPageComponent } from './components/topic-page/topic-page.component';
 import { HelpPageComponent } from './components/help-page/help-page.component';
+import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
@@ -22,8 +22,8 @@ const ROUTES: Routes = [
     { path: 'forgot-password', component: ForgotPasswordComponent},
     { path: 'reset-password/:token', component: ResetPasswordComponent},
     { path: 'forum', component: ForumPageComponent, canActivate: [UserSignedInGuard]},
-    { path: 'topic/{id}', component: TopicPageComponent },
-    { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]}
+    { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
+    { path: 'forum-answers/:id', component: ForumAnswersComponent},
   ];
   
 @NgModule({

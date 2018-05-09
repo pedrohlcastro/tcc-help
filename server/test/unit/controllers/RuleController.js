@@ -23,7 +23,15 @@ describe('Controllers: Rule', () => {
       await UserController.User.destroy({ where: {} });
       await UserController.User.create(defaultUser);
       await RuleController.Rule.create(defaultRule);
-      // done();
+    } catch (err) {
+      /*eslint-disable */
+      console.log(err);
+      /* eslint-enable */
+    }
+  });
+  after(async () => {
+    try {
+      await RuleController.Rule.destroy({ where: {} });
     } catch (err) {
       /*eslint-disable */
       console.log(err);
