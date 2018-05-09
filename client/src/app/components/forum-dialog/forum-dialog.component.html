@@ -1,10 +1,10 @@
 <form #topicForm="ngForm">
   <mat-form-field class="fullwidth">
-    <input matInput placeholder="Titulo" name="title" [(ngModel)]="topic.title" #regex="ngModel">
+    <input matInput placeholder="Titulo" name="title" [(ngModel)]="topic.title" #regex="ngModel" [required]="true">
   </mat-form-field>
 
   <mat-form-field class="fullwidth">
-    <textarea matInput placeholder="Cometário" name="comment" [(ngModel)]="topic.comment" #message="ngModel"></textarea>
+    <textarea matInput placeholder="Cometário" name="comment" [(ngModel)]="topic.comment" #message="ngModel" [required]="true"></textarea>
   </mat-form-field>
   <div class="btn-area">
     <button mat-raised-button class="delete-btn" color="warn" (click)="exit()">
