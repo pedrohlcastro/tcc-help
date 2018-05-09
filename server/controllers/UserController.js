@@ -41,14 +41,6 @@ class UserController {
     });
   }
 
-  getByType(params) {
-    return new Promise((resolve, reject) => {
-      this.User.findAll({ where: params })
-        .then(result => resolve(result))
-        .catch(err => reject(err));
-    });
-  }
-
   create(data) {
     return new Promise((resolve, reject) => {
       this.User.findOne({ where: { email: data.email } })

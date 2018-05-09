@@ -10,7 +10,6 @@ import { MatSnackBar } from '@angular/material';
 })
 export class AccountPageComponent implements OnInit {
   user;
-  type;
   constructor(private authService: AuthService, private snackBar: MatSnackBar) {
   }
 
@@ -18,7 +17,6 @@ export class AccountPageComponent implements OnInit {
     this.authService.getUserFromToken()
       .subscribe((res) => {
         this.user = res;
-        this.type = res.type;
         this.accountForm.patchValue({
           username: res.name,
           email: res.email,
@@ -63,30 +61,19 @@ export class AccountPageComponent implements OnInit {
       return {'MatchPassword': true}
     }
   }
-
   save() {
     if (this.accountForm.invalid){
       this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
       return;
     }
-    if (this.accountForm.get('passwords').get('password').value === ""){
-      const requestUser = {
-        id: this.user.id,
-        name: this.accountForm.get('username').value,
-        email: this.accountForm.get('email').value,
-        type: this.accountForm.get('userType').value
-      };
-    }
-    else {
-      const requestUser = {
-        id: this.user.id,
-        name: this.accountForm.get('username').value,
-        email: this.accountForm.get('email').value,
-        password: this.accountForm.get('passwords').get('password').value,
-        confirmPassword: this.accountForm.get('passwords').get('confirmPassword').value,
-        type: this.accountForm.get('userType').value
-      };
-    }
+    const requestUser = {
+      id: this.user.id,
+      name: this.accountForm.get('username').value,
+      email: this.accountForm.get('email').value,
+      password: this.accountForm.get('passwords').get('password').value,
+      confirmPassword: this.accountForm.get('passwords').get('confirmPassword').value,
+      type: this.accountForm.get('userType').value
+    };
     
     this.authService.updateUser(requestUser)
       .subscribe((res) => {
@@ -98,12 +85,5 @@ export class AccountPageComponent implements OnInit {
         this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
-  }
-
-  isUser(type){
-    if (this.user)
-      return false;
-
-    return this.user.type === type;
   }
 }
