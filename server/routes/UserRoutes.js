@@ -23,6 +23,16 @@ router.get('/', passport.authenticate('BasicBearer', { session: false }), (req, 
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
+router.get('/getbytype/:type', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  const data = {
+    type: req.params.type,
+    validate_professor: (req.params.type === '2') ? '1' : '0', // only valid teachers
+  };
+  UserController.getByType(data)
+    .then(result => res.json(result))
+    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+});
+
 router.post('/', ((req, res, next) => {
   UserController.create(req.body)
     .then(result => res.json(result))

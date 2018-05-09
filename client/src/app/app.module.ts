@@ -27,6 +27,8 @@ import { ForumService } from './services/forum.service';
 import { TopicPageComponent } from './components/topic-page/topic-page.component';
 
 import { HelpPageComponent } from './components/help-page/help-page.component';
+import { AssociatePageComponent } from './components/associate-page/associate-page.component';
+import { AssociateService } from './services/associate.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { HelpPageComponent } from './components/help-page/help-page.component';
     ForumPageComponent,
     ForumDialogComponent,
     TopicPageComponent,
-    HelpPageComponent
+    HelpPageComponent,
+    AssociatePageComponent
   ],
   entryComponents: [
     RuleDialogComponent,
@@ -62,7 +65,8 @@ import { HelpPageComponent } from './components/help-page/help-page.component';
     AuthService,
     RuleService,
     ForumService,
-    UserSignedInGuard
+    UserSignedInGuard,
+    AssociateService
   ],
   bootstrap: [AppComponent]
 })

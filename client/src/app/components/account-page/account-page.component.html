@@ -37,14 +37,13 @@
           <mat-radio-group formControlName="userType">
             <p>Tipo de usuário *</p>
             <mat-radio-button value="1" class="md-primary">Estudante</mat-radio-button>
-            <mat-radio-button value="2" class="md-accent">Professor</mat-radio-button>
+            <mat-radio-button value="2" class="md-primary">Professor</mat-radio-button>
           </mat-radio-group>
           
-          <button mat-button (click)="save()">SALVAR</button>
-  
+          <button mat-button (click)="save()">SALVAR</button><br><br>
         </form>
+        <button [routerLink]="['/associate-page']" *ngIf="type == 2" mat-button>Gerenciar alunos</button>
+        <button [routerLink]="['/associate-page']" *ngIf="type == 1" mat-button>Indicar professor</button>
       </mat-card-content>
     </mat-card>
   </div>
-  
-  
