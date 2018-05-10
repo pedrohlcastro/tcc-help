@@ -42,10 +42,12 @@ export class NavBarComponent implements OnInit {
   openNavBar(){
     $('.nav-bar').width( '300px' );
     $('#content').css({'margin-left' : '300px'});
+    $('.top-header').css({'display' : 'none'});
   }
 
   closeNavBar(){
     $('.nav-bar').width( '0px' );
     $('#content').css({'margin-left' : '0px'});
+    $('.top-header').css({'display' : 'block'});
   }
 }

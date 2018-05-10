@@ -1,43 +1,55 @@
+.row{
+    width: 100%;
+}
 .pdf-container{
-    margin-left: 22px;
     display: absolute;
-    width:calc(100% - 25%);
-    height:95vh;
+    width: calc(100% - 25%);
+    height: 92vh;
     overflow: auto;
-    background: grey;
-    .pdf-viewer{
-        display: block;
-        width: calc(100% - 10px);
-        margin: 5px;
-    }
+    background: #DCDCDC;
     .page {
-        padding: 10px;
-        color: white;
-        .page-label {
-          color: black;
-          text-align: right;
+        ngx-mat-numberpicker{
+            padding: 20px;
+            color: white;
+            font-size: 20px;
+            margin-left: 36%;
         }
+       margin-bottom: 35px;
     }
     .pdfViewer {
       width: 80%;
       margin-left: 10%;
       margin-right: 10%;
       margin-bottom: 10%;
+      height: 90vh;
+
     }
 }
 
-.open-btn{
-    position: absolute;
-    height: 100vh;
-    width: 22px;
-    margin-top:-25px;
-    background-color: red;
-    z-index: 3;
-    cursor: pointer;
-    i {
-      color:white;
-      font-size: 20px;
-      margin-top: 50vh;
-      margin-bottom: 50vh;
+
+
+.suggestions{
+    width: 24%;
+    margin-left: 1%;
+    mat-accordion{
+        width: 100%;
+        position: relative;
+        mat-expansion-panel{
+            width: 100%;
+            mat-panel-title{
+                color: black;
+            }
+            .btn-area{
+                margin-left: 7%;
+            }
+        }
+        
+        
     }
+    h4{
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
 }

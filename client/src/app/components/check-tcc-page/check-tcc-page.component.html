@@ -1,12 +1,31 @@
 <!-- Diplay PDF -->
-<div class="pdf-container">
-  <div class="page" >
-    <label >Page:</label>
-      <input matInput type="number" placeholder="Page" [(ngModel)]="page" class="page-label" (change)="changePage(page)">
+<div class="row">
+  <div class="pdf-container">
+    <div class="page">
+      <ngx-mat-numberpicker [min]="1" [max]="maxPage" [default]="page" (onChange)="changePage($event)" [starttext]="'Página'">3</ngx-mat-numberpicker>
+    </div>
+    <div id="pdf-container">
+      <div id="pageContainer" class="pdfViewer singlePageView"></div>
+    </div>
   </div>
-  <!-- <mat-progress-bar mode="determinate" value="40" class="loader"></mat-progress-bar> -->
-  <div id="pdf-container">
-    <div id="pageContainer" class="pdfViewer singlePageView"></div>
+  <div class="suggestions">
+    <h4>Sugestões de alteração</h4>
+    <mat-accordion *ngFor="let suggestion of suggestions; let i = index;">
+        <mat-expansion-panel [expanded]="step === i" (opened)="setStep(i)">
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+                  Trecho: {{ suggestion.word }}
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="btn-area">
+            <button mat-raised-button class="delete-btn" color="warn" (click)="choose(i, false)">
+              <i class="material-icons">cancel</i> Recusar
+            </button>
+            <button mat-raised-button class="edit-btn" color="primary" (click)="choose(i, true)">
+              <i class="material-icons">check</i> Aceitar
+            </button>
+          </div>
+        </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </div>
-<button (click)="buscaWord()">BUSCA</button>

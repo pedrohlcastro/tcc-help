@@ -24,6 +24,7 @@ import { RuleService } from './services/rule.service';
 import { ForumPageComponent } from './components/forum-page/forum-page.component';
 import { ForumDialogComponent } from './components/forum-dialog/forum-dialog.component';
 import { ForumService } from './services/forum.service';
+import { NumberPickerModule } from '@retailify/ngx-mat-numberpicker';
 
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
@@ -62,7 +63,8 @@ import { PdfService } from './services/pdf-service';
     AppMaterialModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NumberPickerModule
   ],
   providers: [
     AuthService,
