@@ -43,7 +43,6 @@ export class PdfService {
   }
 
   setControllers() {
-    console.log('SetControllers');
     // set find Controller into view
     this.pdfFindController = new PDFJS.PDFFindController({
       pdfViewer: this.pdfViewer

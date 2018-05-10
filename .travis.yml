@@ -28,6 +28,8 @@ before_script:
 
 script:
   - ./pre-commit
+  - docker-compose -f docker-compose.test-unit.yml build
+  - docker-compose -f docker-compose.test-unit.yml up -d
 
 after_script:
   - ./stop.sh
