@@ -28,9 +28,9 @@ before_script:
 
 script:
   - ./pre-commit
-  - ./stop.sh
+  - ./manage --stop
   - docker-compose -f docker-compose.test-unit.yml build
   - docker-compose -f docker-compose.test-unit.yml up -d
 
 after_script:
-  - ./stop.sh
+  - ./manage --stop
