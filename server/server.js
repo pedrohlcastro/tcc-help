@@ -13,6 +13,7 @@ import configPassportLocalStrategy from './config/auth/passportLocalConfig';
 import RuleRoutes from './routes/RuleRoutes';
 import TopicRoutes from './routes/TopicRoutes';
 import ReplyRoutes from './routes/ReplyRoutes';
+import StudentProfessorRoutes from './routes/StudentProfessorRoutes';
 
 const ENV = process.env.NODE_ENV;
 
@@ -60,7 +61,7 @@ app.use('/users', UserRoutes);
 app.use('/rules', RuleRoutes);
 app.use('/topic', TopicRoutes);
 app.use('/reply', ReplyRoutes);
-
+app.use('/studentProfessor', StudentProfessorRoutes);
 
 // Call Angular
 app.all('*', (req, res) => {

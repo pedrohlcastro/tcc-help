@@ -24,10 +24,12 @@ import { RuleService } from './services/rule.service';
 import { ForumPageComponent } from './components/forum-page/forum-page.component';
 import { ForumDialogComponent } from './components/forum-dialog/forum-dialog.component';
 import { ForumService } from './services/forum.service';
+import { StudentProfessorService } from './services/student-professor.service';
 
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
 import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/forum-answer-dialog.component';
+import { StudentsListComponent } from './components/students-list/students-list.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/for
     ForumDialogComponent,
     HelpPageComponent,
     ForumAnswersComponent,
-    ForumAnswerDialogComponent
+    ForumAnswerDialogComponent,
+    StudentsListComponent
   ],
   entryComponents: [
     RuleDialogComponent,
@@ -65,7 +68,8 @@ import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/for
     AuthService,
     RuleService,
     ForumService,
-    UserSignedInGuard
+    UserSignedInGuard,
+    StudentProfessorService
   ],
   bootstrap: [AppComponent]
 })

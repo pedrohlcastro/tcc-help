@@ -12,6 +12,7 @@ import { UserSignedInGuard } from './guards/user-signed-in-guard';
 import { ForumPageComponent } from './components/forum-page/forum-page.component';
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
+import { StudentsListComponent } from './components/students-list/students-list.component';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
@@ -24,6 +25,7 @@ const ROUTES: Routes = [
     { path: 'forum', component: ForumPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'forum-answers/:id', component: ForumAnswersComponent},
+    { path: 'students-list/:id', component: StudentsListComponent, canActivate: [UserSignedInGuard]},
   ];
   
 @NgModule({

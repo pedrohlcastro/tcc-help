@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-account-page',
@@ -10,7 +11,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class AccountPageComponent implements OnInit {
   user;
-  constructor(private authService: AuthService, private snackBar: MatSnackBar) {
+  constructor(private authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
   }
 
   ngOnInit() {
@@ -85,5 +86,9 @@ export class AccountPageComponent implements OnInit {
         this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
+  }
+
+  visitStudents(){
+    this.router.navigate(['/students-list', this.user.id]);
   }
 }
