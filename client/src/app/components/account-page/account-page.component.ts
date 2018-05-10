@@ -65,12 +65,13 @@ export class AccountPageComponent implements OnInit {
   }
 
   save() {
+    let requestUser;
     if (this.accountForm.invalid){
       this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
       return;
     }
     if (this.accountForm.get('passwords').get('password').value === ""){
-      const requestUser = {
+      requestUser = {
         id: this.user.id,
         name: this.accountForm.get('username').value,
         email: this.accountForm.get('email').value,
@@ -78,7 +79,7 @@ export class AccountPageComponent implements OnInit {
       };
     }
     else {
-      const requestUser = {
+      requestUser = {
         id: this.user.id,
         name: this.accountForm.get('username').value,
         email: this.accountForm.get('email').value,

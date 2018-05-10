@@ -3,6 +3,7 @@ import db from '../config/db';
 class AssociateController {
   constructor() {
     this.Associate = db().models.StudentProfessor;
+    this.User = db().models.User;
   }
 
   create(data) {
@@ -17,16 +18,23 @@ class AssociateController {
   }
 
   get(params) {
+    const queryParams = {
+      where: params,
+      //include: [{
+      //  model: this.User,
+      //  as: 'UserProfessor',
+      //  required: true,
+       // attributes: ['id', 'name', 'email', 'type'],
+      //}],
+    };
+
     return new Promise((resolve, reject) => {
-      console.log(params);
       if (params) {
-        this.Associate.findOne({
-          where: params,
-        })
+        this.Associate.findOne(queryParams)
           .then(res => resolve(res))
           .catch(err => reject(err));
       } else {
-        this.Associate.findOne({})
+        this.Associate.findOne(queryParams)
           .then(res => resolve(res))
           .catch(err => reject(err));
       }
