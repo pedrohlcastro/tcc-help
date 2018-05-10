@@ -1,0 +1,12 @@
+<!-- Diplay PDF -->
+<div class="pdf-container">
+  <div class="page" >
+    <label >Page:</label>
+      <input matInput type="number" placeholder="Page" [(ngModel)]="page" class="page-label" (change)="changePage(page)">
+  </div>
+  <!-- <mat-progress-bar mode="determinate" value="40" class="loader"></mat-progress-bar> -->
+  <div id="pdf-container">
+    <div id="pageContainer" class="pdfViewer singlePageView"></div>
+  </div>
+</div>
+<button (click)="buscaWord()">BUSCA</button>

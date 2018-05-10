@@ -1,0 +1,27 @@
+.pdf-container{
+    margin-left: 22px;
+    display: absolute;
+    width:calc(100% - 25%);
+    height:95vh;
+    overflow: auto;
+    background: grey;
+    .pdf-viewer{
+        display: block;
+        width: calc(100% - 10px);
+        margin: 5px;
+    }
+    .page {
+        padding: 10px;
+        color: white;
+        .page-label {
+          color: black;
+          text-align: right;
+        }
+    }
+    .pdfViewer {
+      width: 80%;
+      margin-left: 10%;
+      margin-right: 10%;
+      margin-bottom: 10%;
+    }
+}

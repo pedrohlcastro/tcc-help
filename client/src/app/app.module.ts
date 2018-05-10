@@ -28,6 +28,8 @@ import { ForumService } from './services/forum.service';
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
 import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/forum-answer-dialog.component';
+import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
+import { PdfService } from './services/pdf-service';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/for
     ForumDialogComponent,
     HelpPageComponent,
     ForumAnswersComponent,
-    ForumAnswerDialogComponent
+    ForumAnswerDialogComponent,
+    CheckTccPageComponent
   ],
   entryComponents: [
     RuleDialogComponent,
@@ -65,6 +68,7 @@ import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/for
     AuthService,
     RuleService,
     ForumService,
+    PdfService,
     UserSignedInGuard
   ],
   bootstrap: [AppComponent]
