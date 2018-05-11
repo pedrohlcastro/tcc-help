@@ -11,7 +11,7 @@ export class StudentProfessorService {
 
   getMyStudents(userId){
     const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/studentProfessor/${userId}`, options)
+    return this.http.get(`${this.baseUrl}/studentProfessor/`, options)
       .map((res) => {
         return res.json();
       });

@@ -1,8 +1,105 @@
-<section>
-    <div>
-    <h4>Nome: {{user.name}}</h4>
-    <h5>Id: {{userId}}</h5>
-  </div>
+<div class="container">
+  <div class="header">
 
-</section>
+  </div>
+  <mat-card>
+      <mat-card-content>
+        <h3>Meus alunos</h3>
+        <mat-tab-group class="tab-group">
+
+          <mat-tab label="Aprovados">
+            <div class="tab-content">
+              <div class="col-xl-3 col-lg-3" *ngFor="let student of students; let i = index;">
+                <mat-card *ngIf= "student['UserProfessor.StudentProfessor.accept'] === 1 && student['UserProfessor.StudentProfessor.activate'] === 1 ">
+                <mat-card-content>
+                  <div mat-card-avatar class="avatar"></div>
+                  <br>
+                  <br>
+                  <mat-card-title>
+                    <b>{{student["UserProfessor.name"]}}</b>
+                  </mat-card-title>
+                </mat-card-content>
+                <div class="mat-card-actions">
+                  <br>
+                  <button  mat-raised-button class="view-btn" color="primary">
+                  <i class="material-icons">how_to_reg</i> View </button>
+                </div>
+                </mat-card>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Pendentes">
+            <div class="tab-content">
+              <mat-tab label="Aprovados">
+                <div class="tab-content">
+                  <div class="col-xl-3 col-lg-3" *ngFor="let student of students; let i = index;">
+                    <mat-card *ngIf= "student['UserProfessor.StudentProfessor.accept'] === 0 && student['UserProfessor.StudentProfessor.activate'] === 1 ">
+                    <mat-card-content>
+                      <div mat-card-avatar class="avatar"></div>
+                      <br>
+                      <br>
+                      <mat-card-title>
+                        <b>{{student["UserProfessor.name"]}}</b>
+                      </mat-card-title>
+                    </mat-card-content>
+                    <div class="mat-card-actions">
+                      <br>
+                      <button  mat-raised-button class="accept-btn" color="primary">
+                        <i class="material-icons">done</i> Aceitar </button>
+                      <button  mat-raised-button class="cancel-btn" color="primary">
+                        <i class="material-icons">block</i> Recusar </button>
+                    </div>
+                    </mat-card>
+                  </div>
+                </div>
+              </mat-tab>
+            </div>  
+          </mat-tab>
+           
+          <mat-tab label="Desconectados">
+            <div class="tab-content">
+              <div class="col-xl-3 col-lg-3" *ngFor="let student of students; let i = index;">
+                <mat-card *ngIf= "student['UserProfessor.StudentProfessor.activate'] === 0 ">
+                <mat-card-content>
+                  <div mat-card-avatar class="avatar"></div>
+                  <br>
+                  <br>
+                  <mat-card-title>
+                    <b>{{student["UserProfessor.name"]}}</b>
+                  </mat-card-title>
+                </mat-card-content>
+                <div class="mat-card-actions">
+                  <br>
+                  <button  mat-raised-button class="accept-btn" color="primary">
+                    <i class="material-icons">rotate_left</i> Reconectar </button>
+                </div>
+                </mat-card>
+                </div>
+            </div> 
+
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
 

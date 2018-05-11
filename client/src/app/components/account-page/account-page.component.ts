@@ -29,6 +29,7 @@ export class AccountPageComponent implements OnInit {
         this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
+    console.log(this.user);
   }
   
   accountForm = new FormGroup({
@@ -89,6 +90,6 @@ export class AccountPageComponent implements OnInit {
   }
 
   visitStudents(){
-    this.router.navigate(['/students-list', this.user.id]);
+    this.router.navigate(['/students-list'], this.user.id);
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 import { StudentProfessorService } from '../../services/student-professor.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-students-list',
@@ -11,9 +12,11 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 export class StudentsListComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private studentProfessorService: StudentProfessorService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar, private authService: AuthService) { }
 
   private userId;
+  private students = [];
+  private studentsID = [];
   private user;
 
   ngOnInit() {
@@ -22,14 +25,14 @@ export class StudentsListComponent implements OnInit {
     });
 
     this.studentProfessorService.getMyStudents(this.userId).subscribe(result =>{
-      this.user = result;
+      console.log(result);
+      this.students = result;
+
     }, (err) =>{
-      this.snackBar.open('Não foi possível recuperar professor.', 'Fechar', {
+      this.snackBar.open('Não foi possível recuperar os alunos.', 'Fechar', {
         duration: 7000
       });
     })
-    
-
   }
 
 }

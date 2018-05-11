@@ -25,7 +25,7 @@ const ROUTES: Routes = [
     { path: 'forum', component: ForumPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'forum-answers/:id', component: ForumAnswersComponent},
-    { path: 'students-list/:id', component: StudentsListComponent, canActivate: [UserSignedInGuard]},
+    { path: 'students-list', component: StudentsListComponent, canActivate: [UserSignedInGuard]},
   ];
   
 @NgModule({

@@ -43,8 +43,10 @@
             <button mat-button (click)="save()">SALVAR</button>
            
         </form>
-        <button mat-raised-button (click)="visitStudents()">Meus alunos</button>
-        
+        <div *ngIf="user.type==2">
+          <br>
+          <button mat-raised-button (click)="visitStudents()">Meus alunos</button>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
