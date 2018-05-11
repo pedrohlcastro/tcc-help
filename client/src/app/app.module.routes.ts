@@ -12,7 +12,7 @@ import { UserSignedInGuard } from './guards/user-signed-in-guard';
 import { ForumPageComponent } from './components/forum-page/forum-page.component';
 import { TopicPageComponent } from './components/topic-page/topic-page.component';
 import { HelpPageComponent } from './components/help-page/help-page.component';
-import { AssociatePageComponent } from './components/associate-page/associate-page.component';
+import { ProfessorListComponent } from './components/professor-list/professor-list.component';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
@@ -25,7 +25,7 @@ const ROUTES: Routes = [
     { path: 'forum', component: ForumPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'topic/{id}', component: TopicPageComponent },
     { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
-    { path: 'associate-page', component: AssociatePageComponent, canActivate: [UserSignedInGuard]}
+    { path: 'professor-list', component: ProfessorListComponent, canActivate: [UserSignedInGuard]}
   ];
   
 @NgModule({

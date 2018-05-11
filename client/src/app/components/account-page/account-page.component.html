@@ -43,8 +43,8 @@
           <button mat-button (click)="save()">SALVAR</button><br><br>
         </form>
         <br>
-        <button [routerLink]="['/associate-page']" *ngIf="type == 2" mat-button>GERENCIAR ALUNOS</button>
-        <button [routerLink]="['/associate-page']" *ngIf="type == 1" mat-button>INDICAR PROFESSOR</button>
+        <button [routerLink]="['/student-list']" *ngIf="type == 2" mat-button>GERENCIAR ALUNOS</button>
+        <button [routerLink]="['/professor-list']" *ngIf="type == 1" mat-button>INDICAR PROFESSOR</button>
         <br>
       </mat-card-content>
     </mat-card>

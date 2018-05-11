@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssociatePageComponent } from './associate-page.component';
+import { ProfessorListComponent } from './professor-list.component';
 
-describe('AssociatePageComponent', () => {
-  let component: AssociatePageComponent;
-  let fixture: ComponentFixture<AssociatePageComponent>;
+describe('ProfessorListComponent', () => {
+  let component: ProfessorListComponent;
+  let fixture: ComponentFixture<ProfessorListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssociatePageComponent ]
+      declarations: [ ProfessorListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AssociatePageComponent);
+    fixture = TestBed.createComponent(ProfessorListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

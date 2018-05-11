@@ -4,28 +4,28 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { Observable, Observer, Subscriber, Subject, BehaviorSubject } from 'rxjs/Rx';
 
 @Injectable()
-export class AssociateService {
+export class ProfessorListService {
   baseUrl = 'http://localhost:8000';
   constructor(private authService:AuthService, private http: Http) { }
 
-  getUsersByType(userType){
+  getProfessorList(){
     const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/users/getbytype/${userType}`, options)
+    return this.http.get(`${this.baseUrl}/professor_list/`)
       .map((res) => {
         return res.json();
       });
   }
 
-  getAssociationsByIds(data){
-    const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/associate/${data.student_id}/${data.professor_id}`)
-      .map((res) => {
-        return res.json();
-      });
+  inviteProfessor(userEmail){
+    return this.http.post(`${this.baseUrl}/professor_list/invitation`, userEmail)
+    .map((res)=> {
+      return res.json();
+    });
+
   }
 
   create(data){
-    return this.http.post(`${this.baseUrl}/associate`, data)
+    return this.http.post(`${this.baseUrl}/professor_list`, data)
       .map((res)=> {
         return res.json();
       });

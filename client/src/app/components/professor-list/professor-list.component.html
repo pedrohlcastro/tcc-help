@@ -1,0 +1,68 @@
+<div class="container">
+	<button [routerLink]="['/account-page']" class="back-btn" mat-button><i class="material-icons">arrow_back</i> Voltar</button>
+	<div class="header-bar">
+		<div class="row">
+			<mat-form-field class="search-input">
+			<input #myInput type="text" matInput placeholder="Buscar" (input)="filterItem(myInput.value)">
+			<i class="material-icons" matSuffix>search</i>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="users">
+		<div class="row" >
+		
+		<div class="col-xl-3 col-lg-3" *ngFor="let user of filteredUsers; let i = index;">
+			<mat-card>
+			<mat-card-content>
+				<div mat-card-avatar class="avatar"></div>
+				<br>
+				<br>
+				<mat-card-title><b>{{user.name}}</b></mat-card-title>
+			</mat-card-content>
+			<div class="mat-card-actions btn-group">
+				<br>
+				<button *ngIf="user['UserProfessor.StudentProfessor.accept'] === null" mat-raised-button class="btn" color="primary" (click)="sendIndication(user.id)">
+				<i class="material-icons">send</i> Enviar indicação
+				</button>
+				<button *ngIf="user['UserProfessor.StudentProfessor.activate'] === 1 && user['UserProfessor.StudentProfessor.accept'] === 0" mat-raised-button class="btn" color="primary">
+				<i class="material-icons">hourglass_full</i> Aguardando
+				</button>
+				<button *ngIf="user['UserProfessor.StudentProfessor.activate'] === 1 && user['UserProfessor.StudentProfessor.accept'] === 1 " mat-raised-button class="accept-btn" color="primary">
+				<i class="material-icons">thumb_up</i> Aceito
+				</button>
+				<button *ngIf="user['UserProfessor.StudentProfessor.activate'] === 1 && user['UserProfessor.StudentProfessor.accept'] === 2" mat-raised-button class="refused-btn" color="primary">
+				<i class="material-icons">thumb_down</i> Reprovado
+				</button>
+			</div>
+			</mat-card>
+		</div>
+
+		<mat-card>
+			<mat-card-content>
+				<mat-card-title><b>Convidar um professor</b></mat-card-title>
+				Insira o e-mail:
+				<form class="email-form" [formGroup]="emailForm">
+					<mat-form-field class="input">
+						<input matInput placeholder="E-mail" formControlName="email" required>
+						<mat-error *ngIf="emailForm.get('email').hasError('required')">
+							Digite o e-mail
+						</mat-error>
+						<mat-error *ngIf="!emailForm.get('email').hasError('required') && emailForm.get('email').hasError('email')">
+							Digite um e-mail válido
+						</mat-error>
+					</mat-form-field>
+				</form>
+			</mat-card-content>
+
+			<div class="mat-card-actions btn-group">
+				<button mat-raised-button class="btn" color="primary" (click)="sendEmail()">
+				<i class="material-icons">send</i> Enviar convite
+				</button>
+			</div>
+		</mat-card>
+		</div>
+	</div>
+</div>
+	
+	
+	
