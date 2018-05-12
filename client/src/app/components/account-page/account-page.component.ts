@@ -90,6 +90,6 @@ export class AccountPageComponent implements OnInit {
   }
 
   visitStudents(){
-    this.router.navigate(['/students-list'], this.user.id);
+    this.router.navigate(['/students-list']);
   }
 }

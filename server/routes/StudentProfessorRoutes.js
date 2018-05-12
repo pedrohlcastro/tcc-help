@@ -5,17 +5,19 @@ import StudentProfessorController from '../controllers/StudentProfessorControlle
 
 const router = new Router();
 
-router.get('/:id', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
-  const userId = req.params.id;
+router.get('/', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  const userId = req.user.id;
   StudentProfessorController.get({ id: userId })
     .then(data => res.json(data))
     .catch(err => next({ err, msg: 'Error DB query', status: 500 }));
 });
 
-router.get('/', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
-  StudentProfessorController.get()
+router.put('/', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  const myid = req.body.id;
+  const myflag = req.body.flag;
+
+  StudentProfessorController.update(myid, myflag)
     .then(data => res.json(data))
     .catch(err => next({ err, msg: 'Error DB query', status: 500 }));
 });
-
 export default router;
