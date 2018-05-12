@@ -8,25 +8,43 @@ export class ProfessorListService {
   baseUrl = 'http://localhost:8000';
   constructor(private authService:AuthService, private http: Http) { }
 
-  getProfessorList(){
+  getProfessorList(student_id){
     const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/professor_list/`)
+    return this.http.get(`${this.baseUrl}/professor_list/${student_id}`, options)
       .map((res) => {
         return res.json();
       });
   }
 
   inviteProfessor(userEmail){
-    return this.http.post(`${this.baseUrl}/professor_list/invitation`, userEmail)
+    const options = this.authService.addAuthHeader(true);
+    return this.http.post(`${this.baseUrl}/professor_list/invitation`, userEmail, options)
     .map((res)=> {
       return res.json();
     });
 
   }
 
+  checkAssociation(student_id){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/professor_list/already_associate/${student_id}`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
   create(data){
-    return this.http.post(`${this.baseUrl}/professor_list`, data)
+    const options = this.authService.addAuthHeader(true);
+    return this.http.post(`${this.baseUrl}/professor_list`, data, options)
       .map((res)=> {
+        return res.json();
+      });
+  }
+
+  remove(params, student_id, professor_id){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.put(`${this.baseUrl}/professor_list/${student_id}/${professor_id}`, params, options)
+      .map((res) => {
         return res.json();
       });
   }

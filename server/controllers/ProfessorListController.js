@@ -6,7 +6,7 @@ import config from '../config/config.json';
 
 class ProfessorListController {
   constructor() {
-    this.ProfessorList = db().models.StudentProfessor;
+    this.StudentProfessor = db().models.StudentProfessor;
     this.User = db().models.User;
     this.smtpTransport = nodemailer.createTransport({
       service: config.email_service,
@@ -23,18 +23,35 @@ class ProfessorListController {
     };
   }
 
+  alreadyAssociate(params) {
+    return new Promise((resolve, reject) => {
+      this.StudentProfessor.findOne({ where: { student_id: params.student_id, activate: 1 } })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  }
+
   create(data) {
     return new Promise((resolve, reject) => {
-      this.ProfessorList.create(data)
+      this.StudentProfessor.create(data)
         .then((result) => {
           /* eslint-disable */
           if (result._options.isNewRecord) { resolve({ msg: 'Association created', status: 200 }); } else { reject(new Error('Error running DB query')); }
           /* eslint-enable */
-        }).catch(err => reject(err));
+        }).catch((err) => {
+          // try update
+          this.StudentProfessor.update({ activate: 1 }, {
+            where: { student_id: data.student_id, professor_id: data.professor_id },
+          })
+            .then((result) => {
+              if (result) { resolve({ msg: 'Association activated', status: 200 }); } else { reject(new Error('Error running DB query')); }
+            })
+            .catch(reject(err));
+        });
     });
   }
 
-  get() {
+  getByUser(id) {
     const queryParams = {
       where: { type: 2, validate_professor: 1 },
       attributes: ['id', 'name', 'email', 'type'],
@@ -42,6 +59,8 @@ class ProfessorListController {
         model: this.User,
         as: 'UserProfessor',
         attributes: ['id'],
+        required: false,
+        where: { id, type: 1 },
       }],
       raw: true,
     };
@@ -70,6 +89,18 @@ class ProfessorListController {
       this.smtpTransport.sendMail(data)
         .then(() => resolve({ msg: 'Email sent', status: 200 }))
         .catch(er => reject(er));
+    });
+  }
+
+  remove(data, params) {
+    return new Promise((resolve, reject) => {
+      this.StudentProfessor.update(data, {
+        where: params,
+      })
+        .then((result) => {
+          if (result) { resolve({ msg: 'Association desactivated', status: 200 }); } else { reject(new Error('Error running DB query')); }
+        })
+        .catch(err => reject(err));
     });
   }
 }

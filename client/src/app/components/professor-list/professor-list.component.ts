@@ -13,7 +13,7 @@ export class ProfessorListComponent implements OnInit {
   user;
   showUsers = [];
   filteredUsers;
-
+  alreadyAssociate = 0;
   constructor(private authService: AuthService, private professorListService: ProfessorListService,
     private snackBar: MatSnackBar) { }
 
@@ -29,7 +29,17 @@ export class ProfessorListComponent implements OnInit {
           });
         }
 
-        this.professorListService.getProfessorList()
+        this.professorListService.checkAssociation(this.user.id)
+          .subscribe((res) => {
+            if (res !== null)
+              this.alreadyAssociate = 1;
+          },
+          error => {
+            console.log(error.statusText);
+          }
+        );
+
+        this.professorListService.getProfessorList(this.user.id)
           .subscribe((res) => {
             this.showUsers = res;
             this.filteredUsers = Object.assign([], this.showUsers);
@@ -94,6 +104,10 @@ export class ProfessorListComponent implements OnInit {
   }
 
   sendIndication(teacherId){
+    if (this.alreadyAssociate === 1){
+      this.snackBar.open("Você já está associado a algum professor.", 'Fechar', {duration: 3000});
+      return;
+    }
     let requestIndication = {
       accept: 0,
       activate: 1,
@@ -103,7 +117,7 @@ export class ProfessorListComponent implements OnInit {
 
     this.professorListService.create(requestIndication)
       .subscribe((res) => {
-        this.snackBar.open("Indicação enviada com sucesso!.", 'Fechar', {duration: 3000});
+        this.snackBar.open("Indicação enviada com sucesso.", 'Fechar', {duration: 3000});
       },
       error => {
         console.log(error.statusText);
@@ -111,6 +125,40 @@ export class ProfessorListComponent implements OnInit {
       }
     );
 
+    let userUpdated = this.showUsers.find( (User)=> { return (User["id"] == teacherId)} );
+    userUpdated["UserProfessor.StudentProfessor.activate"] = 1;
+    userUpdated["UserProfessor.StudentProfessor.accept"] = 0;
+    userUpdated["UserProfessor.StudentProfessor.id"] = undefined;
+    userUpdated["UserProfessor.StudentProfessor.professor_id"] = teacherId;
+    userUpdated["UserProfessor.StudentProfessor.student_id"] = this.user.id;
+    this.filteredUsers = Object.assign([], this.showUsers);
 
+    this.alreadyAssociate = 1;
+  }
+
+  removeIndication(professor_id){
+    const data = {
+      accept: 0,
+      activate: 0
+    }
+
+    this.professorListService.remove(data, this.user.id, professor_id)
+      .subscribe((res) => {
+        this.snackBar.open("Associação removida com sucesso", 'Fechar', {duration: 3000});
+      },
+      error => {
+        console.log(error.statusText);
+        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
+      })
+    
+    let userUpdated = this.showUsers.find( (User)=> { return (User["UserProfessor.StudentProfessor.student_id"] == this.user.id)} );
+    userUpdated["UserProfessor.StudentProfessor.id"] = undefined;
+    userUpdated["UserProfessor.StudentProfessor.professor_id"] = undefined;
+    userUpdated["UserProfessor.StudentProfessor.student_id"] = undefined;
+    userUpdated["UserProfessor.StudentProfessor.activate"] = 0;
+    userUpdated["UserProfessor.StudentProfessor.accept"] = 0;
+    this.filteredUsers = Object.assign([], this.showUsers);
+
+    this.alreadyAssociate = 0;
   }
 }
