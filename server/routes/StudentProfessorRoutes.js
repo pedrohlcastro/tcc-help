@@ -13,10 +13,10 @@ router.get('/', passport.authenticate('BasicBearer', { session: false }), (req, 
 });
 
 router.put('/', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
-  const myid = req.body.id;
-  const myflag = req.body.flag;
+  const myId = req.body.id;
+  const myFlag = req.body.flag;
 
-  StudentProfessorController.update(myid, myflag)
+  StudentProfessorController.update(myId, myFlag)
     .then(data => res.json(data))
     .catch(err => next({ err, msg: 'Error DB query', status: 500 }));
 });
