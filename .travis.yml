@@ -30,7 +30,7 @@ script:
   - ./pre-commit
   - ./manage.sh --stop
   - docker-compose -f docker-compose.test-unit.yml build
-  - docker-compose -f docker-compose.test-unit.yml up -d
+  - docker-compose -f docker-compose.test-unit.yml up
 
 after_script:
   - ./manage.sh --stop
