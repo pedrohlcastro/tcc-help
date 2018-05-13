@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import async from 'async';
 import scissors from 'scissors';
-import { spawn } from 'child_process';
 import pdfUtil from 'pdf-to-text';
 /* eslint-disable */
 import Nodehun from 'nodehun';
