@@ -62,6 +62,15 @@ class TccController {
     });
   }
 
+  async getFile(res, next, tccId) {
+    try {
+      const tcc = await this.Tcc.findOne({ where: { id: tccId } });
+      res.download(path.join(__dirname, `../upload/${tcc.file_path}`));
+    } catch (err) {
+      next(next({ err, msg: 'Error ao atualizar regra', status: 500 }));
+    }
+  }
+
   runProfessorRules(tccId, studentId) {
     const queryParams = {
       where: {

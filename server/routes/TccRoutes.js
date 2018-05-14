@@ -25,4 +25,8 @@ router.get('/runRule/:tccId', passport.authenticate('BasicBearer', { session: fa
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
+router.get('/file/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  return TccController.getFile(res, next, req.params.tccId);
+});
+
 export default router;

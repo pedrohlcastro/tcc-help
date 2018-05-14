@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PdfService } from '../../services/pdf-service';
 import {MatSnackBar} from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 declare const $: any;
 
@@ -30,9 +31,16 @@ export class CheckTccPageComponent implements OnInit {
       accept: false,
     }
   ]
-  constructor(private pdfService: PdfService, private snackBar: MatSnackBar) { }
+  constructor(
+    private pdfService: PdfService,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.tccId = params['id'];
+    });
     this.getPdfFile();
     this.pdfService.loadPDF(this.src);
     this.page = 1;
@@ -48,15 +56,16 @@ export class CheckTccPageComponent implements OnInit {
    * build pdf source URL
   */
   getPdfFile() {
-    this.src = '/assets/sample.pdf';
-    // const token = JSON.parse(localStorage.getItem('userToken'));
-    // this.src = {
-    //   url: `/api/area/getfile?areaId=${this.tccId}`,
-    //   withCredentials: true,
-    //   httpHeaders: {
-    //     Authorization: token.token
-    //   }
-    // };
+    // this.src = '/assets/sample.pdf';
+    const token = JSON.parse(localStorage.getItem('userToken'));
+    console.log(token);
+    this.src = {
+      url: `http://localhost:8000/tcc/file/${this.tccId}`,
+      withCredentials: false,
+      httpHeaders: {
+        Authorization: token.token
+      }
+    };
   }
 
   setStep(index){
