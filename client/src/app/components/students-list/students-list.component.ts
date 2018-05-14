@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StudentProfessorService } from '../../services/student-professor.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../services/auth.service';
+import { YesnoDialogComponent } from '../yesno-dialog/yesno-dialog.component'
 
 @Component({
   selector: 'app-students-list',
@@ -12,7 +13,8 @@ import { AuthService } from '../../services/auth.service';
 export class StudentsListComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private studentProfessorService: StudentProfessorService,
-    private snackBar: MatSnackBar, private authService: AuthService, private router: Router) { }
+    private snackBar: MatSnackBar, private authService: AuthService, private router: Router,
+    private dialog: MatDialog) { }
 
   private userId;
   private students = [];
@@ -53,30 +55,50 @@ export class StudentsListComponent implements OnInit {
     let element = this.aproved[index];
     /*continue*/
   }
-  acceptPendentStudent(index) {
-    let element = this.pendent[index];
-    let id = element["UserProfessor.StudentProfessor.id"];
-    //id da tabela de associação
-    this.studentProfessorService.feedbackStudent(id, 1).subscribe(result => {
-      window.location.reload();
-    }, (err) => {
-      this.snackBar.open('Não foi possível responder ao aluno.', 'Fechar', {
-        duration: 7000
-      });
+  
+  handlePendentStudent(index, flag) {
+    let dialogRef = this.dialog.open(YesnoDialogComponent, {
+      width: '40%',
+      height: "30%",
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        let element = this.pendent[index];
+        let id = element["UserProfessor.StudentProfessor.id"];
+        //id da tabela de associação
+        this.studentProfessorService.feedbackStudent(id, flag, 1).subscribe(result => {
+          window.location.reload();
+        }, (err) => {
+          this.snackBar.open('Não foi possível responder ao aluno.', 'Fechar', {
+            duration: 7000
+          });
+        })
+      }
     })
   }
-  denyPendentStudent(index) {
-    let element = this.pendent[index];
-    let id = element["UserProfessor.StudentProfessor.id"];
-    //id da tabela de associação
-    this.studentProfessorService.feedbackStudent(id, 2).subscribe(result => {
-      window.location.reload();
-    }, (err) => {
-      this.snackBar.open('Não foi possível responder ao aluno.', 'Fechar', {
-        duration: 7000
-      });
+ 
+  removeStudent(index){
+    let dialogRef = this.dialog.open(YesnoDialogComponent, {
+      width: '40%',
+      height: "30%",
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        let element = this.aproved[index];
+        let id = element["UserProfessor.StudentProfessor.id"];
+        this.studentProfessorService.feedbackStudent(id, 0, 0).subscribe(result => {
+          window.location.reload();
+        }, (err) => {
+          this.snackBar.open('Não foi possível remover o aluno.', 'Fechar', {
+            duration: 7000
+          });
+        })
+      }
     })
   }
+
   filterAproved(value) {
     if (!value)
       this.filteredAproved = this.aproved;

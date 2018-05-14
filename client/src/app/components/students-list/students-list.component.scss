@@ -1,3 +1,5 @@
+@import '~variables.scss';
+
 .header{
     margin-top: 5%;
 }
@@ -47,4 +49,23 @@ h3{
 .search-input{
     margin-left: 10px;
     margin-top: 5px;
+}
+
+.avatar{
+    width: 72px;
+    height: 72px;
+    margin: -5% auto;
+    background-color: $second-color;
+}
+
+.remove-btn{
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    background-color: red;
+}
+
+mat-card-title {
+    font-size: 18px;
+    text-align: center;
 }

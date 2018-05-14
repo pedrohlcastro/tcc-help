@@ -28,9 +28,10 @@ class StudentProfessorController {
     });
   }
 
-  update(id, flag) {
+  update(id, acceptFlag, activateFlag) {
     return new Promise((resolve, reject) => {
-      this.StudentProfessor.update({ accept: flag }, { where: { id } })
+      this.StudentProfessor.update({ accept: acceptFlag, activate: activateFlag },
+         { where: { id } })
         .then((result) => {
           if (result) {
             resolve({ status: 'Success' });

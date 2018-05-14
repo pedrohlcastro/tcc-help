@@ -18,11 +18,16 @@
               <div class="col-3" *ngFor="let student of filteredAproved; let i = index;">
                 <mat-card class="inner-card">
                   <mat-card-content>
+
+                      <button mat-raised-button class="remove-btn" color="primary" (click)="removeStudent(i)">
+                          <i class="material-icons">remove</i> Remover
+                      </button>
+
                     <div mat-card-avatar class="avatar"></div>
                     <br>
                     <br>
                     <mat-card-title>
-                      <b>{{student["UserProfessor.name"]}}</b>
+                      <b>{{ (student["UserProfessor.name"].length>13)? (student["UserProfessor.name"] | slice:0:13)+'...':(student["UserProfessor.name"]) }} </b>
                     </mat-card-title>
                   </mat-card-content>
                   <div class="mat-card-actions">
@@ -52,14 +57,14 @@
                     <br>
                     <br>
                     <mat-card-title>
-                      <b>{{student["UserProfessor.name"]}}</b>
+                      <b>{{ (student["UserProfessor.name"].length>13)? (student["UserProfessor.name"] | slice:0:13)+'...':(student["UserProfessor.name"]) }}</b>
                     </mat-card-title>
                   </mat-card-content>
 
                   <div class="mat-card-actions">
-                    <button mat-raised-button class="refuse-btn col-5" color="primary" (click)="denyPendentStudent(i)">
+                    <button mat-raised-button class="refuse-btn col-5" color="primary" (click)="handlePendentStudent(i, 2)">
                       <i class="material-icons">close</i> Negar </button>
-                    <button mat-raised-button class="accept-btn col-5" color="primary" (click)="acceptPendentStudent(i)">
+                    <button mat-raised-button class="accept-btn col-5" color="primary" (click)="handlePendentStudent(i, 1)">
                       <i class="material-icons">done</i> Aceitar </button>
                   </div>
                 </mat-card>
@@ -68,7 +73,7 @@
           </div>
         </mat-tab>
 
-        <mat-tab label="Desconectados">
+        <mat-tab label="Removidos">
           <div class="tab-content">
 
             <mat-form-field class="search-input">
@@ -84,7 +89,7 @@
                     <br>
                     <br>
                     <mat-card-title>
-                      <b>{{student["UserProfessor.name"]}}</b>
+                      <b>{{ (student["UserProfessor.name"].length>13)? (student["UserProfessor.name"] | slice:0:13)+'...':(student["UserProfessor.name"]) }}</b>
                     </mat-card-title>
                   </mat-card-content>
                   <div class="mat-card-actions">

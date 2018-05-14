@@ -17,16 +17,18 @@ export class StudentProfessorService {
       });
   }
 
-  feedbackStudent(id, flag){
+  feedbackStudent(id, acceptFlag, activateFlag){
     const options = this.authService.addAuthHeader(true);
     const body = {
       id: id,
-      flag: flag
+      acceptFlag: acceptFlag,
+      activateFlag: activateFlag
     }
     return this.http.put(`${this.baseUrl}/studentProfessor/`, body, options)
       .map((res) => {
         return res.json();
       });
   }
+
 
 }

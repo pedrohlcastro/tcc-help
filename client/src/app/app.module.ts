@@ -30,6 +30,7 @@ import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
 import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/forum-answer-dialog.component';
 import { StudentsListComponent } from './components/students-list/students-list.component';
+import { YesnoDialogComponent } from './components/yesno-dialog/yesno-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,12 +49,14 @@ import { StudentsListComponent } from './components/students-list/students-list.
     HelpPageComponent,
     ForumAnswersComponent,
     ForumAnswerDialogComponent,
-    StudentsListComponent
+    StudentsListComponent,
+    YesnoDialogComponent
   ],
   entryComponents: [
     RuleDialogComponent,
     ForumDialogComponent,
-    ForumAnswerDialogComponent
+    ForumAnswerDialogComponent,
+    YesnoDialogComponent
   ],
   imports: [
     BrowserModule,
