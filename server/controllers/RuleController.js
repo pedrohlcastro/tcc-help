@@ -14,14 +14,16 @@ class RuleController {
     });
   }
 
-  get(params) {
+  get(userId, params) {
     return new Promise((resolve, reject) => {
       if (params) {
-        this.Rule.findOne({ where: params, raw: true })
+        const options = params;
+        options.professor_id = userId;
+        this.Rule.findOne({ where: options, raw: true })
           .then(res => resolve(res))
           .catch(err => reject(err));
       } else {
-        this.Rule.findAll({})
+        this.Rule.findAll({ where: { professor_id: userId } })
           .then(res => resolve(res))
           .catch(err => reject(err));
       }

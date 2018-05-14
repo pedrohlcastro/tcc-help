@@ -7,11 +7,14 @@ import pdfUtil from 'pdf-to-text';
 import Nodehun from 'nodehun';
 /* eslint-enable */
 import db from '../config/db';
+import RuleController from '../controllers/RuleController';
 
 
 class TccController {
   constructor() {
     this.Tcc = db().models.Tcc;
+    this.StudentProfessor = db().models.StudentProfessor;
+    this.CheckRule = db().models.CheckRule;
   }
 
   /**
@@ -56,6 +59,74 @@ class TccController {
         if (err) { reject(err); }
         resolve({ status: correct, suggestion: suggestions, word: origWord });
       });
+    });
+  }
+
+  runProfessorRules(tccId, studentId) {
+    const queryParams = {
+      where: {
+        id: tccId,
+        '$TccStudentProfessor.student_id$': studentId,
+        '$TccStudentProfessor.activate$': 1,
+      },
+      include: [{
+        model: this.StudentProfessor,
+        as: 'TccStudentProfessor',
+        attributes: ['professor_id', 'activate'],
+      }],
+    };
+    return new Promise(async (resolve, reject) => {
+      try {
+        const tcc = await this.Tcc.findOne(queryParams);
+        let professorId;
+        if (tcc.TccStudentProfessor.professor_id) {
+          professorId = tcc.TccStudentProfessor.professor_id;
+        } else {
+          reject(new Error('Relation Not Found Tcc - StudentProfessor'));
+        }
+        const rules = await RuleController.get(professorId);
+        const pages = await this.pdf2Txt(path.join(__dirname, `../upload/${tcc.file_path}`));
+        // PECORRE CADA REGEX
+        async.forEach(rules, (rule, nextRegex) => {
+          const regex = new RegExp(rule.regex, 'g');
+
+          // PECORRE PAGINAS
+          async.forEach(pages, (page, nextPage) => {
+            const matches = page.match(regex);
+            if (matches) {
+              // CREATE checkRule
+              async.forEach(matches, async (match, nextMatch) => {
+                const checkRule = {
+                  rule_id: rule.id,
+                  tcc_id: tcc.id,
+                  accept: 0,
+                  word: match,
+                  page: parseInt(pages.indexOf(page), 10) + 1,
+                };
+                this.CheckRule.create(checkRule)
+                  .then(() => nextMatch())
+                  .catch(checkRuleErr => nextMatch(checkRuleErr));
+              }, (err) => {
+                // FINALLY de CREATE checkRule
+                if (err) reject(err);
+                else nextPage();
+              });
+            } else {
+              nextPage();
+            }
+          }, (err) => {
+            // FINALLY de PECORRE PAGINAS
+            if (err) reject(err);
+            else nextRegex();
+          });
+        }, (err) => {
+          // PECORRE CADA REGEX
+          if (err) reject(err);
+          resolve();
+        });
+      } catch (err) {
+        reject(err);
+      }
     });
   }
 }
