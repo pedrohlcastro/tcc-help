@@ -98,7 +98,7 @@ class TccController {
         // PECORRE CADA REGEX
         async.forEach(rules, (rule, nextRegex) => {
           const regex = new RegExp(rule.regex, 'g');
-
+          pages.splice(0, 1); // remove page 0
           // PECORRE PAGINAS
           async.forEach(pages, (page, nextPage) => {
             const matches = page.match(regex);
@@ -136,6 +136,14 @@ class TccController {
       } catch (err) {
         reject(err);
       }
+    });
+  }
+
+  update(id, data) {
+    return new Promise((resolve, reject) => {
+      this.Tcc.update(data, { where: { id } })
+        .then(() => resolve())
+        .catch(err => reject(err));
     });
   }
 }

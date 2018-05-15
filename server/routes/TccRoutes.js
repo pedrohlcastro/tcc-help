@@ -18,15 +18,19 @@ router.get('/parseTxt/:fileName/:page', (req, res, next) => {
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
-router.get('/runRule/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+router.get('/runRules/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
   const userId = req.user.id;
   TccController.runProfessorRules(req.params.tccId, userId)
-    .then(data => res.json(data))
+    .then(() => res.json({ result: 'Success' }))
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
-router.get('/file/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
-  return TccController.getFile(res, next, req.params.tccId);
+router.put('/sendToProfessor', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  TccController.update(req.body.id, { visible_professor: 1 })
+    .then(() => res.json({ result: 'Success' }))
+    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
+
+router.get('/file/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => TccController.getFile(res, next, req.params.tccId));
 
 export default router;

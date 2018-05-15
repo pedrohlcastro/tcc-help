@@ -6,7 +6,7 @@ declare var PDFJS: any;
 @Injectable()
 export class PdfService {
   url;
-  workerUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.9.489/pdf.worker.min.js';
+  workerUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.489/pdf.worker.min.js';
   numPages;
   pdfDoc;
   canvas;
@@ -71,7 +71,7 @@ export class PdfService {
   */
   query(text: string) {
     this.pdfFindController.executeCommand('find', {
-      caseSensitive: true,
+      caseSensitive: false,
       findPrevious: true,
       highlightAll: true,
       phraseSearch: true,

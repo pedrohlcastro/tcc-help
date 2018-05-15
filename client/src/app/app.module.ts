@@ -31,6 +31,7 @@ import { ForumAnswersComponent } from './components/forum-answers/forum-answers.
 import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/forum-answer-dialog.component';
 import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
 import { PdfService } from './services/pdf-service';
+import { TccService } from './services/tcc.service';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { PdfService } from './services/pdf-service';
     RuleService,
     ForumService,
     PdfService,
+    TccService,
     UserSignedInGuard
   ],
   bootstrap: [AppComponent]
