@@ -29,7 +29,7 @@ before_script:
 
 script:
   - ./pre-commit
-  - docker exec tcchelp_app_1 npm test
+  - docker exec tcchelp_app_1 npm run test-unit
 
 after_script:
   - ./manage.sh --stop
