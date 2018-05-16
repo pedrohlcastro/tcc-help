@@ -33,4 +33,11 @@ router.put('/sendToProfessor', passport.authenticate('BasicBearer', { session: f
 
 router.get('/file/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => TccController.getFile(res, next, req.params.tccId));
 
+router.get('/runSpelling/:tccId', (req, res, next) => {
+  // const userId = req.user.id;
+  TccController.runSpelling(req.params.tccId, 2)
+    .then(data => res.json(data))
+    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+});
+
 export default router;

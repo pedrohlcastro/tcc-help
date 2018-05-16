@@ -15,6 +15,7 @@ class TccController {
     this.Tcc = db().models.Tcc;
     this.StudentProfessor = db().models.StudentProfessor;
     this.CheckRule = db().models.CheckRule;
+    this.CheckSpelling = db().models.CheckSpelling;
   }
 
   /**
@@ -45,20 +46,6 @@ class TccController {
             }
           });
         });
-    });
-  }
-
-  checkSpelling(params) {
-    const dictionaryDirectory = path.join(__dirname, '../config/dictionaries');
-    const affbuf = fs.readFileSync(`${dictionaryDirectory}/${params.language}.aff`);
-    const dictbuf = fs.readFileSync(`${dictionaryDirectory}/${params.language}.dic`);
-    const dict = new Nodehun(affbuf, dictbuf);
-
-    return new Promise((resolve, reject) => {
-      dict.spellSuggestions('computdor', (err, correct, suggestions, origWord) => {
-        if (err) { reject(err); }
-        resolve({ status: correct, suggestion: suggestions, word: origWord });
-      });
     });
   }
 
@@ -144,6 +131,77 @@ class TccController {
       this.Tcc.update(data, { where: { id } })
         .then(() => resolve())
         .catch(err => reject(err));
+    });
+  }
+
+  runSpelling(tccId, studentId) {
+    const queryParams = {
+      where: {
+        id: tccId,
+        '$TccStudentProfessor.student_id$': studentId,
+        '$TccStudentProfessor.activate$': 1,
+      },
+      include: [{
+        model: this.StudentProfessor,
+        as: 'TccStudentProfessor',
+        attributes: ['professor_id', 'activate'],
+      }],
+    };
+
+    const firstLanguage = 'pt_BR';
+    const secondLanguage = 'en_US';
+    const dictionaryDirectory = path.join(__dirname, '../config/dictionaries');
+    const affbuf = fs.readFileSync(`${dictionaryDirectory}/${firstLanguage}.aff`);
+    const dictbufPTBr = fs.readFileSync(`${dictionaryDirectory}/${firstLanguage}.dic`);
+    const dictbufEnUs = fs.readFileSync(`${dictionaryDirectory}/${secondLanguage}.dic`);
+    const dict = new Nodehun(affbuf, dictbufPTBr);
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const tcc = await this.Tcc.findOne(queryParams);
+        if (!tcc.TccStudentProfessor.professor_id) {
+          reject(new Error('Relation Not Found Tcc - StudentProfessor'));
+        }
+        const pages = await this.pdf2Txt(path.join(__dirname, `../upload/${tcc.file_path}`));
+        // pages.splice(0, 1); // remove page 0
+        dict.addDictionary(dictbufEnUs, (errDict) => {
+          if (errDict) { reject(errDict); } else {
+            // PERCORRE PAGINAS
+            async.forEach(pages, (page, nextPage) => {
+              const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ' ').replace(/\s\s+/g, ' ').trim()
+                .split(' ');
+              async.forEach(words, (word, nextWord) => {
+                nextWord();
+                // dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
+                //   if (!correct) {
+                //     const checkSpelling = {
+                //       tcc_id: tcc.id,
+                //       accept: 0,
+                //       word: origWord,
+                //       suggestions,
+                //       page: parseInt(pages.indexOf(page), 10) + 1,
+                //     };
+                //      this.CheckSpelling.create(checkSpelling)
+                //       .then(() => nextWord())
+                //       .catch(checkSpellingErr => nextWord(checkSpellingErr));
+                //   }
+                //   nextWord();
+                // });
+              }, (err) => {
+                // FINALLY WORDS
+                if (err) reject(err);
+                else nextPage();
+              });
+            }, (err) => {
+              // PECORRE CADA PAGE
+              if (err) reject(err);
+              resolve();
+            });
+          }
+        });
+      } catch (err) {
+        reject(err);
+      }
     });
   }
 }
