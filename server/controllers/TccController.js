@@ -167,21 +167,143 @@ class TccController {
     });
   }
 
-  checkSpelling() {
-    const firstLanguage = 'pt_BR';
-    const secondLanguage = 'en_US';
-    // const thirdLanguage = 'es_SP';
-
-    const word = 'Errad';
+  checkSpelling(word, arrayLanguages) {
+    const dictionaryDirectory = path.join(__dirname, '../config/dictionaries');
+    // const word = 'extraño';
+    // let arrayLanguages = [];
+    // arrayLanguages [0] = 'pt_BR';
+    // arrayLanguages [1] = 'en_US';
+    // arrayLanguages [2] = 'es_SP';
+    // if(arrayLanguages.length === 3){
+    //   arrayLanguages.splice(0, 1);
+    //   arrayLanguages[0] = 'EN_PT';
+    // }
+    let dictbuf = '';
+    if (arrayLanguages.length === 2) { dictbuf = fs.readFileSync(`${dictionaryDirectory}/${arrayLanguages[1]}.dic`); }
     return new Promise(async (resolve, reject) => {
       try {
-        let dict = await this.createDictionary(firstLanguage);
-        dict = await this.appendDictionary(dict, secondLanguage);
-        dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
-          if (errSpell) {
-            reject(errSpell);
+        const dict = await this.createDictionary(arrayLanguages[0]);
+        if (arrayLanguages.length === 2) {
+          dict.addDictionary(dictbuf, (err) => {
+            if (!err) {
+              dict.spellSuggestions(word, (errSpell, correct, suggestion, origWord) => {
+                if (errSpell) {
+                  reject(errSpell);
+                } else {
+                  resolve({ status: correct, suggestions: suggestion, originalWord: origWord });
+                }
+              });
+            } else {
+              reject(err);
+            }
+          });
+        } else {
+          dict.spellSuggestions(word, (errSpell, correct, suggestion, origWord) => {
+            if (errSpell) {
+              reject(errSpell);
+            } else {
+              resolve({ status: correct, suggestions: suggestion, originalWord: origWord });
+            }
+          });
+        }
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  runSpellingOneLanguage(tcc, pages, language) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dict = await this.createDictionary(language);
+        // PERCORRE PAGINAS
+        async.forEach(pages, (page, nextPage) => {
+          /* eslint-disable */
+          const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ' ')
+            .replace(/\s\s+/g, ' ').trim().split(' ');
+          /* eslint-enable */
+          async.forEach(words, (word, nextWord) => {
+            dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
+              if (errSpell) {
+                nextWord(errSpell);
+              } else if (!correct) {
+                const checkSpelling = {
+                  tcc_id: tcc.id,
+                  accept: 0,
+                  word: origWord,
+                  suggestions: suggestions.toString(),
+                  justification: null,
+                  page: parseInt(pages.indexOf(page), 10) + 1,
+                };
+                this.CheckSpelling.create(checkSpelling)
+                  .then(() => nextWord())
+                  .catch(checkSpellingErr => nextWord(checkSpellingErr));
+              } else {
+                nextWord();
+              }
+            });
+          }, (err) => {
+            // FINALLY WORDS
+            if (err) reject(err);
+            else nextPage();
+          });
+        }, (err) => {
+          // PECORRE CADA PAGE
+          if (err) reject(err);
+          resolve();
+        });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  runSpellingTwoLanguages(tcc, pages, arrayLanguages) {
+    const dictionaryDirectory = path.join(__dirname, '../config/dictionaries');
+    const dictbuf = fs.readFileSync(`${dictionaryDirectory}/${arrayLanguages[1]}.dic`);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dict = await this.createDictionary(arrayLanguages[0]);
+        dict.addDictionary(dictbuf, (errDictionary) => {
+          if (!errDictionary) {
+            // PERCORRE PAGINAS
+            async.forEach(pages, (page, nextPage) => {
+              /* eslint-disable */
+              const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ' ')
+                .replace(/\s\s+/g, ' ').trim().split(' ');
+              /* eslint-enable */
+              async.forEach(words, (word, nextWord) => {
+                dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
+                  if (errSpell) {
+                    nextWord(errSpell);
+                  } else if (!correct) {
+                    const checkSpelling = {
+                      tcc_id: tcc.id,
+                      accept: 0,
+                      word: origWord,
+                      suggestions: suggestions.toString(),
+                      justification: null,
+                      page: parseInt(pages.indexOf(page), 10) + 1,
+                    };
+                    this.CheckSpelling.create(checkSpelling)
+                      .then(() => nextWord())
+                      .catch(checkSpellingErr => nextWord(checkSpellingErr));
+                  } else {
+                    nextWord();
+                  }
+                });
+              }, (err) => {
+                // FINALLY WORDS
+                if (err) reject(err);
+                else nextPage();
+              });
+            }, (err) => {
+              // PECORRE CADA PAGE
+              if (err) reject(err);
+              resolve();
+            });
           } else {
-            resolve({ status: correct, sug: suggestions, w: origWord });
+            reject(errDictionary);
           }
         });
       } catch (err) {
@@ -190,91 +312,49 @@ class TccController {
     });
   }
 
-//   runSpelling(tccId, studentId) {
-//     const queryParams = {
-//       where: {
-//         id: tccId,
-//         '$TccStudentProfessor.student_id$': studentId,
-//         '$TccStudentProfessor.activate$': 1,
-//       },
-//       include: [{
-//         model: this.StudentProfessor,
-//         as: 'TccStudentProfessor',
-//         attributes: ['professor_id', 'activate'],
-//       }],
-//     };
+  runSpelling(tccId, studentId) {
+    const queryParams = {
+      where: {
+        id: tccId,
+        '$TccStudentProfessor.student_id$': studentId,
+        '$TccStudentProfessor.activate$': 1,
+      },
+      include: [{
+        model: this.StudentProfessor,
+        as: 'TccStudentProfessor',
+        attributes: ['professor_id', 'activate'],
+      }],
+    };
+    const arrayLanguages = [];
+    arrayLanguages[0] = 'pt_BR';
+    arrayLanguages[1] = 'en_US';
+    arrayLanguages[2] = 'es_SP';
 
-//     const firstLanguage = 'pt_BR';
-//     const secondLanguage = 'en_US';
-//     const thirdLanguage = 'es_SP';
-//     const dictionaryDirectory = path.join(__dirname, '../config/dictionaries');
-//     const affbuf = fs.readFileSync(`${dictionaryDirectory}/${firstLanguage}.aff`);
-//     const dictbufPTBr = fs.readFileSync(`${dictionaryDirectory}/${firstLanguage}.dic`);
-//     const dictbufEnUs = [];
-//     dictbufEnUs[0] = fs.readFileSync(`${dictionaryDirectory}/${secondLanguage}.dic`);
-//     dictbufEnUs[1] = fs.readFileSync(`${dictionaryDirectory}/${thirdLanguage}.dic`);
-//     const dict = new Nodehun(affbuf, dictbufPTBr);
-
-//     return new Promise(async (resolve, reject) => {
-//       try {
-//         const tcc = await this.Tcc.findOne(queryParams);
-//         if (!tcc.TccStudentProfessor.professor_id) {
-//           reject(new Error('Relation Not Found Tcc - StudentProfessor'));
-//         }
-//         const pages = await this.pdf2Txt(path.join(__dirname, `../upload/${tcc.file_path}`));
-//         // pages.splice(0, 1); // remove page 0
-//         for (let i = 0; i < dictbufEnUs.length; i++) {
-//           //console.log(`i: ${i}`);
-//           dict.addDictionary(dictbufEnUs[i], (errDict) => {
-//             if (errDict) { reject(errDict); } else {
-//               // PERCORRE PAGINAS
-//               // if(i == dictbufEnUs.length - 1){}
-//               async.forEach(pages, (page, nextPage) => {
-                  /* eslint-disable */
-//                 const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ' ').replace(/\s\s+/g, ' ').trim()
-//                   .split(' ');
-                  /* eslint-enable */
-//                 async.forEach(words, (word, nextWord) => {
-//                   // nextWord();
-
-//                   dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
-//                     if (!correct) {
-//                       const checkSpelling = {
-//                         tcc_id: tcc.id,
-//                         accept: 0,
-//                         word: origWord,
-//                         suggestions: suggestions.toString(),
-//                         page: parseInt(pages.indexOf(page), 10) + 1,
-//                       };
-//                       if (i == dictbufEnUs.length) {
-//                         this.CheckSpelling.create(checkSpelling)
-//                           .then(() => nextWord())
-//                           .catch(checkSpellingErr => nextWord(checkSpellingErr));
-//                       } else {
-//                         nextWord();
-//                       }
-//                     } else {
-//                       nextWord();
-//                     }
-//                   });
-//                 }, (err) => {
-//                   // FINALLY WORDS
-//                   if (err) reject(err);
-//                   else nextPage();
-//                 });
-//               }, (err) => {
-//                 // PECORRE CADA PAGE
-//                 if (err) reject(err);
-//                 resolve();
-//               });
-//             }
-//           });
-//         }
-//       } catch (err) {
-//         reject(err);
-//       }
-//     });
-//   }
+    if (arrayLanguages.length === 3) {
+      arrayLanguages.splice(0, 1);
+      arrayLanguages[0] = 'EN_PT';
+    }
+    return new Promise(async (resolve, reject) => {
+      try {
+        const tcc = await this.Tcc.findOne(queryParams);
+        if (!tcc.TccStudentProfessor.professor_id) {
+          reject(new Error('Relation Not Found Tcc - StudentProfessor'));
+        }
+        const pages = await this.pdf2Txt(path.join(__dirname, `../upload/${tcc.file_path}`));
+        if (arrayLanguages.length === 1) {
+          this.runSpellingOneLanguage(tcc, pages, arrayLanguages[0])
+            .then(() => resolve({ msg: 'Success', status: 200 }))
+            .catch(err => reject(err));
+        } else {
+          this.runSpellingTwoLanguages(tcc, pages, arrayLanguages)
+            .then(() => resolve({ msg: 'Success', status: 200 }))
+            .catch(err => reject(err));
+        }
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
 }
 
 export default new TccController();
