@@ -46,7 +46,11 @@ class ProfessorListController {
             .then((result) => {
               if (result) { resolve({ msg: 'Association activated', status: 200 }); } else { reject(new Error('Error running DB query')); }
             })
-            .catch(reject(err));
+            .catch((error) => {
+              console.log(err);
+              console.log(error);
+              reject(error);
+            });
         });
     });
   }
