@@ -7,7 +7,7 @@ import TccController from '../controllers/TccController';
 const router = new Router();
 
 router.get('/spell/:language', (req, res, next) => {
-  TccController.checkSpelling(req.params)
+  TccController.checkSpelling()
     .then(result => res.json(result))
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
@@ -35,7 +35,7 @@ router.get('/file/:tccId', passport.authenticate('BasicBearer', { session: false
 
 router.get('/runSpelling/:tccId', (req, res, next) => {
   // const userId = req.user.id;
-  TccController.runSpelling(req.params.tccId, 2)
+  TccController.runSpelling(req.params.tccId, 1)
     .then(data => res.json(data))
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });

@@ -11,12 +11,16 @@ export default (sequelize, DataType) => {
         allowNull: false,
       },
       accept: {
-        type: DataType.TINYINT(1),
+        type: DataType.TINYINT(2),
         allowNull: false,
       },
       page: {
         type: DataType.INTEGER,
         allowNull: false,
+      },
+      justification: {
+        type: DataType.STRING(255),
+        allowNull: true,
       },
     },
     {

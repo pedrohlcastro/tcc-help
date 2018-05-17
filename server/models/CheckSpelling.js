@@ -14,8 +14,12 @@ export default (sequelize, DataType) => {
         type: DataType.STRING(255),
         allowNull: true,
       },
+      justification: {
+        type: DataType.STRING(255),
+        allowNull: true,
+      },
       accept: {
-        type: DataType.TINYINT(1),
+        type: DataType.TINYINT(2),
         allowNull: false,
       },
       page: {
