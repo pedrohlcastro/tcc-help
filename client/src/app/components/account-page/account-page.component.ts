@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-account-page',
@@ -11,14 +12,14 @@ import { MatSnackBar } from '@angular/material';
 export class AccountPageComponent implements OnInit {
   user;
   type;
-  constructor(private authService: AuthService, private snackBar: MatSnackBar) {
+  constructor(private authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
   }
 
   ngOnInit() {
     this.authService.getUserFromToken()
       .subscribe((res) => {
         this.user = res;
-        this.type = res.type;
+        this.type = res.type; 
         this.accountForm.patchValue({
           username: res.name,
           email: res.email,
@@ -30,6 +31,7 @@ export class AccountPageComponent implements OnInit {
         this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
+    console.log(this.user);
   }
   
   accountForm = new FormGroup({
@@ -63,7 +65,6 @@ export class AccountPageComponent implements OnInit {
       return {'MatchPassword': true}
     }
   }
-
   save() {
     let requestUser;
     if (this.accountForm.invalid){
@@ -99,12 +100,5 @@ export class AccountPageComponent implements OnInit {
         this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
-  }
-
-  isUser(type){
-    if (this.user)
-      return false;
-
-    return this.user.type === type;
   }
 }

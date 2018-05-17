@@ -10,8 +10,9 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { UserSignedInGuard } from './guards/user-signed-in-guard';
 import { ForumPageComponent } from './components/forum-page/forum-page.component';
-import { TopicPageComponent } from './components/topic-page/topic-page.component';
 import { HelpPageComponent } from './components/help-page/help-page.component';
+import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
+import { StudentsListComponent } from './components/students-list/students-list.component';
 import { ProfessorListComponent } from './components/professor-list/professor-list.component';
 
 const ROUTES: Routes = [
@@ -23,8 +24,9 @@ const ROUTES: Routes = [
     { path: 'forgot-password', component: ForgotPasswordComponent},
     { path: 'reset-password/:token', component: ResetPasswordComponent},
     { path: 'forum', component: ForumPageComponent, canActivate: [UserSignedInGuard]},
-    { path: 'topic/{id}', component: TopicPageComponent },
     { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
+    { path: 'forum-answers/:id', component: ForumAnswersComponent},
+    { path: 'students-list', component: StudentsListComponent, canActivate: [UserSignedInGuard]},
     { path: 'professor-list', component: ProfessorListComponent, canActivate: [UserSignedInGuard]}
   ];
   

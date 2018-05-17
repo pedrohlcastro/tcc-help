@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="header">
+  </div>
+  <mat-card class="outer-card">
+    <mat-card-content>
+      <h3>Meus alunos</h3>
+      <br>
+      <mat-tab-group class="tab-group">
+        <mat-tab label="Aprovados">
+          <div class="tab-content">
+
+            <mat-form-field class="search-input">
+              <input #myInput1 type="text" matInput placeholder="Buscar" (input)="filterAproved(myInput1.value)">
+              <i class="material-icons" matSuffix>search</i>
+            </mat-form-field>
+
+            <div class="row">
+              <div class="col-3" *ngFor="let student of filteredAproved; let i = index;">
+                <mat-card class="inner-card">
+                  <mat-card-content>
+
+                      <button mat-raised-button class="remove-btn" color="primary" (click)="removeStudent(i)">
+                          <i class="material-icons">remove</i> Remover
+                      </button>
+
+                    <div mat-card-avatar class="avatar"></div>
+                    <br>
+                    <br>
+                    <mat-card-title>
+                      <b>{{ (student["UserProfessor.name"].length>13)? (student["UserProfessor.name"] | slice:0:13)+'...':(student["UserProfessor.name"]) }} </b>
+                    </mat-card-title>
+                  </mat-card-content>
+                  <div class="mat-card-actions">
+                    <br>
+                    <button mat-raised-button class="centered-btn" color="primary" (click)="visualizeAprovedStudent(i)">
+                      <i class="material-icons">how_to_reg</i> Visualizar </button>
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Pendentes">
+          <div class="tab-content">
+
+            <mat-form-field class="search-input">
+              <input #myInput2 type="text" matInput placeholder="Buscar" (input)="filterPendent(myInput2.value)">
+              <i class="material-icons" matSuffix>search</i>
+            </mat-form-field>
+
+            <div class="row">
+              <div class="col-3" *ngFor="let student of filteredPendent; let i = index;">
+                <mat-card>
+                  <mat-card-content>
+                    <div mat-card-avatar class="avatar"></div>
+                    <br>
+                    <br>
+                    <mat-card-title>
+                      <b>{{ (student["UserProfessor.name"].length>13)? (student["UserProfessor.name"] | slice:0:13)+'...':(student["UserProfessor.name"]) }}</b>
+                    </mat-card-title>
+                  </mat-card-content>
+
+                  <div class="mat-card-actions">
+                    <button mat-raised-button class="refuse-btn col-5" color="primary" (click)="handlePendentStudent(i, 2)">
+                      <i class="material-icons">close</i> Negar </button>
+                    <button mat-raised-button class="accept-btn col-5" color="primary" (click)="handlePendentStudent(i, 1)">
+                      <i class="material-icons">done</i> Aceitar </button>
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Removidos">
+          <div class="tab-content">
+
+            <mat-form-field class="search-input">
+              <input #myInput3 type="text" matInput placeholder="Buscar" (input)="filterDisconected(myInput3.value)">
+              <i class="material-icons" matSuffix>search</i>
+            </mat-form-field>
+
+            <div class="row">
+              <div class="col-3" *ngFor="let student of filteredDisconected; let i = index;">
+                <mat-card>
+                  <mat-card-content>
+                    <div mat-card-avatar class="avatar"></div>
+                    <br>
+                    <br>
+                    <mat-card-title>
+                      <b>{{ (student["UserProfessor.name"].length>13)? (student["UserProfessor.name"] | slice:0:13)+'...':(student["UserProfessor.name"]) }}</b>
+                    </mat-card-title>
+                  </mat-card-content>
+                  <div class="mat-card-actions">
+                    <br>
+                    <button mat-raised-button class="centered-btn" color="primary">
+                      <i class="material-icons">rotate_left</i> Reconectar </button>
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

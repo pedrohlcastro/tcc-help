@@ -24,4 +24,34 @@ export class ForumService {
         return res.json();
       });
   }
+
+  createAnswer(data, topicId){
+    const options = this.authService.addAuthHeader(true);
+    const body = {
+      topic: {
+        id: topicId
+      },
+      data: data
+    };
+    return this.http.post(`${this.baseUrl}/reply/`, body, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
+  getTopicId(topicId){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/topic/${topicId}`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
+  getReply(){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/reply/`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
 }
