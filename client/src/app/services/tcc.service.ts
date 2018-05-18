@@ -56,4 +56,12 @@ export class TccService {
         return res.json();
       });
   }
+
+  runAnalisys(tccId, languages){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.post(`${this.baseUrl}/tcc/runAnalisys/${tccId}`, languages, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
 }

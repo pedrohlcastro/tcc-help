@@ -40,4 +40,11 @@ router.get('/runSpelling/:tccId', passport.authenticate('BasicBearer', { session
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
+router.post('/runAnalisys/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  const userId = req.user.id;
+  TccController.runAnalisys(req.params.tccId, userId, req.body)
+    .then(() => res.json({ result: 'Success', status: 200 }))
+    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+});
+
 export default router;

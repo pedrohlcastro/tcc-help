@@ -69,7 +69,7 @@ export class CheckTccPageComponent implements OnInit {
 
   runAnalisys(){
     this.callSuggestions = true;
-    this.tccService.runSuggestions(this.tccId)
+    this.tccService.runAnalisys(this.tccId, this.languageFormGroup.value.languages)
       .subscribe((res) => {
         this.getMatches();
       }, (err) => {

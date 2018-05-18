@@ -33,7 +33,7 @@
       <h4>Análise ortográfica e de regras</h4>
       <form [formGroup]="languageFormGroup">
         <mat-card-content>
-          <h6>Escolha as línguas que deseja verificar a ortografia*:</h6>
+          <h6>Escolha a(s) língua(s) que deseja verificar a ortografia*:</h6>
           <section class="checkbox-section">
             <div *ngFor="let language of languages; let aux = index">
               <mat-checkbox class="checkbox-margin" (change)="onChangeLanguage($event)"
@@ -42,7 +42,7 @@
           </section>
           <mat-error align="left" *ngIf="languageError">É necessário selecionar pelo menos uma língua.</mat-error>
         </mat-card-content>
-        <button mat-raised-button class="run-btn" color="primary" (click)="runAnalisys()" *ngIf="!callSuggestions">Analisar documento</button>
+        <button mat-raised-button class="run-btn" color="primary" (click)="runAnalisys()" *ngIf="!callSuggestions && !languageError">Analisar documento</button>
         <mat-spinner *ngIf="callSuggestions"></mat-spinner>
       </form>
     </ng-template>

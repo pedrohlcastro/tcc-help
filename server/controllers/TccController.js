@@ -58,30 +58,10 @@ class TccController {
     }
   }
 
-  runProfessorRules(tccId, studentId) {
-    const queryParams = {
-      where: {
-        id: tccId,
-        '$TccStudentProfessor.student_id$': studentId,
-        '$TccStudentProfessor.activate$': 1,
-      },
-      include: [{
-        model: this.StudentProfessor,
-        as: 'TccStudentProfessor',
-        attributes: ['professor_id', 'activate'],
-      }],
-    };
+  runProfessorRules(tcc, professorId, pages) {
     return new Promise(async (resolve, reject) => {
       try {
-        const tcc = await this.Tcc.findOne(queryParams);
-        let professorId;
-        if (tcc.TccStudentProfessor.professor_id) {
-          professorId = tcc.TccStudentProfessor.professor_id;
-        } else {
-          reject(new Error('Relation Not Found Tcc - StudentProfessor'));
-        }
         const rules = await RuleController.get(professorId);
-        const pages = await this.pdf2Txt(path.join(__dirname, `../upload/${tcc.file_path}`));
         // PECORRE CADA REGEX
         async.forEach(rules, (rule, nextRegex) => {
           const regex = new RegExp(rule.regex, 'g');
@@ -215,7 +195,7 @@ class TccController {
   runSpellingOneLanguage(tcc, pages, language) {
     return new Promise(async (resolve, reject) => {
       try {
-        const dict = await this.createDictionary(language);
+        let dict = await this.createDictionary(language[0].value);
         // PERCORRE PAGINAS
         async.forEach(pages, (page, nextPage) => {
           /* eslint-disable */
@@ -250,6 +230,7 @@ class TccController {
         }, (err) => {
           // PECORRE CADA PAGE
           if (err) reject(err);
+          dict = null;
           resolve();
         });
       } catch (err) {
@@ -258,12 +239,12 @@ class TccController {
     });
   }
 
-  runSpellingTwoLanguages(tcc, pages, arrayLanguages) {
+  runSpellingTwoLanguages(tcc, pages, languages) {
     const dictionaryDirectory = path.join(__dirname, '../config/dictionaries');
-    const dictbuf = fs.readFileSync(`${dictionaryDirectory}/${arrayLanguages[1]}.dic`);
+    const dictbuf = fs.readFileSync(`${dictionaryDirectory}/${languages[1].value}.dic`);
     return new Promise(async (resolve, reject) => {
       try {
-        const dict = await this.createDictionary(arrayLanguages[0]);
+        let dict = await this.createDictionary(languages[0].value);
         dict.addDictionary(dictbuf, (errDictionary) => {
           if (!errDictionary) {
             // PERCORRE PAGINAS
@@ -300,6 +281,7 @@ class TccController {
             }, (err) => {
               // PECORRE CADA PAGE
               if (err) reject(err);
+              dict = null;
               resolve();
             });
           } else {
@@ -312,7 +294,31 @@ class TccController {
     });
   }
 
-  runSpelling(tccId, studentId) {
+  runSpelling(tcc, languages, pages) {
+    let arrLanguages = languages;
+    if (arrLanguages.length === 3) {
+      arrLanguages.splice(0, 1);
+      arrLanguages[0].value = 'EN_PT';
+    }
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (arrLanguages.length === 1) {
+          this.runSpellingOneLanguage(tcc, pages, arrLanguages)
+            .then(() => resolve({ msg: 'Success', status: 200 }))
+            .catch(err => reject(err));
+        } else {
+          this.runSpellingTwoLanguages(tcc, pages, arrLanguages)
+            .then(() => resolve({ msg: 'Success', status: 200 }))
+            .catch(err => reject(err));
+        }
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  runAnalisys(tccId, studentId, languages) {
     const queryParams = {
       where: {
         id: tccId,
@@ -325,31 +331,25 @@ class TccController {
         attributes: ['professor_id', 'activate'],
       }],
     };
-    const arrayLanguages = [];
-    arrayLanguages[0] = 'pt_BR';
-    arrayLanguages[1] = 'en_US';
-    arrayLanguages[2] = 'es_SP';
-
-    if (arrayLanguages.length === 3) {
-      arrayLanguages.splice(0, 1);
-      arrayLanguages[0] = 'EN_PT';
-    }
     return new Promise(async (resolve, reject) => {
       try {
         const tcc = await this.Tcc.findOne(queryParams);
-        if (!tcc.TccStudentProfessor.professor_id) {
+        let professorId;
+        if (tcc.TccStudentProfessor.professor_id) {
+          professorId = tcc.TccStudentProfessor.professor_id;
+        } else {
           reject(new Error('Relation Not Found Tcc - StudentProfessor'));
         }
         const pages = await this.pdf2Txt(path.join(__dirname, `../upload/${tcc.file_path}`));
-        if (arrayLanguages.length === 1) {
-          this.runSpellingOneLanguage(tcc, pages, arrayLanguages[0])
-            .then(() => resolve({ msg: 'Success', status: 200 }))
-            .catch(err => reject(err));
-        } else {
-          this.runSpellingTwoLanguages(tcc, pages, arrayLanguages)
-            .then(() => resolve({ msg: 'Success', status: 200 }))
-            .catch(err => reject(err));
-        }
+        this.runSpelling(tcc, languages, pages)
+          .then(() => {
+            this.runProfessorRules(tcc, professorId, pages)
+              .then(() => {
+                resolve({ msg: 'Success', status: 200 });
+              })
+              .catch(errCheckRules => reject(errCheckRules));
+          })
+          .catch(errSpelling => reject(errSpelling));
       } catch (err) {
         reject(err);
       }
