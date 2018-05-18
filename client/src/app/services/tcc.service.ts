@@ -48,4 +48,12 @@ export class TccService {
         return res.json();
       });
   }
+
+  getSpelling(tccId){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/check-spelling/${tccId}`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
 }

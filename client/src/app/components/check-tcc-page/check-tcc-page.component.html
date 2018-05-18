@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="suggestions">
-    <div *ngIf="suggestions.length != 0; else runSuggestions">
+    <div *ngIf="suggestions.length != 0 || spell.length != 0; else runSuggestions">
       <h4>Sugestões de alteração</h4>
       <mat-accordion *ngFor="let suggestion of suggestions; let i = index;">
           <mat-expansion-panel [ngStyle]="{'border-color': suggestion.accept ? 'green' : 'red'}" [expanded]="step === i" (opened)="setStep(i)">
@@ -30,8 +30,21 @@
       </mat-accordion>
     </div>
     <ng-template #runSuggestions>
-      <button mat-raised-button class="run-btn" color="primary" (click)="runAnalisys()" *ngIf="!callSuggestions">Rodar Correção</button>
-      <mat-spinner *ngIf="callSuggestions"></mat-spinner>
+      <h4>Análise ortográfica e de regras</h4>
+      <form [formGroup]="languageFormGroup">
+        <mat-card-content>
+          <h6>Escolha as línguas que deseja verificar a ortografia*:</h6>
+          <section class="checkbox-section">
+            <div *ngFor="let language of languages; let aux = index">
+              <mat-checkbox class="checkbox-margin" (change)="onChangeLanguage($event)"
+                [value]="language">{{language.name}}</mat-checkbox>
+            </div>
+          </section>
+          <mat-error align="left" *ngIf="languageError">É necessário selecionar pelo menos uma língua.</mat-error>
+        </mat-card-content>
+        <button mat-raised-button class="run-btn" color="primary" (click)="runAnalisys()" *ngIf="!callSuggestions">Analisar documento</button>
+        <mat-spinner *ngIf="callSuggestions"></mat-spinner>
+      </form>
     </ng-template>
     
   </div>

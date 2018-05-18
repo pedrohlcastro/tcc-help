@@ -3,6 +3,7 @@ import { PdfService } from '../../services/pdf-service';
 import {MatSnackBar} from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { TccService } from '../../services/tcc.service';
+import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 
 declare const $: any;
 
@@ -19,12 +20,18 @@ export class CheckTccPageComponent implements OnInit {
   step;
   page;
   callSuggestions = false; //nao clicou
-  suggestions = []
+  suggestions = [];
+  spell = [];
+  languageFormGroup : FormGroup;
+  languages: any;
+  languageError = true;
   constructor(
     private pdfService: PdfService,
     private tccService: TccService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+
   ) { }
 
   ngOnInit() {
@@ -32,6 +39,7 @@ export class CheckTccPageComponent implements OnInit {
       this.tccId = params['id'];
     });
     this.getMatches();
+    this.getSpelling();
     this.getPdfFile();
     this.pdfService.loadPDF(this.src);
     this.page = 1;
@@ -41,6 +49,11 @@ export class CheckTccPageComponent implements OnInit {
     $('.closebtn').click(() => {
       $('.pdf-container').css({'height' : '92vh'});
     });
+
+    this.languageFormGroup = this.formBuilder.group({
+      languages: this.formBuilder.array([])
+    });
+    this.languages = [{value: 'pt_BR', name: 'Português'}, {value: 'en_US', name: 'Inglês'}, {value: 'es_SP', name: 'Espanhol'}];
   }
 
   getMatches(){
@@ -125,5 +138,28 @@ export class CheckTccPageComponent implements OnInit {
           duration: 7000
         });
       })
+  }
+
+  getSpelling(){
+    this.tccService.getSpelling(this.tccId)
+      .subscribe((res) => {
+        this.callSuggestions = false; //tenho resultado
+        this.spell = res;
+      }, (err) => {
+        this.callSuggestions = false;
+        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 5000});
+      });
+  }
+
+  onChangeLanguage(event){
+    const languages = <FormArray> this.languageFormGroup.get('languages') as FormArray;
+
+    if(event.checked){
+      languages.push(new FormControl(event.source.value));
+    } else {
+      const index = languages.controls.findIndex(aux => aux.value === event.source.value);
+      languages.removeAt(index);
+    }
+    this.languageError = (this.languageFormGroup.value.languages.length) ? false : true;
   }
 }

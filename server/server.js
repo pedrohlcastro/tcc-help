@@ -15,6 +15,7 @@ import TopicRoutes from './routes/TopicRoutes';
 import ReplyRoutes from './routes/ReplyRoutes';
 import TccRoutes from './routes/TccRoutes';
 import CheckRulesRoutes from './routes/CheckRulesRoutes';
+import CheckSpellingRoutes from './routes/CheckSpellingRoutes';
 
 const ENV = process.env.NODE_ENV;
 
@@ -64,6 +65,7 @@ app.use('/topic', TopicRoutes);
 app.use('/reply', ReplyRoutes);
 app.use('/tcc', TccRoutes);
 app.use('/check-rule', CheckRulesRoutes);
+app.use('/check-spelling', CheckSpellingRoutes);
 
 
 // Call Angular
