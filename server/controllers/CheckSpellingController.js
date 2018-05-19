@@ -1,6 +1,6 @@
 import db from '../config/db';
 
-class TccController {
+class CheckSpellingController {
   constructor() {
     this.CheckSpelling = db().models.CheckSpelling;
   }
@@ -26,4 +26,4 @@ class TccController {
   }
 }
 
-export default new TccController();
+export default new CheckSpellingController();

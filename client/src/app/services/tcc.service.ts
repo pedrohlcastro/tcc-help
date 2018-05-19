@@ -12,7 +12,7 @@ export class TccService {
 
   getMatches(tccId){
     const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/check-rule/${tccId}`, options)
+    return this.http.get(`${this.baseUrl}/tcc/getRulesSpelling/${tccId}`, options)
       .map((res) => {
         return res.json();
       });

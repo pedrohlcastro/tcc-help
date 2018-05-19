@@ -9,10 +9,10 @@
     </div>
   </div>
   <div class="suggestions">
-    <div *ngIf="suggestions.length != 0 || spell.length != 0; else runSuggestions">
+    <div *ngIf="suggestions.length != 0 || spelling.length != 0; else runSuggestions">
       <h4>Sugestões de alteração</h4>
       <mat-accordion *ngFor="let suggestion of suggestions; let i = index;">
-          <mat-expansion-panel [ngStyle]="{'border-color': suggestion.accept ? 'green' : 'red'}" [expanded]="step === i" (opened)="setStep(i)">
+          <mat-expansion-panel [ngStyle]="{'border-color': getBorderColor(suggestion.accept)}" [expanded]="step === i" (opened)="setStep(i)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Trecho: {{ suggestion.word }}

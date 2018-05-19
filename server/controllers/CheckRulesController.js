@@ -1,7 +1,7 @@
 import db from '../config/db';
 
 
-class TccController {
+class CheckRulesController {
   constructor() {
     this.CheckRule = db().models.CheckRule;
   }
@@ -26,4 +26,4 @@ class TccController {
   }
 }
 
-export default new TccController();
+export default new CheckRulesController();

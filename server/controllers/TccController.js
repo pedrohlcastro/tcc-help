@@ -8,7 +8,8 @@ import Nodehun from 'nodehun';
 /* eslint-enable */
 import db from '../config/db';
 import RuleController from '../controllers/RuleController';
-
+import CheckRulesController from './CheckRulesController';
+import CheckSpellingController from './CheckSpellingController';
 
 class TccController {
   constructor() {
@@ -295,7 +296,7 @@ class TccController {
   }
 
   runSpelling(tcc, languages, pages) {
-    let arrLanguages = languages;
+    const arrLanguages = languages;
     if (arrLanguages.length === 3) {
       arrLanguages.splice(0, 1);
       arrLanguages[0].value = 'EN_PT';
@@ -354,6 +355,30 @@ class TccController {
         reject(err);
       }
     });
+  }
+
+  getCheckRulesAndSpelling(tccId){
+    let response;
+    return new Promise(async (resolve, reject) => {
+      try {
+        CheckRulesController.getAll(tccId)
+          .then(responseCheckRules => {
+            CheckSpellingController.getAll(tccId)
+              .then(responseCheckSpelling => {
+                response = {
+                  rules: responseCheckRules,
+                  spelling: responseCheckSpelling
+                };
+                resolve(response);
+              })
+              .catch(errSpelling => reject(errSpelling));
+          })
+          .catch(errCheckRules => reject(errCheckRules));
+      } catch (err) {
+        reject(err);
+      }
+    });
+    
   }
 }
 

@@ -21,7 +21,7 @@ export class CheckTccPageComponent implements OnInit {
   page;
   callSuggestions = false; //nao clicou
   suggestions = [];
-  spell = [];
+  spelling = [];
   languageFormGroup : FormGroup;
   languages: any;
   languageError = true;
@@ -39,7 +39,6 @@ export class CheckTccPageComponent implements OnInit {
       this.tccId = params['id'];
     });
     this.getMatches();
-    this.getSpelling();
     this.getPdfFile();
     this.pdfService.loadPDF(this.src);
     this.page = 1;
@@ -60,7 +59,8 @@ export class CheckTccPageComponent implements OnInit {
     this.tccService.getMatches(this.tccId)
       .subscribe((res) => {
         this.callSuggestions = false; //tenho resultado
-        this.suggestions = res;
+        this.suggestions = res.rules;
+        this.spelling = res.spelling;
       }, (err) => {
         this.callSuggestions = false;
         this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 5000});
@@ -95,7 +95,6 @@ export class CheckTccPageComponent implements OnInit {
   setStep(index){
     const item = this.suggestions[index];
     this.step = index;
-    console.log(item.page);
     this.changePage(item.page);
     this.pdfService.query(item.word);
   }
@@ -140,17 +139,6 @@ export class CheckTccPageComponent implements OnInit {
       })
   }
 
-  getSpelling(){
-    this.tccService.getSpelling(this.tccId)
-      .subscribe((res) => {
-        this.callSuggestions = false; //tenho resultado
-        this.spell = res;
-      }, (err) => {
-        this.callSuggestions = false;
-        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 5000});
-      });
-  }
-
   onChangeLanguage(event){
     const languages = <FormArray> this.languageFormGroup.get('languages') as FormArray;
 
@@ -161,5 +149,16 @@ export class CheckTccPageComponent implements OnInit {
       languages.removeAt(index);
     }
     this.languageError = (this.languageFormGroup.value.languages.length) ? false : true;
+  }
+
+  getBorderColor(status){
+    let color = '';
+    if(status == 0)
+      color = 'grey';
+    else if(status == 1)
+      color = 'green';
+    else 
+      color = 'red';
+    return color;
   }
 }
