@@ -4,6 +4,7 @@ import {MatSnackBar} from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { TccService } from '../../services/tcc.service';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
+import {MatPaginator} from '@angular/material/paginator';
 
 declare const $: any;
 
@@ -12,6 +13,7 @@ declare const $: any;
   templateUrl: './check-tcc-page.component.html',
   styleUrls: ['./check-tcc-page.component.scss']
 })
+
 export class CheckTccPageComponent implements OnInit {
   src;
   tccId;
@@ -25,6 +27,13 @@ export class CheckTccPageComponent implements OnInit {
   languageFormGroup : FormGroup;
   languages: any;
   languageError = true;
+   
+  pageSize = 10;
+  currentPage = 0;
+  totalSize = 0;
+  paginator: MatPaginator;
+  response: Response;
+  rulesSpelling = [];
   constructor(
     private pdfService: PdfService,
     private tccService: TccService,
@@ -59,8 +68,12 @@ export class CheckTccPageComponent implements OnInit {
     this.tccService.getMatches(this.tccId)
       .subscribe((res) => {
         this.callSuggestions = false; //tenho resultado
+        this.response = new Response(res.rules, res.spelling);
         this.suggestions = res.rules;
         this.spelling = res.spelling;
+        this.rulesSpelling = [...this.suggestions, ...this.spelling];
+        this.totalSize = this.rulesSpelling.length;
+        this.iterator();
       }, (err) => {
         this.callSuggestions = false;
         this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 5000});
@@ -160,5 +173,27 @@ export class CheckTccPageComponent implements OnInit {
     else 
       color = 'red';
     return color;
+  }
+
+  public handlePage(e: any) {
+    this.currentPage = e.pageIndex;
+    this.pageSize = e.pageSize;
+    this.iterator();
+  }
+
+  private iterator() {
+    const end = (this.currentPage + 1) * this.pageSize;
+    const start = this.currentPage * this.pageSize;
+    this.rulesSpelling = [...this.response.suggestions, ...this.response.spelling];
+    this.rulesSpelling = this.rulesSpelling.slice(start, end);
+  }
+}
+
+class Response{
+  suggestions = [];
+  spelling = [];
+  constructor(rules, spell){
+    this.suggestions = rules;
+    this.spelling = spell;
   }
 }

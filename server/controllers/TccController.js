@@ -357,17 +357,17 @@ class TccController {
     });
   }
 
-  getCheckRulesAndSpelling(tccId){
+  getCheckRulesAndSpelling(tccId) {
     let response;
     return new Promise(async (resolve, reject) => {
       try {
         CheckRulesController.getAll(tccId)
-          .then(responseCheckRules => {
+          .then((responseCheckRules) => {
             CheckSpellingController.getAll(tccId)
-              .then(responseCheckSpelling => {
+              .then((responseCheckSpelling) => {
                 response = {
                   rules: responseCheckRules,
-                  spelling: responseCheckSpelling
+                  spelling: responseCheckSpelling,
                 };
                 resolve(response);
               })
@@ -378,7 +378,6 @@ class TccController {
         reject(err);
       }
     });
-    
   }
 }
 
