@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ProfessorListService } from '../../services/professor-list.service';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { YesnoDialogComponent } from '../yesno-dialog/yesno-dialog.component'
 
 @Component({
   selector: 'app-professor-list',
@@ -15,7 +16,7 @@ export class ProfessorListComponent implements OnInit {
   filteredUsers;
   alreadyAssociate = 0;
   constructor(private authService: AuthService, private professorListService: ProfessorListService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.authService.getUserFromToken()
@@ -137,28 +138,36 @@ export class ProfessorListComponent implements OnInit {
   }
 
   removeIndication(professor_id){
+    let dialogRef = this.dialog.open(YesnoDialogComponent, {
+      width: '40%',
+      height: "30%",
+    });
+
     const data = {
       accept: 0,
       activate: 0
     }
-
-    this.professorListService.remove(data, this.user.id, professor_id)
-      .subscribe((res) => {
-        this.snackBar.open("Associação removida com sucesso", 'Fechar', {duration: 3000});
-      },
-      error => {
-        console.log(error.statusText);
-        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
-      })
     
-    let userUpdated = this.showUsers.find( (User)=> { return (User["UserProfessor.StudentProfessor.student_id"] == this.user.id)} );
-    userUpdated["UserProfessor.StudentProfessor.id"] = undefined;
-    userUpdated["UserProfessor.StudentProfessor.professor_id"] = undefined;
-    userUpdated["UserProfessor.StudentProfessor.student_id"] = undefined;
-    userUpdated["UserProfessor.StudentProfessor.activate"] = 0;
-    userUpdated["UserProfessor.StudentProfessor.accept"] = 0;
-    this.filteredUsers = Object.assign([], this.showUsers);
-
-    this.alreadyAssociate = 0;
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.professorListService.remove(data, this.user.id, professor_id)
+        .subscribe((res) => {
+          this.snackBar.open("Associação removida com sucesso", 'Fechar', {duration: 3000});
+        },
+        error => {
+          console.log(error.statusText);
+          this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
+        });
+        let userUpdated = this.showUsers.find( (User)=> { return (User["UserProfessor.StudentProfessor.student_id"] == this.user.id)} );
+        userUpdated["UserProfessor.StudentProfessor.id"] = undefined;
+        userUpdated["UserProfessor.StudentProfessor.professor_id"] = undefined;
+        userUpdated["UserProfessor.StudentProfessor.student_id"] = undefined;
+        userUpdated["UserProfessor.StudentProfessor.activate"] = 0;
+        userUpdated["UserProfessor.StudentProfessor.accept"] = 0;
+        this.filteredUsers = Object.assign([], this.showUsers);
+    
+        this.alreadyAssociate = 0;    
+      }
+    })
   }
 }
