@@ -34,6 +34,8 @@ export class CheckTccPageComponent implements OnInit {
   paginator: MatPaginator;
   response: Response;
   rulesSpelling = [];
+  filterType = '0';
+  filterStatus = '0';
   constructor(
     private pdfService: PdfService,
     private tccService: TccService,
@@ -175,17 +177,49 @@ export class CheckTccPageComponent implements OnInit {
     return color;
   }
 
-  public handlePage(e: any) {
+  handlePage(e: any) {
     this.currentPage = e.pageIndex;
     this.pageSize = e.pageSize;
     this.iterator();
   }
 
-  private iterator() {
+  iterator() {
+    this.updateRulesSpelling();
+    this.totalSize = this.rulesSpelling.length;
+    this.currentPage = 0;
     const end = (this.currentPage + 1) * this.pageSize;
     const start = this.currentPage * this.pageSize;
-    this.rulesSpelling = [...this.response.suggestions, ...this.response.spelling];
     this.rulesSpelling = this.rulesSpelling.slice(start, end);
+  }
+
+  onChangeTypeFilter(){
+    this.iterator();
+  }
+
+  updateRulesSpelling(){
+    if(this.filterType === '1')
+      this.rulesSpelling = this.response.suggestions;
+    else if(this.filterType === '2')
+      this.rulesSpelling = this.response.spelling;
+    else
+      this.rulesSpelling = [...this.response.suggestions, ...this.response.spelling];
+
+    if(this.filterStatus !== '0'){
+      let auxArray = this.rulesSpelling;
+      this.rulesSpelling = [];
+      for(let aux = 0; aux < auxArray.length; aux++){
+        const item = auxArray[aux];
+        if(this.filterStatus === '1' && item.accept === 0){
+          this.rulesSpelling = [...this.rulesSpelling, ...item];
+        }
+        else if(this.filterStatus === '2' && item.accept === 1){
+          this.rulesSpelling = [...this.rulesSpelling, ...item];
+        }
+        else if(this.filterStatus === '3' && item.accept === 2){
+          this.rulesSpelling = [...this.rulesSpelling, ...item];
+        }
+      }
+    }
   }
 }
 

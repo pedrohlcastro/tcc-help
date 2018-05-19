@@ -11,6 +11,24 @@
   <div class="suggestions">
     <div *ngIf="suggestions.length != 0 || spelling.length != 0; else runSuggestions">
       <h4>Sugestões de alteração</h4>
+      <h5>Filtros</h5>
+      <h6>Tipos de sugestão</h6>
+      <mat-form-field>
+        <mat-select [(value)]="filterType" (selectionChange)="onChangeTypeFilter()">
+          <mat-option value="0">Todos</mat-option>
+          <mat-option value="1">Regras</mat-option>
+          <mat-option value="2">Ortografia</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <h6>Estado</h6>
+      <mat-form-field>
+        <mat-select [(value)]="filterStatus" (selectionChange)="onChangeTypeFilter()">
+          <mat-option value="0">Todos</mat-option>
+          <mat-option value="1">Pendente</mat-option>
+          <mat-option value="2">Aceito</mat-option>
+          <mat-option value="3">Recusado</mat-option>
+        </mat-select>
+      </mat-form-field>
       <mat-accordion *ngFor="let suggestion of rulesSpelling; let i = index;">
           <mat-expansion-panel [ngStyle]="{'border-color': getBorderColor(suggestion.accept)}" [expanded]="step === i" (opened)="setStep(i)">
             <mat-expansion-panel-header>
