@@ -30,20 +30,38 @@
         </mat-select>
       </mat-form-field>
       <mat-accordion *ngFor="let suggestion of rulesSpelling; let i = index;">
-          <mat-expansion-panel [ngStyle]="{'border-color': getBorderColor(suggestion.accept)}" [expanded]="step === i" (opened)="setStep(i)">
+          <mat-expansion-panel [ngStyle]="{'border-color': getBorderColor(suggestion.accept)}" [expanded]="step === i" (opened)="setStep(index, suggestion)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Trecho: {{ suggestion.word }}
+                    <div *ngIf="suggestion.type === 0; else showSpellingTitle">
+                      Trecho: {{ suggestion.word }}
+                    </div>
+                    <ng-template #showSpellingTitle>
+                        Palavra: {{ suggestion.word }}
+                    </ng-template>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="btn-area">
-              <button mat-raised-button class="delete-btn" color="warn" (click)="choose(i, false)">
-                <i class="material-icons">cancel</i> Recusar
-              </button>
-              <button mat-raised-button class="edit-btn" color="primary" (click)="choose(i, true)">
-                <i class="material-icons">check</i> Aceitar
-              </button>
+            <div *ngIf="suggestion.type === 0; else showSpellingBody">
+              <div class="btn-area">
+                <button mat-raised-button class="delete-btn" color="warn" (click)="chooseRule(suggestion, 2)">
+                  <i class="material-icons">cancel</i> Recusar
+                </button>
+                <button mat-raised-button class="edit-btn" color="primary" (click)="chooseRule(suggestion, 1)">
+                  <i class="material-icons">check</i> Aceitar
+                </button>
+              </div>
             </div>
+            <ng-template #showSpellingBody>
+              <p>Sugestões: {{ suggestion.suggestions }}</p>
+              <div class="btn-area">
+                <button mat-raised-button class="delete-btn" color="warn" (click)="chooseSpelling(suggestion, 2)">
+                  <i class="material-icons">cancel</i> Recusar
+                </button>
+                <button mat-raised-button class="edit-btn" color="primary" (click)="chooseSpelling(suggestion, 1)">
+                  <i class="material-icons">check</i> Aceitar
+                </button>
+              </div>
+            </ng-template>
           </mat-expansion-panel>
       </mat-accordion>
       <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" [length]="totalSize"

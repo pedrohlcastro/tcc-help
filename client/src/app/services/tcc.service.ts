@@ -38,6 +38,18 @@ export class TccService {
       });
   }
 
+  chooseSpelling(checkSpellingId, choice){
+    const options = this.authService.addAuthHeader(true);
+    const body = {
+      choice: choice,
+      id: checkSpellingId
+    };
+    return this.http.put(`${this.baseUrl}/check-spelling/choose`, body, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
   sendToProfessor(tccId) {
     const options = this.authService.addAuthHeader(true);
     const body = {

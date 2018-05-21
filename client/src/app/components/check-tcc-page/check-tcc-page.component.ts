@@ -73,6 +73,12 @@ export class CheckTccPageComponent implements OnInit {
         this.response = new Response(res.rules, res.spelling);
         this.suggestions = res.rules;
         this.spelling = res.spelling;
+        for(let suggestion of this.suggestions){
+          suggestion.type = 0;
+        }
+        for(let spell of this.spelling){
+          spell.type = 1;
+        }
         this.rulesSpelling = [...this.suggestions, ...this.spelling];
         this.totalSize = this.rulesSpelling.length;
         this.iterator();
@@ -107,8 +113,8 @@ export class CheckTccPageComponent implements OnInit {
     };
   }
 
-  setStep(index){
-    const item = this.suggestions[index];
+  setStep(index, suggestion){
+    const item = suggestion;
     this.step = index;
     this.changePage(item.page);
     this.pdfService.query(item.word);
@@ -120,9 +126,30 @@ export class CheckTccPageComponent implements OnInit {
     this.pdfService.changePage(e);
   }
 
-  choose(index, result){
-    const item = this.suggestions[index];
+  chooseRule(suggestion, result){
+    const item = suggestion;
     this.tccService.choose(item.id, Number(result))
+      .subscribe((res) => {
+        item.accept = result;
+        if(result){
+          this.snackBar.open('Sugestão foi marcada como aceita.', 'Fechar', {
+            duration: 7000
+          });
+        } else {
+          this.snackBar.open('Sugestão foi marcada como ignorada.', 'Fechar', {
+            duration: 7000
+          });
+        }
+      }, (err) => {
+        this.snackBar.open('Error ao marcar sugestão.', 'Fechar', {
+          duration: 7000
+        });
+      });
+  }
+
+  chooseSpelling(suggestion, result){
+    const item = suggestion;
+    this.tccService.chooseSpelling(item.id, Number(result))
       .subscribe((res) => {
         item.accept = result;
         if(result){
