@@ -13,6 +13,7 @@ import { ForumPageComponent } from './components/forum-page/forum-page.component
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
 import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
+import { CommentPageComponent } from './components/comment-page/comment-page.component';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
@@ -25,7 +26,8 @@ const ROUTES: Routes = [
     { path: 'forum', component: ForumPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'forum-answers/:id', component: ForumAnswersComponent},
-    { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [UserSignedInGuard]}
+    { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [UserSignedInGuard]},
+    { path: 'comment-page/:id', component: CommentPageComponent}
   ];
   
 @NgModule({

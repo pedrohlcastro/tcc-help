@@ -32,6 +32,8 @@ import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/for
 import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
 import { PdfService } from './services/pdf-service';
 import { TccService } from './services/tcc.service';
+import { CommentPageComponent } from './components/comment-page/comment-page.component';
+import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { TccService } from './services/tcc.service';
     HelpPageComponent,
     ForumAnswersComponent,
     ForumAnswerDialogComponent,
-    CheckTccPageComponent
+    CheckTccPageComponent,
+    CommentPageComponent,
+    CommentDialogComponent
   ],
   entryComponents: [
     RuleDialogComponent,
