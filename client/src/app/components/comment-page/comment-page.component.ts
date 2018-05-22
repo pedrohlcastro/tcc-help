@@ -12,19 +12,19 @@ import {Router, ActivatedRoute, Params} from '@angular/router'
 export class CommentPageComponent implements OnInit {
 
   answers = [];
-  private topicId;
-  private topic;
+  private commentId;
+  private comment;
 
   constructor(private dialog: MatDialog, private commentService: CommentService,
      private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.topicId = params['id'];
+      this.commentId = params['id'];
     });
 
-    this.commentService.getTopicId(this.topicId).subscribe(result =>{
-      this.topic = result;
+    this.commentService.getCommentId(this.commentId).subscribe(result =>{
+      this.comment = result;
     }, (err) => {
       this.snackBar.open('Não foi possível recuperar ID.', 'Fechar', {
         duration: 7000
@@ -49,7 +49,7 @@ export class CommentPageComponent implements OnInit {
       if(result){
         result.date = new Date().toLocaleString();
 
-        this.commentService.createAnswer(result, this.topicId).subscribe(result =>{
+        this.commentService.createAnswer(result, this.commentId).subscribe(result =>{
           this.snackBar.open('Criado com sucesso.', 'Fechar', {
             duration: 7000
           });
