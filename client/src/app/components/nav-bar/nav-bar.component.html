@@ -3,6 +3,7 @@
 
   <a [routerLink]="['sign-in']" *ngIf="!isAuthenticated"><i class="material-icons">vpn_key</i>Login</a>
   <a [routerLink]="['sign-up']" *ngIf="!isAuthenticated"><i class="material-icons">input</i>Cadastro</a>
+  <a [routerLink]="['text-page']" *ngIf="isAuthenticated"><i class="material-icons">book</i>Textos</a>
   <a [routerLink]="['account-page']" *ngIf="isAuthenticated"><i class="material-icons">face</i>Perfil</a>
   <a [routerLink]="['manage-rules']" *ngIf="isAuthenticated"><i class="material-icons">gavel</i>Regras</a>
   <a [routerLink]="['forum']" *ngIf="isAuthenticated"><i class="material-icons">forum</i>Fórum</a>

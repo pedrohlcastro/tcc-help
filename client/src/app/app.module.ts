@@ -1,3 +1,4 @@
+  
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -32,6 +33,10 @@ import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/for
 import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
 import { PdfService } from './services/pdf-service';
 import { TccService } from './services/tcc.service';
+import { TextPageComponent } from './components/text-page/text-page.component';
+import { TextPageDialogComponent } from './components/text-page-dialog/text-page-dialog.component';
+import { DndDirective } from './directives/dnd.directive';
+
 
 @NgModule({
   declarations: [
@@ -50,12 +55,17 @@ import { TccService } from './services/tcc.service';
     HelpPageComponent,
     ForumAnswersComponent,
     ForumAnswerDialogComponent,
-    CheckTccPageComponent
+    CheckTccPageComponent,
+    TextPageComponent,
+    TextPageDialogComponent,
+    DndDirective
+    
   ],
   entryComponents: [
     RuleDialogComponent,
     ForumDialogComponent,
-    ForumAnswerDialogComponent
+    ForumAnswerDialogComponent,
+    TextPageDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -77,4 +87,6 @@ import { TccService } from './services/tcc.service';
   ],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }

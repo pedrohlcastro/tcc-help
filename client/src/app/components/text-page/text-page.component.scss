@@ -1,0 +1,45 @@
+@import '~variables.scss';
+
+h2{
+    text-align: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.fullwidth-card{
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.types{
+    margin-left: 36px;
+}
+
+.title{
+    font-weight: bold;
+}
+
+.buttons{
+    button{
+        background-color: $second-color-ligth;
+        color: white;
+        font-weight: bold;
+    }   
+}
+
+.header-bar{
+    width: 100%;
+    margin-bottom: 35px;
+    margin-top: 15px;
+    .search-input{
+        width: 100%;
+    }
+    .create-btn{
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        top: 7px;
+        font-weight: bold;
+    }
+}

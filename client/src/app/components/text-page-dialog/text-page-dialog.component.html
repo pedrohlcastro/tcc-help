@@ -1,0 +1,28 @@
+
+<form #sendForm="ngForm">
+  <div class="dropzone" appDnd (filesChangeEmiter)="onFilesChange($event)" [allowed_extensions]="['pdf']" >
+    <div class="text-wrapper" (click) = "inputFile()">
+      <input class="input-files"  #myFile type="file"  name="sendFile"   (change)="handleFiles(myFile.files)">
+      <div class="dropzone-list">
+        <ul class="valid">
+            <!-- {{ file.name }} -->
+        </ul>
+      </div>
+      <div class="centered">
+        <button mat-icon-button disableRipple disabled name= "upload-button" class="file-btn">  
+          <i class="material-icons">insert_drive_file</i> Solte seu arquivo ou clique aqui ! 
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="btn-area">
+    <button mat-raised-button class="delete-btn" color="warn" (click)="exit()">
+      <i class="material-icons">cancel</i> Cancelar
+    </button>
+    <button mat-raised-button class="edit-btn" color="primary" (click)="confirm()">
+      <i class="material-icons">check</i> Confirmar
+    </button>
+  </div>
+</form>

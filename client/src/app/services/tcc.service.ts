@@ -48,4 +48,17 @@ export class TccService {
         return res.json();
       });
   }
+  
+  upload(file, path){
+    console.log('1')
+    const options = this.authService.addAuthHeader(true);
+    const body = {
+      file: file,
+      path: path,
+    };
+    return this.http.post(`${this.baseUrl}/tcc/upload`, body, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
 }
