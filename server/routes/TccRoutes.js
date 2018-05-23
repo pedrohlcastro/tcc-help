@@ -31,16 +31,17 @@ router.put('/sendToProfessor', passport.authenticate('BasicBearer', { session: f
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
-router.post('/upload', passport.authenticate('BasicBearer', { session: false }), (req, res) => {
-  console.log('2');
-  // const DIR = './server/upload/';
-  // const name = req.body.path;
-  // upload = multer({ dest: DIR }).single(name)
-  //   .then(() => resolve())
-  //   .catch(err => reject(err));
+// router.post('/upload', passport.authenticate('BasicBearer',
+//      { session: false }), (req, res, next) => {
+//   console.log('2');
+//   const DIR = './server/upload/';
+//   const name = req.body.path;
+//   upload = multer({ dest: DIR }).single(name)
+//     .then(() => resolve())
+//     .catch(err => reject(err));
 
-  // return res.send('Upload Completed');
-});
+//   return res.send('Upload Completed');
+// });
 
 router.get('/file/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => TccController.getFile(res, next, req.params.tccId));
 
