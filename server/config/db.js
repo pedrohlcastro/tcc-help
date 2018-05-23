@@ -31,7 +31,12 @@ export default () => {
         dialect: 'mysql',
         operatorsAliases: false,
         query: true,
-        logging: false,
+        logging: true,
+        pool: {
+          maxConnections: 100,
+          minConnections: 1,
+          maxIdleTime: 3600000000,
+        },
       },
     );
 

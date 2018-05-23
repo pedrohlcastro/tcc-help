@@ -64,7 +64,7 @@
             </ng-template>
           </mat-expansion-panel>
       </mat-accordion>
-      <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" [length]="totalSize"
+      <mat-paginator #paginator [pageSize]="pageSize" [showFirstLastButtons]="true" [length]="totalSize"
         [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
       </mat-paginator>
     </div>

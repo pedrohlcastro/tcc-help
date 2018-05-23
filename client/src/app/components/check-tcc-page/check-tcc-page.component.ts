@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PdfService } from '../../services/pdf-service';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { TccService } from '../../services/tcc.service';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
+import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component';
 
 declare const $: any;
 
@@ -41,8 +42,8 @@ export class CheckTccPageComponent implements OnInit {
     private tccService: TccService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
-
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -128,10 +129,23 @@ export class CheckTccPageComponent implements OnInit {
 
   chooseRule(suggestion, result){
     const item = suggestion;
+    let flag = false;
+    if(result == '2'){
+      flag = true;
+      let dialogRef = this.dialog.open(RejectDialogComponent, {
+        width: '75%'
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          flag = false;
+        }
+      });
+    }
+    if(!flag){
     this.tccService.choose(item.id, Number(result))
       .subscribe((res) => {
         item.accept = result;
-        if(result){
+        if(result == '1'){
           this.snackBar.open('Sugestão foi marcada como aceita.', 'Fechar', {
             duration: 7000
           });
@@ -145,27 +159,42 @@ export class CheckTccPageComponent implements OnInit {
           duration: 7000
         });
       });
+    }
   }
 
   chooseSpelling(suggestion, result){
     const item = suggestion;
-    this.tccService.chooseSpelling(item.id, Number(result))
-      .subscribe((res) => {
-        item.accept = result;
-        if(result){
-          this.snackBar.open('Sugestão foi marcada como aceita.', 'Fechar', {
-            duration: 7000
-          });
-        } else {
-          this.snackBar.open('Sugestão foi marcada como ignorada.', 'Fechar', {
-            duration: 7000
-          });
-        }
-      }, (err) => {
-        this.snackBar.open('Error ao marcar sugestão.', 'Fechar', {
-          duration: 7000
-        });
+    let flag = false;
+    if(result == '2'){
+      flag = true;
+      let dialogRef = this.dialog.open(RejectDialogComponent, {
+        width: '75%'
       });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          flag = false;
+        }
+      });
+    }
+    if(!flag){
+      this.tccService.chooseSpelling(item.id, Number(result))
+        .subscribe((res) => {
+          item.accept = result;
+          if(result == '1'){
+            this.snackBar.open('Sugestão foi marcada como aceita.', 'Fechar', {
+              duration: 7000
+            });
+          } else {
+            this.snackBar.open('Sugestão foi marcada como ignorada.', 'Fechar', {
+              duration: 7000
+            });
+          }
+        }, (err) => {
+          this.snackBar.open('Error ao marcar sugestão.', 'Fechar', {
+            duration: 7000
+          });
+        });
+    }
   }
 
   sendToProfessor(tccId){
@@ -213,7 +242,6 @@ export class CheckTccPageComponent implements OnInit {
   iterator() {
     this.updateRulesSpelling();
     this.totalSize = this.rulesSpelling.length;
-    this.currentPage = 0;
     const end = (this.currentPage + 1) * this.pageSize;
     const start = this.currentPage * this.pageSize;
     this.rulesSpelling = this.rulesSpelling.slice(start, end);
