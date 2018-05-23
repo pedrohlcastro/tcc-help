@@ -3,15 +3,14 @@ import db from '../config/db';
 class CommentController {
   constructor() {
     this.Comment = db().models.Comment;
-    this.User = db().models.Comment;
+    this.Tcc = db().models.Tcc;
+    this.User = db().models.User;
+    this.StudentProfessor = db().models.StudentProfessor;
   }
 
-  create(userId, tccId, data) {
-    const newComment = data;
-    newComment.user_id = userId;
-    newComment.tcc_id = tccId;
+  create(data) {
     return new Promise((resolve, reject) => {
-      this.Comment.create(newComment)
+      this.Comment.create(data)
         .then(result => resolve(result))
         .catch(err => reject(err));
     });
@@ -20,11 +19,21 @@ class CommentController {
   get(params) {
     const queryParams = {
       where: params,
+      /*eslint-disable */
+      include: [{
+        model: this.Tcc,
+        as: 'CommentTcc',
+        attributes: ['id', 'student_professor_id'],
+        required: false,
+      }],
       include: [{
         model: this.User,
-        as: 'Comment',
-        attributes: ['name', 'email', 'type', 'validate_professor'],
+        as: 'CommentUser',
+        attributes: ['name', 'email'],
+        required: false,
       }],
+      /*eslint-enabled */
+      raw: true,
     };
     return new Promise((resolve, reject) => {
       if (params) {

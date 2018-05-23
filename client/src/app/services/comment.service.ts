@@ -9,37 +9,16 @@ export class CommentService {
   baseUrl = 'http://localhost:8000';
   constructor(private authService:AuthService, private http: Http) { }
 
-  createComment(newComment){
+  createComment(data){
     const options = this.authService.addAuthHeader(true);
-    return this.http.post(`${this.baseUrl}/comment/`, newComment, options)
+    console.log(data);
+    return this.http.post(`${this.baseUrl}/comment/`, data, options)
       .map((res) => {
         return res.json();
       });
   }
 
-  getComment(){
-    const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/comment/`, options)
-      .map((res) => {
-        return res.json();
-      });
-  }
-
-  createAnswer(data, commentId){
-    const options = this.authService.addAuthHeader(true);
-    const body = {
-      topic: {
-        id: commentId
-      },
-      data: data
-    };
-    return this.http.post(`${this.baseUrl}/answer/`, body, options)
-      .map((res) => {
-        return res.json();
-      });
-  }
-
-  getCommentId(commentId){
+  getTccComments(commentId){
     const options = this.authService.addAuthHeader(true);
     return this.http.get(`${this.baseUrl}/comment/${commentId}`, options)
       .map((res) => {
@@ -47,9 +26,9 @@ export class CommentService {
       });
   }
 
-  getReply(){
+  removeComment(commentId){
     const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/answer/`, options)
+    return this.http.delete(`${this.baseUrl}/comment/${commentId}`, options)
       .map((res) => {
         return res.json();
       });

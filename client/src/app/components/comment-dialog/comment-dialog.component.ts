@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
-
-import { ManageRulesPageComponent } from '../manage-rules-page/manage-rules-page.component';
+import { CommentPageComponent } from '../comment-page/comment-page.component';
 
 @Component({
   selector: 'app-comment-dialog',
@@ -12,14 +11,11 @@ export class CommentDialogComponent implements OnInit {
 
   constructor(
     private snackBar:MatSnackBar,
-    public dialogRef: MatDialogRef<ManageRulesPageComponent>,
+    public dialogRef: MatDialogRef<CommentPageComponent>,
     @Inject(MAT_DIALOG_DATA) public dataReceive: any
   ) {  }
 
-  topic = {
-    title: '',
-    comment: ''
-  }
+  comment;
 
   ngOnInit() {
   }
@@ -31,7 +27,7 @@ export class CommentDialogComponent implements OnInit {
   confirm(value){
     
     if(value){
-      if(value.title && value.comment){
+      if(value.comment){
         value.date = new Date().toLocaleString();
         this.dialogRef.close(value);
       }

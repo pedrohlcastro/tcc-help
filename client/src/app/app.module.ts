@@ -34,6 +34,7 @@ import { PdfService } from './services/pdf-service';
 import { TccService } from './services/tcc.service';
 import { CommentPageComponent } from './components/comment-page/comment-page.component';
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
+import { CommentService } from './services/comment.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
   entryComponents: [
     RuleDialogComponent,
     ForumDialogComponent,
-    ForumAnswerDialogComponent
+    ForumAnswerDialogComponent,
+    CommentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +79,7 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
     ForumService,
     PdfService,
     TccService,
+    CommentService,
     UserSignedInGuard
   ],
   bootstrap: [AppComponent]

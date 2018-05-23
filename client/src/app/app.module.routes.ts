@@ -27,7 +27,7 @@ const ROUTES: Routes = [
     { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'forum-answers/:id', component: ForumAnswersComponent},
     { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [UserSignedInGuard]},
-    { path: 'comment-page:id', component: CommentPageComponent, canActivate: [UserSignedInGuard]}
+    { path: 'comment-page/:id', component: CommentPageComponent, canActivate: [UserSignedInGuard]}
   ];
   
 @NgModule({

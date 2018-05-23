@@ -1,7 +1,14 @@
 @import '~variables.scss';
 
-.answerButton{
+.remove-btn{
     position: absolute;
+    top: 70%;
+    right: 3%;
+    background-color: rgb(219, 94, 11);
+}
+    
+.comment-btn{
+    position: fixed;
     bottom: 0;
     right: 0;
     margin: 30px;
@@ -29,3 +36,4 @@ h2{
     margin-bottom: 15px;
     margin-top: 15px;
 }
+
