@@ -78,6 +78,7 @@ export class CheckTccPageComponent implements OnInit {
           suggestion.type = 0;
         }
         for(let spell of this.spelling){
+          spell.suggestions = spell.suggestions.replace(/\,/g, ', ');
           spell.type = 1;
         }
         this.rulesSpelling = [...this.suggestions, ...this.spelling];
@@ -275,6 +276,8 @@ export class CheckTccPageComponent implements OnInit {
         }
       }
     }
+    if((this.currentPage*this.pageSize) >  this.rulesSpelling.length)
+      this.currentPage = 0;
   }
 }
 

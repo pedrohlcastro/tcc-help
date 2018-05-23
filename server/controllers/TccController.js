@@ -197,32 +197,38 @@ class TccController {
     return new Promise(async (resolve, reject) => {
       try {
         let dict = await this.createDictionary(language[0].value);
+        pages.splice(0, 1);
         // PERCORRE PAGINAS
         async.forEach(pages, (page, nextPage) => {
           /* eslint-disable */
-          const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ' ')
+          const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ]/g, ' ')
             .replace(/\s\s+/g, ' ').trim().split(' ');
           /* eslint-enable */
           async.forEach(words, (word, nextWord) => {
-            dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
-              if (errSpell) {
-                nextWord(errSpell);
-              } else if (!correct) {
-                const checkSpelling = {
-                  tcc_id: tcc.id,
-                  accept: 0,
-                  word: origWord,
-                  suggestions: suggestions.toString(),
-                  justification: null,
-                  page: parseInt(pages.indexOf(page), 10) + 1,
-                };
-                this.CheckSpelling.create(checkSpelling)
-                  .then(() => nextWord())
-                  .catch(checkSpellingErr => nextWord(checkSpellingErr));
-              } else {
-                nextWord();
-              }
-            });
+            if(word !== word.toUpperCase()){
+              dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
+                if (errSpell) {
+                  nextWord(errSpell);
+                } else if (!correct) {
+                  const checkSpelling = {
+                    tcc_id: tcc.id,
+                    accept: 0,
+                    word: origWord,
+                    suggestions: suggestions.toString(),
+                    justification: null,
+                    page: parseInt(pages.indexOf(page), 10) + 1,
+                  };
+                  this.CheckSpelling.create(checkSpelling)
+                    .then(() => nextWord())
+                    .catch(checkSpellingErr => nextWord(checkSpellingErr));
+                } else {
+                  nextWord();
+                }
+              });
+            } else {
+              nextWord();
+            }
+
           }, (err) => {
             // FINALLY WORDS
             if (err) reject(err);
@@ -246,34 +252,40 @@ class TccController {
     return new Promise(async (resolve, reject) => {
       try {
         let dict = await this.createDictionary(languages[0].value);
+        pages.splice(0, 1);
         dict.addDictionary(dictbuf, (errDictionary) => {
           if (!errDictionary) {
             // PERCORRE PAGINAS
             async.forEach(pages, (page, nextPage) => {
               /* eslint-disable */
-              const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ' ')
+              const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ]/g, ' ')
                 .replace(/\s\s+/g, ' ').trim().split(' ');
               /* eslint-enable */
               async.forEach(words, (word, nextWord) => {
-                dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
-                  if (errSpell) {
-                    nextWord(errSpell);
-                  } else if (!correct) {
-                    const checkSpelling = {
-                      tcc_id: tcc.id,
-                      accept: 0,
-                      word: origWord,
-                      suggestions: suggestions.toString(),
-                      justification: null,
-                      page: parseInt(pages.indexOf(page), 10) + 1,
-                    };
-                    this.CheckSpelling.create(checkSpelling)
-                      .then(() => nextWord())
-                      .catch(checkSpellingErr => nextWord(checkSpellingErr));
-                  } else {
-                    nextWord();
-                  }
-                });
+                if(word !== word.toUpperCase()){
+                  dict.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
+                    if (errSpell) {
+                      nextWord(errSpell);
+                    } else if (!correct) {
+                      const checkSpelling = {
+                        tcc_id: tcc.id,
+                        accept: 0,
+                        word: origWord,
+                        suggestions: suggestions.toString(),
+                        justification: null,
+                        page: parseInt(pages.indexOf(page), 10) + 1,
+                      };
+                      this.CheckSpelling.create(checkSpelling)
+                        .then(() => nextWord())
+                        .catch(checkSpellingErr => nextWord(checkSpellingErr));
+                    } else {
+                      nextWord();
+                    }
+                  });
+                }
+                else {
+                  nextWord();
+                }
               }, (err) => {
                 // FINALLY WORDS
                 if (err) reject(err);

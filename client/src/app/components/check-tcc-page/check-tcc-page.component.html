@@ -30,7 +30,7 @@
         </mat-select>
       </mat-form-field>
       <mat-accordion *ngFor="let suggestion of rulesSpelling; let i = index;">
-          <mat-expansion-panel [ngStyle]="{'border-color': getBorderColor(suggestion.accept)}" [expanded]="step === i" (opened)="setStep(index, suggestion)">
+          <mat-expansion-panel [ngStyle]="{'border-color': getBorderColor(suggestion.accept)}" [expanded]="step === i" (opened)="setStep(i, suggestion)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <div *ngIf="suggestion.type === 0; else showSpellingTitle">
