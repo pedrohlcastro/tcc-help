@@ -64,7 +64,7 @@ export class CheckTccPageComponent implements OnInit {
     this.languageFormGroup = this.formBuilder.group({
       languages: this.formBuilder.array([])
     });
-    this.languages = [{value: 'pt_BR', name: 'Português'}, {value: 'en_US', name: 'Inglês'}, {value: 'es_SP', name: 'Espanhol'}];
+    this.languages = [{value: 'pt_BR', name: 'Português'}, {value: 'en_US', name: 'Inglês'}];
   }
 
   getMatches(){
