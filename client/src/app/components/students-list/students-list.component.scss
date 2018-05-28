@@ -1,0 +1,71 @@
+@import '~variables.scss';
+
+.header{
+    margin-top: 5%;
+}
+
+h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-content{
+    margin-top: 5%;
+    max-width: 97%;
+}
+
+.refuse-btn{
+    margin-right: 5%;
+}
+
+.inner-card{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.mat-card-actions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-3{
+    max-width: 24%;
+    min-width: 220px;
+}
+
+.container{
+    max-width: 70%;
+}
+
+.row{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    margin-bottom: 2%;
+}
+
+.search-input{
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.avatar{
+    width: 72px;
+    height: 72px;
+    margin: -5% auto;
+    background-color: $second-color;
+}
+
+.remove-btn{
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    background-color: red;
+}
+
+mat-card-title {
+    font-size: 18px;
+    text-align: center;
+}

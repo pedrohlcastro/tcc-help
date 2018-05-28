@@ -24,11 +24,16 @@ import { RuleService } from './services/rule.service';
 import { ForumPageComponent } from './components/forum-page/forum-page.component';
 import { ForumDialogComponent } from './components/forum-dialog/forum-dialog.component';
 import { ForumService } from './services/forum.service';
+import { StudentProfessorService } from './services/student-professor.service';
 import { NumberPickerModule } from '@retailify/ngx-mat-numberpicker';
 
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
 import { ForumAnswerDialogComponent } from './components/forum-answer-dialog/forum-answer-dialog.component';
+import { StudentsListComponent } from './components/students-list/students-list.component';
+import { YesnoDialogComponent } from './components/yesno-dialog/yesno-dialog.component';
+import { ProfessorListComponent } from './components/professor-list/professor-list.component';
+import { ProfessorListService } from './services/professor-list.service';
 import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
 import { PdfService } from './services/pdf-service';
 import { TccService } from './services/tcc.service';
@@ -55,13 +60,17 @@ import { CommentService } from './services/comment.service';
     ForumAnswerDialogComponent,
     CheckTccPageComponent,
     CommentPageComponent,
-    CommentDialogComponent
+    CommentDialogComponent,
+    StudentsListComponent,
+    YesnoDialogComponent,
+    ProfessorListComponent
   ],
   entryComponents: [
     RuleDialogComponent,
     ForumDialogComponent,
     ForumAnswerDialogComponent,
-    CommentDialogComponent
+    CommentDialogComponent,
+    YesnoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +86,8 @@ import { CommentService } from './services/comment.service';
     AuthService,
     RuleService,
     ForumService,
+    StudentProfessorService,
+    ProfessorListService,
     PdfService,
     TccService,
     CommentService,

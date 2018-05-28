@@ -1,0 +1,16 @@
+<mat-card class="card">
+    <mat-card-content>
+      <h5>Deseja realmente concluir essa ação?</h5>
+    </mat-card-content>
+    <mat-card-actions>
+      <br>
+      <div class="btn-area">
+        <button mat-raised-button class="cancel-btn" color="warn" (click)="exit()">
+          <i class="material-icons">cancel</i> Cancelar
+        </button>
+        <button mat-raised-button class="confirm-btn" color="primary" (click)="confirm(1)">
+          <i class="material-icons">check</i> Confirmar
+        </button>
+      </div>
+    </mat-card-actions>
+</mat-card>    

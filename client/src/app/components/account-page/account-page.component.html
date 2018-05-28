@@ -1,50 +1,51 @@
 <div class="card-content">
-    <mat-card class="card">
-      <mat-card-header>
-      <mat-card-title>Configurações de conta</mat-card-title>
-      </mat-card-header>
-  
-  
-      <mat-card-content>
-        <form class="register-form" [formGroup]="accountForm">
-                
+  <mat-card class="card">
+    <mat-card-header>
+    <mat-card-title>Configurações de conta</mat-card-title>
+    </mat-card-header>
+
+
+    <mat-card-content>
+      <form class="register-form" [formGroup]="accountForm">
+              
+        <mat-form-field class="input">
+          <input matInput placeholder="Nome" formControlName="username" required>
+          <mat-error *ngIf="accountForm.get('username').hasError('required')">
+            Digite seu nome
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="input">
+          <input matInput placeholder="E-mail" formControlName="email" required >
+        </mat-form-field>
+
+        <form class="register-form" formGroupName="passwords">  
           <mat-form-field class="input">
-            <input matInput placeholder="Nome" formControlName="username" required>
-            <mat-error *ngIf="accountForm.get('username').hasError('required')">
-              Digite seu nome
+            <input matInput type="password" placeholder="Nova senha" formControlName="password">
+            <mat-error *ngIf="accountForm.get('passwords').get('password').hasError('minlength')">
+              A senha precisa ter mais de 6 caracteres 
             </mat-error>
           </mat-form-field>
   
           <mat-form-field class="input">
-            <input matInput placeholder="E-mail" formControlName="email" required >
+            <input matInput type="password" placeholder="Confirme sua nova senha" formControlName="confirmPassword">
+            <mat-error *ngIf="accountForm.get('passwords').get('confirmPassword').hasError('MatchPassword')">
+              As senhas não combinam
+            </mat-error>
           </mat-form-field>
-
-          <form class="register-form" formGroupName="passwords">  
-            <mat-form-field class="input">
-              <input matInput type="password" placeholder="Nova senha" formControlName="password">
-              <mat-error *ngIf="accountForm.get('passwords').get('password').hasError('minlength')">
-                A senha precisa ter mais de 6 caracteres 
-              </mat-error>
-            </mat-form-field>
-    
-            <mat-form-field class="input">
-              <input matInput type="password" placeholder="Confirme sua nova senha" formControlName="confirmPassword">
-              <mat-error *ngIf="accountForm.get('passwords').get('confirmPassword').hasError('MatchPassword')">
-                As senhas não combinam
-              </mat-error>
-            </mat-form-field>
-          </form>
-          <mat-radio-group formControlName="userType">
-            <p>Tipo de usuário *</p>
-            <mat-radio-button value="1" class="md-primary">Estudante</mat-radio-button>
-            <mat-radio-button value="2" class="md-accent">Professor</mat-radio-button>
-          </mat-radio-group>
-          
-          <button mat-button (click)="save()">SALVAR</button>
-  
         </form>
+        <mat-radio-group formControlName="userType">
+          <p>Tipo de usuário *</p>
+          <mat-radio-button value="1" class="md-primary">Estudante</mat-radio-button>
+          <mat-radio-button value="2" class="md-primary">Professor</mat-radio-button>
+        </mat-radio-group>
+
+          <button mat-button (click)="save()">SALVAR</button><br><br>
+        </form>
+        <br>
+        <button [routerLink]="['/students-list']" *ngIf="type==2" mat-button>GERENCIAR ALUNOS</button>
+        <button [routerLink]="['/professor-list']" *ngIf="type==1" mat-button>INDICAR PROFESSOR</button>
+        <br>
       </mat-card-content>
     </mat-card>
   </div>
-  
-  

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-account-page',
@@ -10,13 +11,15 @@ import { MatSnackBar } from '@angular/material';
 })
 export class AccountPageComponent implements OnInit {
   user;
-  constructor(private authService: AuthService, private snackBar: MatSnackBar) {
+  type;
+  constructor(private authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
   }
 
   ngOnInit() {
     this.authService.getUserFromToken()
       .subscribe((res) => {
         this.user = res;
+        this.type = res.type; 
         this.accountForm.patchValue({
           username: res.name,
           email: res.email,
@@ -28,6 +31,7 @@ export class AccountPageComponent implements OnInit {
         this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
+    console.log(this.user);
   }
   
   accountForm = new FormGroup({
@@ -62,18 +66,29 @@ export class AccountPageComponent implements OnInit {
     }
   }
   save() {
+    let requestUser;
     if (this.accountForm.invalid){
       this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
       return;
     }
-    const requestUser = {
-      id: this.user.id,
-      name: this.accountForm.get('username').value,
-      email: this.accountForm.get('email').value,
-      password: this.accountForm.get('passwords').get('password').value,
-      confirmPassword: this.accountForm.get('passwords').get('confirmPassword').value,
-      type: this.accountForm.get('userType').value
-    };
+    if (this.accountForm.get('passwords').get('password').value === ""){
+      requestUser = {
+        id: this.user.id,
+        name: this.accountForm.get('username').value,
+        email: this.accountForm.get('email').value,
+        type: this.accountForm.get('userType').value
+      };
+    }
+    else {
+      requestUser = {
+        id: this.user.id,
+        name: this.accountForm.get('username').value,
+        email: this.accountForm.get('email').value,
+        password: this.accountForm.get('passwords').get('password').value,
+        confirmPassword: this.accountForm.get('passwords').get('confirmPassword').value,
+        type: this.accountForm.get('userType').value
+      };
+    }
     
     this.authService.updateUser(requestUser)
       .subscribe((res) => {
