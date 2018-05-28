@@ -14,14 +14,16 @@ router.post('/', passport.authenticate('BasicBearer', { session: false }), (req,
 });
 
 router.get('/', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
-  RuleController.get()
+  const userId = req.user.id;
+  RuleController.get(userId)
     .then(data => res.json(data))
     .catch(err => next({ err, msg: 'Error DB query', status: 500 }));
 });
 
 router.get('/:id', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  const userId = req.user.id;
   const ruleId = req.params.id;
-  RuleController.get({ id: ruleId })
+  RuleController.get(userId, { id: ruleId })
     .then(data => res.json(data))
     .catch(err => next({ err, msg: 'Error DB query', status: 500 }));
 });
@@ -37,7 +39,7 @@ router.put('/:id', passport.authenticate('BasicBearer', { session: false }), (re
   const ruleId = req.params.id;
   const newRule = req.body;
   RuleController.update(newRule, ruleId)
-    .then(data => res.json(data))
+    .then(() => res.json({ result: 'Ok... Funciona' }))
     .catch(err => next({ err, msg: 'Error ao atualizar regra', status: 500 }));
 });
 

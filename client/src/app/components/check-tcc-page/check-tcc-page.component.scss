@@ -1,0 +1,76 @@
+.row{
+    width: 100%;
+}
+.pdf-container{
+    display: absolute;
+    width: calc(100% - 25%);
+    height: 92vh;
+    overflow: auto;
+    background: #DCDCDC;
+    .page {
+        ngx-mat-numberpicker{
+            padding: 20px;
+            color: white;
+            font-size: 20px;
+            margin-left: 36%;
+        }
+        margin-bottom: 35px;
+    }
+    .pdfViewer {
+      width: 80%;
+      margin-left: 10%;
+      margin-right: 10%;
+      margin-bottom: 10%;
+      height: 90vh;
+    }
+}
+
+
+
+.suggestions{
+    width: 24%;
+    margin-left: 1%;
+    mat-accordion{
+        width: 100%;
+        position: relative;
+        mat-expansion-panel{
+            width: 100%;
+            border-left: 10px solid red;
+            mat-panel-title{
+                color: black;
+            }
+            .btn-area{
+                margin-left: 7%;
+            }
+        }
+        
+        
+    }
+    h4{
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }    
+}
+
+.btc-send {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 30px;
+    font-weight: bolder;
+}
+mat-spinner{
+    margin-top: 40vh;
+    margin-left: 32%;
+}
+
+.run-btn{
+    font-weight: bolder;
+    font-size: 20px;
+    margin-top: 40vh;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+

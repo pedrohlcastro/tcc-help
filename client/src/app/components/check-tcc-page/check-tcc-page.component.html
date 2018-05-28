@@ -1,0 +1,39 @@
+<!-- Diplay PDF -->
+<div class="row">
+  <div class="pdf-container">
+    <div class="page">
+      <ngx-mat-numberpicker [min]="1" [max]="maxPage" [default]="page" (onChange)="changePage($event)" [starttext]="'Página'">3</ngx-mat-numberpicker>
+    </div>
+    <div id="pdf-container">
+      <div id="pageContainer" class="pdfViewer singlePageView"></div>
+    </div>
+  </div>
+  <div class="suggestions">
+    <div *ngIf="suggestions.length != 0; else runSuggestions">
+      <h4>Sugestões de alteração</h4>
+      <mat-accordion *ngFor="let suggestion of suggestions; let i = index;">
+          <mat-expansion-panel [ngStyle]="{'border-color': suggestion.accept ? 'green' : 'red'}" [expanded]="step === i" (opened)="setStep(i)">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Trecho: {{ suggestion.word }}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="btn-area">
+              <button mat-raised-button class="delete-btn" color="warn" (click)="choose(i, false)">
+                <i class="material-icons">cancel</i> Recusar
+              </button>
+              <button mat-raised-button class="edit-btn" color="primary" (click)="choose(i, true)">
+                <i class="material-icons">check</i> Aceitar
+              </button>
+            </div>
+          </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <ng-template #runSuggestions>
+      <button mat-raised-button class="run-btn" color="primary" (click)="runAnalisys()" *ngIf="!callSuggestions">Rodar Correção</button>
+      <mat-spinner *ngIf="callSuggestions"></mat-spinner>
+    </ng-template>
+    
+  </div>
+  <button mat-raised-button color="primary" class="btc-send" (click)="sendToProfessor()">Enviar para professor <i class="material-icons">send</i></button>
+</div>

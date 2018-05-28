@@ -25,6 +25,7 @@ import { ForumPageComponent } from './components/forum-page/forum-page.component
 import { ForumDialogComponent } from './components/forum-dialog/forum-dialog.component';
 import { ForumService } from './services/forum.service';
 import { StudentProfessorService } from './services/student-professor.service';
+import { NumberPickerModule } from '@retailify/ngx-mat-numberpicker';
 
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
@@ -33,6 +34,9 @@ import { StudentsListComponent } from './components/students-list/students-list.
 import { YesnoDialogComponent } from './components/yesno-dialog/yesno-dialog.component';
 import { ProfessorListComponent } from './components/professor-list/professor-list.component';
 import { ProfessorListService } from './services/professor-list.service';
+import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
+import { PdfService } from './services/pdf-service';
+import { TccService } from './services/tcc.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,8 @@ import { ProfessorListService } from './services/professor-list.service';
     ForumAnswerDialogComponent,
     StudentsListComponent,
     YesnoDialogComponent,
-    ProfessorListComponent
+    ProfessorListComponent,
+    CheckTccPageComponent
   ],
   entryComponents: [
     RuleDialogComponent,
@@ -68,15 +73,18 @@ import { ProfessorListService } from './services/professor-list.service';
     AppMaterialModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NumberPickerModule
   ],
   providers: [
     AuthService,
     RuleService,
     ForumService,
-    UserSignedInGuard,
     StudentProfessorService,
-    ProfessorListService
+    ProfessorListService,
+    PdfService,
+    TccService,
+    UserSignedInGuard
   ],
   bootstrap: [AppComponent]
 })

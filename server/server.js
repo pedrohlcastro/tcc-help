@@ -15,6 +15,8 @@ import TopicRoutes from './routes/TopicRoutes';
 import ReplyRoutes from './routes/ReplyRoutes';
 import StudentProfessorRoutes from './routes/StudentProfessorRoutes';
 import ProfessorListRoutes from './routes/ProfessorListRoutes';
+import TccRoutes from './routes/TccRoutes';
+import CheckRulesRoutes from './routes/CheckRulesRoutes';
 
 const ENV = process.env.NODE_ENV;
 
@@ -64,6 +66,9 @@ app.use('/topic', TopicRoutes);
 app.use('/reply', ReplyRoutes);
 app.use('/professor_list', ProfessorListRoutes);
 app.use('/studentProfessor', StudentProfessorRoutes);
+app.use('/tcc', TccRoutes);
+app.use('/check-rule', CheckRulesRoutes);
+
 
 // Call Angular
 app.all('*', (req, res) => {

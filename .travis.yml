@@ -24,10 +24,12 @@ install:
   - gcc --version
 
 before_script:
-  - ./manage.sh --travis
+  - docker-compose -f docker-compose.test-unit.yml build
+  - docker-compose -f docker-compose.test-unit.yml up -d
 
 script:
   - ./pre-commit
+  - docker exec tcchelp_app_1 npm run test-unit
 
 after_script:
-  - ./stop.sh
+  - ./manage.sh --stop
