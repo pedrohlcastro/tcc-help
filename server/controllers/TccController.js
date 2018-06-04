@@ -13,7 +13,7 @@ import CheckSpellingController from './CheckSpellingController';
 
 let dictPtBR;
 let dictEnUS;
-//let dictEsSP;
+// let dictEsSP;
 class TccController {
   constructor() {
     this.Tcc = db().models.Tcc;
@@ -328,60 +328,62 @@ class TccController {
 
   runSpellingTwoLanguages(tcc, pages) {
     return new Promise(async (resolve, reject) => {
-      try {
-        if (pages.length > 1) {
-          pages.splice(0, 1);
-        }
-        // PERCORRE PAGINAS
-        async.forEach(pages, (page, nextPage) => {
-          /* eslint-disable */
+      if (pages.length > 1) {
+        pages.splice(0, 1);
+      }
+      // PERCORRE PAGINAS
+      async.forEach(pages, (page, nextPage) => {
+        /* eslint-disable */
           const words = page.toString().replace(/[^A-Za-záàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ]/g, ' ')
             .replace(/\s\s+/g, ' ').trim().split(' ');
           /* eslint-enable */
-          async.forEach(words, (word, nextWord) => {
-            if (word !== word.toUpperCase()) {
-              dictPtBR.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
-                if (errSpell) {
-                  nextWord(errSpell);
-                } else if (!correct) {
-                  dictEnUS.spellSuggestions(word, (errSpellEn, correctEn, suggestionsEn) => {
-                    if (errSpellEn) {
-                      nextWord(errSpellEn);
-                    } else if (!correctEn) {
-                      const bothSuggestions = [...suggestions, ...suggestionsEn];
-                      const checkSpelling = {
-                        tcc_id: tcc.id,
-                        accept: 0,
-                        word: origWord,
-                        suggestions: bothSuggestions.toString(),
-                        justification: null,
-                        page: parseInt(pages.indexOf(page), 10) + 1,
-                      };
-                      this.CheckSpelling.create(checkSpelling)
-                        .then(() => nextWord())
-                        .catch(checkSpellingErr => nextWord(checkSpellingErr));
-                    }
-                  });
-                } else {
-                  nextWord();
-                }
-              });
-            } else {
-              nextWord();
-            }
-          }, (err) => {
-            // FINALLY WORDS
-            if (err) reject(err);
-            else nextPage();
-          });
+        async.forEach(words, (word, nextWord) => {
+          if (
+            parseInt(pages.indexOf(page), 10) + 1 === pages.length
+            && parseInt(words.indexOf(word), 10) + 1 === words.length
+          ) {
+            resolve();
+          }
+          if (word !== word.toUpperCase()) {
+            dictPtBR.spellSuggestions(word, (errSpell, correct, suggestions, origWord) => {
+              if (errSpell) {
+                nextWord(errSpell);
+              } else if (!correct) {
+                dictEnUS.spellSuggestions(word, (errSpellEn, correctEn, suggestionsEn) => {
+                  if (errSpellEn) {
+                    nextWord(errSpellEn);
+                  } else if (!correctEn) {
+                    const bothSuggestions = [...suggestions, ...suggestionsEn];
+                    const checkSpelling = {
+                      tcc_id: tcc.id,
+                      accept: 0,
+                      word: origWord,
+                      suggestions: bothSuggestions.toString(),
+                      justification: null,
+                      page: parseInt(pages.indexOf(page), 10) + 1,
+                    };
+                    this.CheckSpelling.create(checkSpelling)
+                      .then(() => nextWord())
+                      .catch(checkSpellingErr => nextWord(checkSpellingErr));
+                  }
+                });
+              } else {
+                nextWord();
+              }
+            });
+          } else {
+            nextWord();
+          }
         }, (err) => {
-          // PECORRE CADA PAGE
+          // FINALLY WORDS
           if (err) reject(err);
-          resolve();
+          else nextPage();
         });
-      } catch (err) {
-        reject(err);
-      }
+      }, (err) => {
+        // PECORRE CADA PAGE
+        if (err) reject(err);
+        resolve();
+      });
     });
   }
 
@@ -435,7 +437,7 @@ class TccController {
         this.runProfessorRules(tcc, professorId, pages)
           .then(() => {
             this.runSpelling(tcc, languages, pages)
-              .then(() => {
+              .then((res) => {
                 resolve({ msg: 'Success', status: 200 });
               })
               .catch(errSpelling => reject(errSpelling));

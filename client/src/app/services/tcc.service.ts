@@ -26,11 +26,12 @@ export class TccService {
       });
   }
 
-  choose(checkRuleId, choice){
+  choose(checkRuleId, choice, justification=null){
     const options = this.authService.addAuthHeader(true);
     const body = {
       choice: choice,
-      id: checkRuleId
+      id: checkRuleId,
+      justification
     };
     return this.http.put(`${this.baseUrl}/check-rule/choose`, body, options)
       .map((res) => {
@@ -38,11 +39,12 @@ export class TccService {
       });
   }
 
-  chooseSpelling(checkSpellingId, choice){
+  chooseSpelling(checkSpellingId, choice, justification=null){
     const options = this.authService.addAuthHeader(true);
     const body = {
       choice: choice,
-      id: checkSpellingId
+      id: checkSpellingId,
+      justification
     };
     return this.http.put(`${this.baseUrl}/check-spelling/choose`, body, options)
       .map((res) => {

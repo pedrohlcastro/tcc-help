@@ -11,18 +11,15 @@
   <div class="suggestions">
     <div *ngIf="suggestions.length != 0 || spelling.length != 0; else runSuggestions">
       <h4>Sugestões de alteração</h4>
-      <h5>Filtros</h5>
-      <h6>Tipos de sugestão</h6>
       <mat-form-field>
-        <mat-select [(value)]="filterType" (selectionChange)="onChangeTypeFilter()">
+        <mat-select [(value)]="filterType" (selectionChange)="onChangeTypeFilter()" placeholder="Tipos de Sugestões">
           <mat-option value="0">Todos</mat-option>
           <mat-option value="1">Regras</mat-option>
           <mat-option value="2">Ortografia</mat-option>
         </mat-select>
       </mat-form-field>
-      <h6>Estado</h6>
       <mat-form-field>
-        <mat-select [(value)]="filterStatus" (selectionChange)="onChangeTypeFilter()">
+        <mat-select [(value)]="filterStatus" (selectionChange)="onChangeTypeFilter()" placeholder="Estado">
           <mat-option value="0">Todos</mat-option>
           <mat-option value="1">Pendente</mat-option>
           <mat-option value="2">Aceito</mat-option>
@@ -42,6 +39,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div *ngIf="suggestion.type === 0; else showSpellingBody">
+              <p>{{suggestion['CheckRuleRule.message']}}</p>
               <div class="btn-area">
                 <button mat-raised-button class="delete-btn" color="warn" (click)="chooseRule(suggestion, 2)">
                   <i class="material-icons">cancel</i> Recusar
@@ -85,7 +83,6 @@
         <mat-spinner *ngIf="callSuggestions"></mat-spinner>
       </form>
     </ng-template>
-    
+    <button mat-raised-button color="primary" class="btc-send" (click)="sendToProfessor()">Enviar para professor <i class="material-icons">send</i></button>
   </div>
-  <button mat-raised-button color="primary" class="btc-send" (click)="sendToProfessor()">Enviar para professor <i class="material-icons">send</i></button>
 </div>

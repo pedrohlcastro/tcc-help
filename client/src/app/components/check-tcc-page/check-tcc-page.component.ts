@@ -130,20 +130,35 @@ export class CheckTccPageComponent implements OnInit {
 
   chooseRule(suggestion, result){
     const item = suggestion;
-    let flag = false;
+    let justification = null;
     if(result == '2'){
-      flag = true;
       let dialogRef = this.dialog.open(RejectDialogComponent, {
         width: '75%'
       });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          flag = false;
+      dialogRef.afterClosed().subscribe(data => {
+        if (data) {
+          justification = data.justification;
+          this.tccService.choose(item.id, Number(result), justification)
+            .subscribe((res) => {
+              item.accept = result;
+              if(result == '1'){
+                this.snackBar.open('Sugestão foi marcada como aceita.', 'Fechar', {
+                  duration: 7000
+                });
+              } else {
+                this.snackBar.open('Sugestão foi marcada como ignorada.', 'Fechar', {
+                  duration: 7000
+                });
+              }
+            }, (err) => {
+              this.snackBar.open('Error ao marcar sugestão.', 'Fechar', {
+                duration: 7000
+              });
+            });
         }
       });
-    }
-    if(!flag){
-    this.tccService.choose(item.id, Number(result))
+    } else {
+      this.tccService.choose(item.id, Number(result))
       .subscribe((res) => {
         item.accept = result;
         if(result == '1'){
@@ -165,19 +180,35 @@ export class CheckTccPageComponent implements OnInit {
 
   chooseSpelling(suggestion, result){
     const item = suggestion;
-    let flag = false;
+    let justification = null;
     if(result == '2'){
-      flag = true;
       let dialogRef = this.dialog.open(RejectDialogComponent, {
         width: '75%'
       });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          flag = false;
+      dialogRef.afterClosed().subscribe(data => {
+        if (data) {
+          justification = data.justification;
+          this.tccService.chooseSpelling(item.id, Number(result), justification)
+            .subscribe((res) => {
+              item.accept = result;
+              if(result == '1'){
+                this.snackBar.open('Sugestão foi marcada como aceita.', 'Fechar', {
+                  duration: 7000
+                });
+              } else {
+                this.snackBar.open('Sugestão foi marcada como ignorada.', 'Fechar', {
+                  duration: 7000
+                });
+              }
+            }, (err) => {
+              this.snackBar.open('Error ao marcar sugestão.', 'Fechar', {
+                duration: 7000
+              });
+            });
         }
       });
     }
-    if(!flag){
+    else{
       this.tccService.chooseSpelling(item.id, Number(result))
         .subscribe((res) => {
           item.accept = result;
