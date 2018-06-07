@@ -62,9 +62,9 @@
                   </mat-card-content>
 
                   <div class="mat-card-actions">
-                    <button mat-raised-button class="refuse-btn col-5" color="primary" (click)="handlePendentStudent(i, 2)">
+                    <button mat-raised-button class="refuse-btn col-5" color="primary" (click)="handleStudent(i, 2, 0)">
                       <i class="material-icons">close</i> Negar </button>
-                    <button mat-raised-button class="accept-btn col-5" color="primary" (click)="handlePendentStudent(i, 1)">
+                    <button mat-raised-button class="accept-btn col-5" color="primary" (click)="handleStudent(i, 1, 0)">
                       <i class="material-icons">done</i> Aceitar </button>
                   </div>
                 </mat-card>
@@ -94,7 +94,7 @@
                   </mat-card-content>
                   <div class="mat-card-actions">
                     <br>
-                    <button mat-raised-button class="centered-btn" color="primary">
+                    <button mat-raised-button class="centered-btn" color="primary" (click)="handleStudent(i, 1, 1)">
                       <i class="material-icons">rotate_left</i> Reconectar </button>
                   </div>
                 </mat-card>

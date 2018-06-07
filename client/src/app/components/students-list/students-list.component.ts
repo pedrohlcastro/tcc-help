@@ -56,7 +56,8 @@ export class StudentsListComponent implements OnInit {
     /*continue*/
   }
   
-  handlePendentStudent(index, flag) {
+  handleStudent(index, accept, reconnecting) {
+    let element;
     let dialogRef = this.dialog.open(YesnoDialogComponent, {
       width: '40%',
       height: "30%",
@@ -64,11 +65,35 @@ export class StudentsListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        let element = this.pendent[index];
+
+        if(reconnecting===0){
+          element = this.pendent[index];
+        }
+        else if(reconnecting===1){
+          element = this.disconected[index];
+        }
+        
         let id = element["UserProfessor.StudentProfessor.id"];
+        
         //id da tabela de associação
-        this.studentProfessorService.feedbackStudent(id, flag, 1).subscribe(result => {
-          window.location.reload();
+        this.studentProfessorService.feedbackStudent(id, accept, 1).subscribe(result => {
+ 
+            if(accept===1){
+              //student accepted or reconnected
+              this.aproved.push(element);
+              
+              if(reconnecting===0){
+                this.pendent.splice(element,1);
+              }
+              else if(reconnecting===1){
+                this.disconected.splice(element,1);
+              }
+            }
+            else if(accept===2){
+              //student rejected
+              this.pendent.splice(element,1);
+            }
+          
         }, (err) => {
           this.snackBar.open('Não foi possível responder ao aluno.', 'Fechar', {
             duration: 7000
@@ -89,7 +114,9 @@ export class StudentsListComponent implements OnInit {
         let element = this.aproved[index];
         let id = element["UserProfessor.StudentProfessor.id"];
         this.studentProfessorService.feedbackStudent(id, 0, 0).subscribe(result => {
-          window.location.reload();
+          //remove student
+          this.disconected.push(element);
+          this.aproved.splice(element,1);
         }, (err) => {
           this.snackBar.open('Não foi possível remover o aluno.', 'Fechar', {
             duration: 7000
