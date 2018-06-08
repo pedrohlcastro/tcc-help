@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Headers } from '@angular/http';
-import { Observable, Observer, Subscriber, Subject, BehaviorSubject } from 'rxjs/Rx';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AuthService } from './auth.service';
 
@@ -49,16 +48,16 @@ export class TccService {
       });
   }
   
-  upload(file, path){
-    console.log('1')
+  upload(data){
+    let file = new FormData();
+    file.append('file', data);
     const options = this.authService.addAuthHeader(true);
-    const body = {
-      file: file,
-      path: path,
-    };
-    return this.http.post(`${this.baseUrl}/tcc/upload`, body, options)
+    console.log('Parte 1\n')
+    
+    return this.http.post(`${this.baseUrl}/tcc/upload`, file, options)
       .map((res) => {
         return res.json();
       });
+
   }
 }

@@ -5,7 +5,7 @@
       <input class="input-files"  #myFile type="file"  name="sendFile"   (change)="handleFiles(myFile.files)">
       <div class="dropzone-list">
         <ul class="valid">
-            <!-- {{ file.name }} -->
+            {{ this.files.item(0).name }} 
         </ul>
       </div>
       <div class="centered">

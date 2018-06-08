@@ -53,48 +53,31 @@ export class TextPageDialogComponent implements OnInit {
     }
   }
 
-  newPath(){
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      const r = Math.random() * 16 | 0, v = c === 'x' ? r : ( r & 0x3 | 0x8 );
-      return v.toString(16);
-    });
-  }
 
   confirm(){
-    let path = `${this.newPath()}.pdf`;
+    let fileCount: number = this.files.length;
     let file = this.files.item(0);
-    console.log(file.name);
-    // let fileCount: number = this.files.length;
-    // let formData = new FormData();
     
-    // if (fileCount > 0) { 
-    //   formData.append('file', this.files.item(0));
-    //   this.tccService.upload(formData,path)
-    //       .subscribe((res) => {
-    //           this.snackBar.open('TCC enviado com Sucesso.', 'Fechar', {
-    //           duration: 7000
-    //           });
-    //       }, (err) => {
-    //         this.snackBar.open('Error ao enviar TCC, tente novamente.', 'Fechar', {
-    //         duration: 7000
-    //         });
-    //     })
-
-    //   const newTcc = {
-    //     file_path: path,
-    //     date: Date.now(),
-    //   };
-
-    // }
-    // else{
-    //   this.snackBar.open('Selecione o arquivo', 'Fechar', {
-    //     duration: 7000
-    //   });
-    // }
+    if (fileCount > 0) { 
+      this.tccService.upload(file)
+          .subscribe((res) => {
+              this.snackBar.open('TCC enviado com Sucesso.', 'Fechar', {
+              duration: 7000
+              });
+          }, (err) => {
+            this.snackBar.open('Error ao enviar TCC, tente novamente.', 'Fechar', {
+            duration: 7000
+            });
+        })
+    }
+    else{
+      this.snackBar.open('Selecione o arquivo', 'Fechar', {
+        duration: 7000
+      });
+    }
   }
   
   onFilesChange(files){
-    this.file = files.item(0);
     this.files = files;
   }
 

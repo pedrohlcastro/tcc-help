@@ -1,11 +1,13 @@
 import { Router } from 'express';
+import { v4 as uuid } from 'uuid';
 import passport from 'passport';
 import path from 'path';
-// import multer from 'multer';
+import multer from 'multer';
 import TccController from '../controllers/TccController';
 
-const router = new Router();
 
+const router = new Router();
+const upload = multer({ dest: './server/upload/' });
 router.get('/spell/:language', (req, res, next) => {
   TccController.checkSpelling(req.params)
     .then(result => res.json(result))
@@ -25,24 +27,30 @@ router.get('/runRules/:tccId', passport.authenticate('BasicBearer', { session: f
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
+
 router.put('/sendToProfessor', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
   TccController.update(req.body.id, { visible_professor: 1 })
     .then(() => res.json({ result: 'Success' }))
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
-// router.post('/upload', passport.authenticate('BasicBearer',
-//      { session: false }), (req, res, next) => {
-//   console.log('2');
-//   const DIR = './server/upload/';
-//   const name = req.body.path;
-//   upload = multer({ dest: DIR }).single(name)
-//     .then(() => resolve())
-//     .catch(err => reject(err));
 
-//   return res.send('Upload Completed');
-// });
+router.post('/upload', passport.authenticate(
+  'BasicBearer',
+  { session: false },
+), (req, res, next) => {
+  if (!req.file) {
+    console.log('No file received');
+  }
+
+  const name = `${uuid()}.pdf`;
+  upload.single(name)
+    .then(() => res.json({ result: 'Success' }))
+    .catch(err => next({ err, msg: 'Error uploading file', status: 500 }));
+  console.log('2');
+});
 
 router.get('/file/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => TccController.getFile(res, next, req.params.tccId));
 
 export default router;
+
