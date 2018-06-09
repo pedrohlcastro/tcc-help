@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UserSignedInGuard } from './guards/user-signed-in-guard';
+import { ProfessorSignedInGuard } from './guards/professor-signed-in-guard';
+import { AdminSignedInGuard } from './guards/admin-signed-in-guard';
 
 import { AppRoutingModule } from './app.module.routes';
 import { AppMaterialModule } from './app.module.material';
@@ -33,6 +35,7 @@ import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-pag
 import { PdfService } from './services/pdf-service';
 import { TccService } from './services/tcc.service';
 import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -76,7 +79,9 @@ import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.
     ForumService,
     PdfService,
     TccService,
-    UserSignedInGuard
+    UserSignedInGuard,
+    ProfessorSignedInGuard,
+    AdminSignedInGuard
   ],
   bootstrap: [AppComponent]
 })

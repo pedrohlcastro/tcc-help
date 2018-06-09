@@ -13,18 +13,19 @@ import { ForumPageComponent } from './components/forum-page/forum-page.component
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import { ForumAnswersComponent } from './components/forum-answers/forum-answers.component';
 import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
+import { ProfessorSignedInGuard } from './guards/professor-signed-in-guard';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
     { path: 'sign-in', component: SignInPageComponent},
     { path: 'sign-up', component: SignUpPageComponent},
-    { path: 'manage-rules', component: ManageRulesPageComponent, canActivate: [UserSignedInGuard]},
+    { path: 'manage-rules', component: ManageRulesPageComponent, canActivate: [ProfessorSignedInGuard]},
     { path: 'account-page', component: AccountPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'forgot-password', component: ForgotPasswordComponent},
     { path: 'reset-password/:token', component: ResetPasswordComponent},
     { path: 'forum', component: ForumPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'help-page', component: HelpPageComponent, canActivate: [UserSignedInGuard]},
-    { path: 'forum-answers/:id', component: ForumAnswersComponent},
+    { path: 'forum-answers/:id', component: ForumAnswersComponent, canActivate: [UserSignedInGuard]},
     { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [UserSignedInGuard]}
   ];
   

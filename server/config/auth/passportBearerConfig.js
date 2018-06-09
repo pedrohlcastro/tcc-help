@@ -17,6 +17,7 @@ const configBearerStrategy = (passport) => {
           const reqUser = {
             id: result.id,
             type: result.type,
+            validate_professor: result.validate_professor,
           };
           return done(null, reqUser);
         })

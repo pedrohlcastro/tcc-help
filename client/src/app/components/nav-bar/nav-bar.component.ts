@@ -13,12 +13,14 @@ declare const $;
 export class NavBarComponent implements OnInit {
   navBarOpen = false;
   isAuthenticated: boolean;
+  isProfessor: boolean;
+  isAdmin : boolean;
 
   constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     // subscription when user is logged
-    this.authService.loggedIn.subscribe((status) => {
-      this.isAuthenticated = status;
-    });
+    this.authService.loggedIn.subscribe(status => this.isAuthenticated = status);
+    this.authService.adminLoggedIn.subscribe(status => this.isAdmin = status);
+    this.authService.professorLoggedIn.subscribe(status => this.isProfessor = status);
   }
 
   ngOnInit() {
