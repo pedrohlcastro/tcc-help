@@ -21,11 +21,6 @@ export class UserSignedInGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot):Observable<boolean> {
     return this.authService.checkToken().map((res) => {
       if (res.result == 'Success') return true; // Can access the route
-      else {
-        this.snackBar.open("Você deve se logar para acessar esta página", 'Fechar', {duration: 5000});
-        this.router.navigateByUrl('/');
-        return of(false);
-      }
     }) //catch the first Observable
     .catch((e) => {
       this.snackBar.open("Você deve se logar para acessar esta página", 'Fechar', {duration: 5000});

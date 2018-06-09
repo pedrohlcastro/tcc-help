@@ -24,7 +24,7 @@ export class ProfessorSignedInGuard implements CanActivate {
       else {
         this.snackBar.open("Você deve ser um professor válido para acessar essa página", 'Fechar', {duration: 5000});
         this.router.navigateByUrl('/account-page');
-        return of(false);
+        return false;
       }
     }) //catch the first Observable
     .catch((e) => {
