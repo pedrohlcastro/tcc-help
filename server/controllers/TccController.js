@@ -13,7 +13,7 @@ import CheckSpellingController from './CheckSpellingController';
 
 let dictPtBR;
 let dictEnUS;
-// let dictEsSP;
+
 class TccController {
   constructor() {
     this.Tcc = db().models.Tcc;
@@ -42,14 +42,6 @@ class TccController {
         dictEnUS = dict2;
       }
     });
-    // //es_SP
-    // const affbufEs = fs.readFileSync(`${dictionaryDirectory}/${arrayLanguages[2]}.aff`);
-    // const dictbufEs = fs.readFileSync(`${dictionaryDirectory}/${arrayLanguages[2]}.dic`);
-    // Nodehun.createNewNodehun(affbufEs,dictbufEs,function(err,dict){
-    //   if(!err){
-    //     dictEsSP = dict;
-    //   }
-    // });
   }
 
   /**
@@ -182,49 +174,11 @@ class TccController {
   }
 
   checkSpelling() {
-    // const dictionaryDirectory = path.join(__dirname, '../config/dictionaries');
-    // // const word = 'extraño';
-    // // let arrayLanguages = [];
-    // // arrayLanguages [0] = 'pt_BR';
-    // // arrayLanguages [1] = 'en_US';
-    // // arrayLanguages [2] = 'es_SP';
-    // // if(arrayLanguages.length === 3){
-    // //   arrayLanguages.splice(0, 1);
-    // //   arrayLanguages[0] = 'EN_PT';
-    // // }
     return new Promise(async (resolve, reject) => {
       try {
         dictPtBR.spellSuggestions('errad', (err, correct, suggestions, origWord) => {
           resolve({ correct, sug: suggestions, word: origWord });
-          // resolve({msg: 'Test', status: 200});
-          // because "color" is a defined word in the US English dictionary
-          // the output will be: null, true, null
         });
-
-        // const dict = await this.createDictionary(arrayLanguages[0]);
-        // if (arrayLanguages.length === 2) {
-        //   dict.addDictionary(dictbuf, (err) => {
-        //     if (!err) {
-        //       dict.spellSuggestions(word, (errSpell, correct, suggestion, origWord) => {
-        //         if (errSpell) {
-        //           reject(errSpell);
-        //         } else {
-        //           resolve({ status: correct, suggestions: suggestion, originalWord: origWord });
-        //         }
-        //       });
-        //     } else {
-        //       reject(err);
-        //     }
-        //   });
-        // } else {
-        //   dict.spellSuggestions(word, (errSpell, correct, suggestion, origWord) => {
-        //     if (errSpell) {
-        //       reject(errSpell);
-        //     } else {
-        //       resolve({ status: correct, suggestions: suggestion, originalWord: origWord });
-        //     }
-        //   });
-        // }
       } catch (err) {
         reject(err);
       }
@@ -388,12 +342,6 @@ class TccController {
   }
 
   runSpelling(tcc, languages, pages) {
-    // const arrLanguages = languages;
-    // if (arrLanguages.length === 3) {
-    //   arrLanguages.splice(0, 1);
-    //   arrLanguages[0].value = 'EN_PT';
-    // }
-
     return new Promise(async (resolve, reject) => {
       try {
         if (languages.length === 1) {
@@ -411,8 +359,8 @@ class TccController {
     });
   }
 
-  runAnalisys(tccId, studentId, languages) {
-    const queryParams = {
+  runAnalisys(tccId, studentId, body, selectedProfessorId) {
+    let queryParams = {
       where: {
         id: tccId,
         '$TccStudentProfessor.student_id$': studentId,
@@ -426,17 +374,28 @@ class TccController {
     };
     return new Promise(async (resolve, reject) => {
       try {
+        let professorId = null;
+        if (selectedProfessorId) {
+          queryParams = {
+            where: {
+              id: tccId,
+            },
+            raw: true,
+          };
+          professorId = selectedProfessorId;
+        }
         const tcc = await this.Tcc.findOne(queryParams);
-        let professorId;
-        if (tcc.TccStudentProfessor.professor_id) {
-          professorId = tcc.TccStudentProfessor.professor_id;
-        } else {
-          reject(new Error('Relation Not Found Tcc - StudentProfessor'));
+        if (professorId === null) {
+          if (tcc.TccStudentProfessor.professor_id) {
+            professorId = tcc.TccStudentProfessor.professor_id;
+          } else {
+            reject(new Error('Relation Not Found Tcc - StudentProfessor'));
+          }
         }
         const pages = await this.pdf2Txt(path.join(__dirname, `../upload/${tcc.file_path}`));
         this.runProfessorRules(tcc, professorId, pages)
           .then(() => {
-            this.runSpelling(tcc, languages, pages)
+            this.runSpelling(tcc, body.languages, pages)
               .then(() => resolve({ msg: 'Success', status: 200 }))
               .catch(errSpelling => reject(errSpelling));
           })

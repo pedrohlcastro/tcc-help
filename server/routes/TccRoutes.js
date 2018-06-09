@@ -42,7 +42,9 @@ router.get('/runSpelling/:tccId', passport.authenticate('BasicBearer', { session
 
 router.post('/runAnalisys/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
   const userId = req.user.id;
-  TccController.runAnalisys(req.params.tccId, userId, req.body)
+  let professorId;
+  if (req.user.type === 2) professorId = userId;
+  TccController.runAnalisys(req.params.tccId, userId, req.body, professorId)
     .then(() => res.json({ result: 'Success', status: 200 }))
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });

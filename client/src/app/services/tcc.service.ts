@@ -71,9 +71,13 @@ export class TccService {
       });
   }
 
-  runAnalisys(tccId, languages){
+  runAnalisys(tccId, languages, professorId=null){
     const options = this.authService.addAuthHeader(true);
-    return this.http.post(`${this.baseUrl}/tcc/runAnalisys/${tccId}`, languages, options)
+    const body = {
+      languages,
+      professorId: professorId
+    }
+    return this.http.post(`${this.baseUrl}/tcc/runAnalisys/${tccId}`, body, options)
       .map((res) => {
         return res.json();
       });
