@@ -1,9 +1,9 @@
 import 'hammerjs';
 import { NgModule } from '@angular/core';
-import {MatCardModule, MatButtonModule,MatRadioModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatExpansionModule, MatTabsModule, MatProgressSpinnerModule} from '@angular/material';
+import {MatCardModule, MatTabsModule, MatButtonModule,MatRadioModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule, MatSelectModule} from '@angular/material';
 
 @NgModule({
-  imports: [MatCardModule, MatButtonModule,MatRadioModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatExpansionModule, MatTabsModule, MatProgressSpinnerModule],
-  exports: [MatCardModule, MatButtonModule,MatRadioModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatExpansionModule, MatTabsModule, MatProgressSpinnerModule],
+  imports: [MatCardModule, MatTabsModule, MatButtonModule,MatRadioModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule, MatSelectModule],
+  exports: [MatCardModule, MatTabsModule, MatButtonModule,MatRadioModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule, MatSelectModule],
 })
 export class AppMaterialModule { }

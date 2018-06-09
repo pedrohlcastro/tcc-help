@@ -32,6 +32,11 @@ export default () => {
         operatorsAliases: false,
         query: true,
         logging: false,
+        pool: {
+          maxConnections: 100,
+          minConnections: 1,
+          maxIdleTime: 3600000000,
+        },
       },
     );
 

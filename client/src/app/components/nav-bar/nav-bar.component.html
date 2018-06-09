@@ -1,10 +1,17 @@
 <div class="nav-bar">
   <a class="closebtn" (click)="changeNavBar(false)" matTooltip="Fechar Menu" matTooltipPosition="above">&times;</a>
 
+  <!-- ROTAS COMUNS USUARIO DESLOGADO -->
   <a [routerLink]="['sign-in']" *ngIf="!isAuthenticated"><i class="material-icons">vpn_key</i>Login</a>
   <a [routerLink]="['sign-up']" *ngIf="!isAuthenticated"><i class="material-icons">input</i>Cadastro</a>
+
+
+  <!-- PROFESSOR ROUTES -->
+  <a [routerLink]="['manage-rules']" *ngIf="isAuthenticated && isProfessor"><i class="material-icons">gavel</i>Regras</a>
+  
+
+  <!-- ROTAS COMUNS USUARIO AUTENTICADO -->
   <a [routerLink]="['account-page']" *ngIf="isAuthenticated"><i class="material-icons">face</i>Perfil</a>
-  <a [routerLink]="['manage-rules']" *ngIf="isAuthenticated"><i class="material-icons">gavel</i>Regras</a>
   <a [routerLink]="['forum']" *ngIf="isAuthenticated"><i class="material-icons">forum</i>Fórum</a>
   <a [routerLink]="['help-page']" *ngIf="isAuthenticated"><i class="material-icons">help</i>Ajuda</a>
   <a (click)="signOut()" *ngIf="isAuthenticated"><i class="material-icons">input</i>Sair</a>

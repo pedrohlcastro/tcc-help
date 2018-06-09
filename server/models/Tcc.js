@@ -50,6 +50,13 @@ export default (sequelize, DataType) => {
         allowNull: false,
       },
     });
+    models.Tcc.hasMany(models.CheckSpelling, {
+      as: 'TccCheckSpelling',
+      foreignKey: {
+        name: 'tcc_id',
+        allowNull: false,
+      },
+    });
   };
   return Tcc;
 };
