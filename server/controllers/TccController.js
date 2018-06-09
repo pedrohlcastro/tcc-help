@@ -437,9 +437,7 @@ class TccController {
         this.runProfessorRules(tcc, professorId, pages)
           .then(() => {
             this.runSpelling(tcc, languages, pages)
-              .then((res) => {
-                resolve({ msg: 'Success', status: 200 });
-              })
+              .then(() => resolve({ msg: 'Success', status: 200 }))
               .catch(errSpelling => reject(errSpelling));
           })
           .catch(errCheckRules => reject(errCheckRules));
