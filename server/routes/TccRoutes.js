@@ -49,6 +49,12 @@ router.post('/runAnalisys/:tccId', passport.authenticate('BasicBearer', { sessio
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
+router.get('/getStatistics/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  TccController.getStatistics(req.params.tccId)
+    .then(data => res.json(data))
+    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+});
+
 router.get('/getRulesSpelling/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
   TccController.getCheckRulesAndSpelling(req.params.tccId)
     .then(data => res.json(data))

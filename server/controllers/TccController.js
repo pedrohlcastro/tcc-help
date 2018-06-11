@@ -428,6 +428,44 @@ class TccController {
       }
     });
   }
+
+  getStatistics(tccId) {
+    const result = {
+      rules: {},
+      spelling: {},
+    };
+    return new Promise(async (resolve, reject) => {
+      try {
+        result.rules.accepted = await this.getRulesStatistics({ tcc_id: tccId, accept: 1 });
+        result.rules.rejected = await this.getRulesStatistics({ tcc_id: tccId, accept: 2 });
+        result.rules.ignored = await this.getRulesStatistics({ tcc_id: tccId, accept: 0 });
+        result.spelling.accepted = await this.getSpellingStatistics({ tcc_id: tccId, accept: 1 });
+        result.spelling.rejected = await this.getSpellingStatistics({ tcc_id: tccId, accept: 2 });
+        result.spelling.ignored = await this.getSpellingStatistics({ tcc_id: tccId, accept: 0 });
+        resolve(result);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  getRulesStatistics(whereParam) {
+    const params = {
+      col: 'id',
+      where: whereParam,
+      raw: true,
+    };
+    return this.CheckRule.count(params);
+  }
+
+  getSpellingStatistics(whereParam) {
+    const params = {
+      col: 'id',
+      where: whereParam,
+      raw: true,
+    };
+    return this.CheckSpelling.count(params);
+  }
 }
 
 export default new TccController();
