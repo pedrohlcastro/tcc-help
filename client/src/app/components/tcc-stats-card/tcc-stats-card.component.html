@@ -1,0 +1,22 @@
+<mat-card class="answer-card">
+  <mat-card-header>
+      <p>Estatísticas para este TCC:</p> 
+  </mat-card-header>
+  <mat-card-content *ngIf="stats && totalRules">
+    <div class="row">
+      <div class="col-xl-6 col-lg-6">
+        <h5>Sugestões Professor Aceitas: {{stats.rules.accepted}}</h5>
+        <h5>Sugestões Professor Recusadas: {{stats.rules.rejected}}</h5>
+        <h5>Sugestões Professor Ignoradas: {{stats.rules.ignored}}</h5>
+      </div>
+      <div class="col-xl-6 col-lg-6">
+        <h5>Sugestões Ortografia Aceitas: {{stats.spelling.accepted}}</h5>
+        <h5>Sugestões Ortografia Recusadas: {{stats.spelling.rejected}}</h5>
+        <h5>Sugestões Ortografia Ignoradas: {{stats.spelling.ignored}}</h5>
+      </div>
+     
+    </div>
+    
+    
+  </mat-card-content>
+</mat-card>

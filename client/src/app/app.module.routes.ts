@@ -17,6 +17,7 @@ import { ProfessorListComponent } from './components/professor-list/professor-li
 import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
 import { CommentPageComponent } from './components/comment-page/comment-page.component';
 import { ProfessorSignedInGuard } from './guards/professor-signed-in-guard';
+import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-card.component';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
@@ -34,12 +35,12 @@ const ROUTES: Routes = [
     { path: 'students-list', component: StudentsListComponent, canActivate: [UserSignedInGuard]},
     { path: 'professor-list', component: ProfessorListComponent, canActivate: [UserSignedInGuard]},
     { path: 'forum-answers/:id', component: ForumAnswersComponent, canActivate: [UserSignedInGuard]},
-    { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [UserSignedInGuard]}
+    { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [UserSignedInGuard]},
   ];
   
 @NgModule({
     imports: [
-    RouterModule.forRoot(ROUTES)
+        RouterModule.forRoot(ROUTES)
     ],
     exports: [
         RouterModule

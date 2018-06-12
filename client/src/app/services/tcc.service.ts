@@ -82,4 +82,12 @@ export class TccService {
         return res.json();
       });
   }
+
+  getStatsTcc(tccId) {
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/tcc/getStatistics/${tccId}`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
 }
