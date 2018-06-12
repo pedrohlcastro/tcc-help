@@ -7,10 +7,10 @@ import TccController from '../controllers/TccController';
 const router = new Router();
 
 router.get('/getTccs/:professorId/:studentId', (req, res, next) => {
-  TccController.getTccs({ 
-      professor_id: req.params.professorId,
-      student_id: req.params.studentId
-    })
+  TccController.getTccs({
+    professor_id: req.params.professorId,
+    student_id: req.params.studentId,
+  })
     .then(data => res.json(data))
     .catch(err => next({ err, msg: 'Error DB query', status: 500 }));
 });

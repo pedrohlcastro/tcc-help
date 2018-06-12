@@ -44,7 +44,7 @@ class TccController {
     });
   }
 
-  getTccs(params){
+  getTccs(params) {
     const queryParams = {
       where: { visible_professor: 1 },
       include: [{
