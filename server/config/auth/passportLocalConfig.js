@@ -5,7 +5,7 @@ const { User } = db().models;
 
 const configPassportLocalStrategy = (passport) => {
   passport.use('local', new LocalStrategy((username, password, done) => {
-    User.findOne({ where: { email: username } })
+    User.findOne({ where: { email: username }, raw: true })
       .then((result) => {
         if (result) {
           if (User.comparePassword(result.password, password)) { return done(null, result); }

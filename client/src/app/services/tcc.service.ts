@@ -12,7 +12,7 @@ export class TccService {
 
   getMatches(tccId){
     const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/check-rule/${tccId}`, options)
+    return this.http.get(`${this.baseUrl}/tcc/getRulesSpelling/${tccId}`, options)
       .map((res) => {
         return res.json();
       });
@@ -26,13 +26,27 @@ export class TccService {
       });
   }
 
-  choose(checkRuleId, choice){
+  choose(checkRuleId, choice, justification=null){
     const options = this.authService.addAuthHeader(true);
     const body = {
       choice: choice,
-      id: checkRuleId
+      id: checkRuleId,
+      justification
     };
     return this.http.put(`${this.baseUrl}/check-rule/choose`, body, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
+  chooseSpelling(checkSpellingId, choice, justification=null){
+    const options = this.authService.addAuthHeader(true);
+    const body = {
+      choice: choice,
+      id: checkSpellingId,
+      justification
+    };
+    return this.http.put(`${this.baseUrl}/check-spelling/choose`, body, options)
       .map((res) => {
         return res.json();
       });
@@ -44,6 +58,26 @@ export class TccService {
       id: tccId
     };
     return this.http.put(`${this.baseUrl}/tcc/sendToProfessor`, body, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
+  getSpelling(tccId){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/check-spelling/${tccId}`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
+  runAnalisys(tccId, languages, professorId=null){
+    const options = this.authService.addAuthHeader(true);
+    const body = {
+      languages,
+      professorId: professorId
+    }
+    return this.http.post(`${this.baseUrl}/tcc/runAnalisys/${tccId}`, body, options)
       .map((res) => {
         return res.json();
       });

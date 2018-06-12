@@ -8,7 +8,7 @@ const configEnv = (app) => {
       /*eslint-disable */
       console.error({
         Status: 'Error',
-        Message: err.err,
+        Message: JSON.stringify(err.err),
       });
       /* eslint-enable */
     }

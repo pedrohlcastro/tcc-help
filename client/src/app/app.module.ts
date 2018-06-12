@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UserSignedInGuard } from './guards/user-signed-in-guard';
+import { ProfessorSignedInGuard } from './guards/professor-signed-in-guard';
+import { AdminSignedInGuard } from './guards/admin-signed-in-guard';
 
 import { AppRoutingModule } from './app.module.routes';
 import { AppMaterialModule } from './app.module.material';
@@ -40,6 +42,8 @@ import { TccService } from './services/tcc.service';
 import { CommentPageComponent } from './components/comment-page/comment-page.component';
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { CommentService } from './services/comment.service';
+import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -63,14 +67,16 @@ import { CommentService } from './services/comment.service';
     CommentDialogComponent,
     StudentsListComponent,
     YesnoDialogComponent,
-    ProfessorListComponent
+    ProfessorListComponent,
+    RejectDialogComponent
   ],
   entryComponents: [
     RuleDialogComponent,
     ForumDialogComponent,
     ForumAnswerDialogComponent,
     CommentDialogComponent,
-    YesnoDialogComponent
+    YesnoDialogComponent,
+    RejectDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +97,10 @@ import { CommentService } from './services/comment.service';
     PdfService,
     TccService,
     CommentService,
-    UserSignedInGuard
+    UserSignedInGuard,
+    UserSignedInGuard,
+    ProfessorSignedInGuard,
+    AdminSignedInGuard
   ],
   bootstrap: [AppComponent]
 })

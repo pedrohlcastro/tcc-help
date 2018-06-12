@@ -8,8 +8,8 @@ export class AuthService {
   baseUrl = 'http://localhost:8000';
   private userToken;
   public loggedIn = new BehaviorSubject <boolean>(false);
-  // public adminLoggedIn = new BehaviorSubject <boolean>(false);
-  // public professorLoggedIn = new BehaviorSubject <boolean>(false);
+  public adminLoggedIn = new BehaviorSubject <boolean>(false);
+  public professorLoggedIn = new BehaviorSubject <boolean>(false);
   
 
   constructor(private http: Http) { this.userToken = null; }
@@ -46,7 +46,8 @@ export class AuthService {
         if (this.userToken) {
           localStorage.setItem('userToken', JSON.stringify({ token: this.userToken }));
           this.loggedIn.next(true);
-          // if (resJSON.type === 'ADMIN') { this.adminLoggedIn.next(true); }
+          if (resJSON.type === 2 && resJSON.validate_professor === 1) { this.professorLoggedIn.next(true); }
+          if (resJSON.type === 0) { this.adminLoggedIn.next(true); }
           return true;
         }
         return resJSON;
@@ -56,11 +57,13 @@ export class AuthService {
   checkToken(){
     const options = this.addAuthHeader(true);
     return this.http.get(`${this.baseUrl}/users/checktoken`, options)
-      .map((res) => {        
+      .map((res) => {
         const resJSON = res.json();
         if (resJSON.result === 'Success') {
           this.loggedIn.next(true);
         }
+        if (resJSON.type === 2 && resJSON.validate_professor === 1) { this.professorLoggedIn.next(true); }
+        if (resJSON.type === 0) { this.adminLoggedIn.next(true); }
         return resJSON;
       });
   }
@@ -100,7 +103,8 @@ export class AuthService {
   logout(): void {
     // clear token remove user from local storage to log user out
     this.loggedIn.next(false);
-    // this.adminLoggedIn.next(false);
+    this.adminLoggedIn.next(false);
+    this.professorLoggedIn.next(false);
     this.userToken = null;
     localStorage.removeItem('userToken');
   }

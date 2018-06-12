@@ -1,0 +1,13 @@
+<form #rejectForm="ngForm">
+  <mat-form-field class="fullwidth">
+    <textarea matInput placeholder="Justificativa" name="justification" [(ngModel)]="justification" [required]="true"></textarea>
+  </mat-form-field>
+  <div class="btn-area">
+    <button mat-raised-button class="delete-btn" color="warn" (click)="exit()">
+      <i class="material-icons">cancel</i> Cancelar
+    </button>
+    <button mat-raised-button class="edit-btn" color="primary" (click)="confirm(rejectForm.value)">
+      <i class="material-icons">check</i> Confirmar
+    </button>
+  </div>
+</form>

@@ -1,14 +1,24 @@
 import db from '../config/db';
 
 
-class TccController {
+class CheckRulesController {
   constructor() {
     this.CheckRule = db().models.CheckRule;
+    this.Rule = db().models.Rule;
   }
 
   getAll(tccId) {
     return new Promise((resolve, reject) => {
-      this.CheckRule.findAll({ where: { tcc_id: tccId } })
+      const opts = {
+        where: { tcc_id: tccId },
+        include: [{
+          model: this.Rule,
+          as: 'CheckRuleRule',
+          attributes: ['message'],
+        }],
+        raw: true,
+      };
+      this.CheckRule.findAll(opts)
         .then(data => resolve(data))
         .catch(err => reject(err));
     });
@@ -18,6 +28,7 @@ class TccController {
     return new Promise((resolve, reject) => {
       const data = {
         accept: body.choice,
+        justification: body.justification,
       };
       this.CheckRule.update(data, { where: { id: body.id } })
         .then(() => resolve())
@@ -26,4 +37,4 @@ class TccController {
   }
 }
 
-export default new TccController();
+export default new CheckRulesController();

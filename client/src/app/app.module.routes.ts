@@ -16,12 +16,13 @@ import { StudentsListComponent } from './components/students-list/students-list.
 import { ProfessorListComponent } from './components/professor-list/professor-list.component';
 import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-page.component';
 import { CommentPageComponent } from './components/comment-page/comment-page.component';
+import { ProfessorSignedInGuard } from './guards/professor-signed-in-guard';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
     { path: 'sign-in', component: SignInPageComponent},
     { path: 'sign-up', component: SignUpPageComponent},
-    { path: 'manage-rules', component: ManageRulesPageComponent, canActivate: [UserSignedInGuard]},
+    { path: 'manage-rules', component: ManageRulesPageComponent, canActivate: [ProfessorSignedInGuard]},
     { path: 'account-page', component: AccountPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'forgot-password', component: ForgotPasswordComponent},
     { path: 'reset-password/:token', component: ResetPasswordComponent},
@@ -32,6 +33,8 @@ const ROUTES: Routes = [
     { path: 'comment-page/:id', component: CommentPageComponent, canActivate: [UserSignedInGuard]},
     { path: 'students-list', component: StudentsListComponent, canActivate: [UserSignedInGuard]},
     { path: 'professor-list', component: ProfessorListComponent, canActivate: [UserSignedInGuard]},
+    { path: 'forum-answers/:id', component: ForumAnswersComponent, canActivate: [UserSignedInGuard]},
+    { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [UserSignedInGuard]}
   ];
   
 @NgModule({

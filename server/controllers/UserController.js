@@ -110,7 +110,9 @@ class UserController {
       };
       let token = 'Bearer ';
       token += jwt.sign(payload, config.jwtSecret, options);
-      resolve({ result: 'Success', token, type: users.type });
+      resolve({
+        result: 'Success', token, type: users.type, validate_professor: users.validate_professor,
+      });
     });
   }
 
@@ -120,6 +122,7 @@ class UserController {
         const resJSON = {
           result: 'Success',
           type: users.type,
+          validate_professor: users.validate_professor,
         };
         resolve(resJSON);
       }
