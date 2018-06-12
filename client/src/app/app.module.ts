@@ -43,6 +43,7 @@ import { CommentPageComponent } from './components/comment-page/comment-page.com
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { CommentService } from './services/comment.service';
 import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
+import { ViewTccsComponent } from './components/view-tccs/view-tccs.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.
     StudentsListComponent,
     YesnoDialogComponent,
     ProfessorListComponent,
-    RejectDialogComponent
+    RejectDialogComponent,
+    ViewTccsComponent
   ],
   entryComponents: [
     RuleDialogComponent,
@@ -97,7 +99,6 @@ import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.
     PdfService,
     TccService,
     CommentService,
-    UserSignedInGuard,
     UserSignedInGuard,
     ProfessorSignedInGuard,
     AdminSignedInGuard

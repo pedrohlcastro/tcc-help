@@ -4,6 +4,7 @@ import { StudentProfessorService } from '../../services/student-professor.servic
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../services/auth.service';
 import { YesnoDialogComponent } from '../yesno-dialog/yesno-dialog.component'
+import { UserSignedInGuard } from '../../guards/user-signed-in-guard';
 
 @Component({
   selector: 'app-students-list',
@@ -26,6 +27,16 @@ export class StudentsListComponent implements OnInit {
   private filteredDisconected;
 
   ngOnInit() {
+    this.authService.getUserFromToken()
+      .subscribe((res) => {
+        this.userId = res.id;
+      },
+      error => {
+        console.log(error.statusText);
+        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
+      }
+    );
+
     this.studentProfessorService.getMyStudents().subscribe(result => {
       //console.log(result);
       this.students = result;
@@ -50,10 +61,6 @@ export class StudentsListComponent implements OnInit {
     this.filteredPendent = this.pendent;
     this.filteredDisconected = this.disconected;
 
-  }
-  visualizeAprovedStudent(index) {
-    let element = this.aproved[index];
-    /*continue*/
   }
   
   handleStudent(index, accept, reconnecting) {

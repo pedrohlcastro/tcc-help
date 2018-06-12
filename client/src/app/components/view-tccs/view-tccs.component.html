@@ -1,0 +1,40 @@
+<div class="container">
+	<button [routerLink]="['/students-list']" class="back-btn" mat-button><i class="material-icons">arrow_back</i> Voltar</button>
+	<div class="header-bar">
+		<div class="row">
+			<mat-form-field class="search-input">
+			<input #myInput type="text" matInput placeholder="Buscar" (input)="filterItem(myInput.value)">
+			<i class="material-icons" matSuffix>search</i>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="users">
+		<div class="row" >
+		
+		<div class="col-xl-6 col-lg-6" *ngFor="let tcc of filteredTccs; let i = index;">
+			<mat-card>
+			<mat-card-content>
+				<mat-card-title>
+					<b>TCC {{tcc.id}}</b>
+        </mat-card-title>
+        <div class="pdf-container">
+          <div id="pdf-container">
+            <div id="pageContainer" class="pdfViewer singlePageView"></div>
+          </div>
+        </div>   
+			</mat-card-content>
+			<div class="mat-card-actions btn-group">
+				<br>
+				<button mat-raised-button class="btn" color="primary" (click)="downloadPdf(tcc.id)">
+				<i class="material-icons">cloud_download</i> Download
+				</button>
+			</div>
+			</mat-card>
+		</div>
+
+		</div>
+	</div>
+</div>
+	
+	
+	

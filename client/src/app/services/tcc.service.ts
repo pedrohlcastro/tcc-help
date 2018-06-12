@@ -10,6 +10,14 @@ export class TccService {
 
   constructor(private authService:AuthService, private http: Http) { }
 
+  getTccs(professorId, studentId){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/tcc/getTccs/${professorId}/${studentId}`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+  
   getMatches(tccId){
     const options = this.authService.addAuthHeader(true);
     return this.http.get(`${this.baseUrl}/tcc/getRulesSpelling/${tccId}`, options)

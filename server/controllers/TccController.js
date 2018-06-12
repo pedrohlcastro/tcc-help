@@ -44,6 +44,26 @@ class TccController {
     });
   }
 
+  getTccs(params){
+    const queryParams = {
+      where: { visible_professor: 1 },
+      include: [{
+        model: this.StudentProfessor,
+        as: 'TccStudentProfessor',
+        attributes: ['professor_id', 'student_id'],
+        where: params,
+        required: true,
+      }],
+      raw: true,
+    };
+    console.log(queryParams);
+    return new Promise((resolve, reject) => {
+      this.Tcc.findAll(queryParams)
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  }
+
   /**
    * Funcao que trasforma as parada do pdf em txt
    * @param {string} filePath : endereco absoluto do pdf

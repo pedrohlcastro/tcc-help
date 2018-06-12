@@ -32,8 +32,11 @@
                   </mat-card-content>
                   <div class="mat-card-actions">
                     <br>
-                    <button mat-raised-button class="centered-btn" color="primary" (click)="visualizeAprovedStudent(i)">
-                      <i class="material-icons">how_to_reg</i> Visualizar </button>
+                    <a [routerLink]="['/view-tccs', this.userId, student['UserProfessor.id']]">
+                    <button mat-raised-button class="centered-btn" color="primary">
+                      <i class="material-icons">how_to_reg</i> Visualizar
+                    </button>
+                    </a>
                   </div>
                 </mat-card>
               </div>
