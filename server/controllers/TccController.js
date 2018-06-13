@@ -17,6 +17,7 @@ let dictEnUS;
 class TccController {
   constructor() {
     this.Tcc = db().models.Tcc;
+    this.User = db().models.User;
     this.StudentProfessor = db().models.StudentProfessor;
     this.CheckRule = db().models.CheckRule;
     this.CheckSpelling = db().models.CheckSpelling;
@@ -423,6 +424,58 @@ class TccController {
               .catch(errSpelling => reject(errSpelling));
           })
           .catch(errCheckRules => reject(errCheckRules));
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  getAllTccFromUserId(studentId) {
+    const queryParams = {
+      where: {
+        '$TccStudentProfessor.student_id$': studentId,
+      },
+      include: [{
+        model: this.StudentProfessor,
+        as: 'TccStudentProfessor',
+        attributes: ['professor_id', 'activate'],
+      }],
+      raw: true,
+    };
+
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const responseArray = [];
+        let response = {};
+        let aux;
+        const responseTcc = await this.Tcc.findAll(queryParams);
+        /* eslint-disable */
+        for (aux = 0; aux < responseTcc.length; aux++) {
+          response = {};
+          response.tcc = responseTcc[aux];
+          response.professor = await this.User.findOne({ where: { id: responseTcc[aux]['TccStudentProfessor.professor_id'] }, raw: true });
+          responseArray.push(response);
+        }
+        /* eslint-enable */
+        resolve(responseArray);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  getAllTccFromStudentProfessorId(studentProfessorId) {
+    return new Promise((resolve, reject) => {
+      try {
+        this.Tcc.findAll({
+          where: {
+            student_professor_id: studentProfessorId, visible_professor: 1,
+          },
+          raw: true,
+        })
+          .then(res => resolve(res))
+          .catch(errTcc => reject(errTcc));
       } catch (err) {
         reject(err);
       }

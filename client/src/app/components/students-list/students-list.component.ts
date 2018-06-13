@@ -53,6 +53,7 @@ export class StudentsListComponent implements OnInit {
   }
   visualizeAprovedStudent(index) {
     let element = this.aproved[index];
+    console.log(element);
     /*continue*/
   }
   

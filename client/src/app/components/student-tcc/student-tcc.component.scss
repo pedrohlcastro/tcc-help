@@ -1,0 +1,60 @@
+
+@import '~variables.scss';
+.sub-title {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0,0,0,.54);
+}
+
+button {
+  background-color: $second-color;
+  color: white;
+  i {
+      font-size: 20px;
+  }
+  :hover{
+      color: $second-color-ligth;
+  } 
+}
+
+mat-card-title {
+  font-size: 18px;
+  text-align: center;
+}
+
+h3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab-content{
+  margin-top: 5%;
+  max-width: 97%;
+}
+
+.mat-card-actions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-4{
+  max-width: 25%;
+  min-width: 220px;
+}
+
+.container{
+  max-width: 70%;
+}
+
+.row{
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  margin-bottom: 2%;
+}
+
+

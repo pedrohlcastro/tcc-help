@@ -38,7 +38,7 @@ class ProfessorListController {
           /* eslint-disable */
           if (result._options.isNewRecord) { resolve({ msg: 'Association created', status: 200 }); } else { reject(new Error('Error running DB query')); }
           /* eslint-enable */
-        }).catch((err) => {
+        }).catch(() => {
           // try update
           this.StudentProfessor.update({ activate: 1 }, {
             where: { student_id: data.student_id, professor_id: data.professor_id },
@@ -47,8 +47,6 @@ class ProfessorListController {
               if (result) { resolve({ msg: 'Association activated', status: 200 }); } else { reject(new Error('Error running DB query')); }
             })
             .catch((error) => {
-              console.log(err);
-              console.log(error);
               reject(error);
             });
         });

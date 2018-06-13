@@ -43,6 +43,8 @@ import { CommentPageComponent } from './components/comment-page/comment-page.com
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { CommentService } from './services/comment.service';
 import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
+import { TccListComponent } from './components/tcc-list/tcc-list.component';
+import { StudentTccComponent } from './components/student-tcc/student-tcc.component';
 
 
 @NgModule({
@@ -68,7 +70,9 @@ import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.
     StudentsListComponent,
     YesnoDialogComponent,
     ProfessorListComponent,
-    RejectDialogComponent
+    RejectDialogComponent,
+    TccListComponent,
+    StudentTccComponent
   ],
   entryComponents: [
     RuleDialogComponent,

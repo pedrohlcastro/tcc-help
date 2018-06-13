@@ -1,0 +1,29 @@
+<div>
+  <mat-card class="outer-card">
+    <mat-card-content>
+      <h3>Meus TCCs</h3>
+      <div class="row">
+        <div class="col-4" *ngFor="let object of response; let i = index;">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title><h5>Versão {{ object.tcc.version }}</h5></mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="sub-title"><b>Informações</b></p>
+              <p><b>Data: </b>{{object.tcc.date | date:'dd-MM-yyyy HH:mm': '+0000'}} </p>
+              <p><b>Nome do arquivo: </b>{{object.tcc.file_path}} </p>
+              <p class="sub-title"><b>Professor</b></p>
+              <p><b>Relação: </b>{{object.tcc["TccStudentProfessor.activate"] == 0 ? 'Desativada' : 'Ativa'}} </p>
+              <p><b>Nome: </b>{{object.professor.name}} </p>
+              <p><b>Visível para o professor: </b>{{object.tcc.visible_professor == 0 ? 'Não' : 'Sim'}} </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button [routerLink]="['/comment-page' , object.tcc.id]"><i class="material-icons"></i>Comentários</button>
+                <button mat-button [routerLink]="['/check-tcc' , object.tcc.id]"><i class="material-icons"></i>Análise</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
