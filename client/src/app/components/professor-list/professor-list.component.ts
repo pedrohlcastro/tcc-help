@@ -40,7 +40,7 @@ export class ProfessorListComponent implements OnInit {
           }
         );
 
-        this.professorListService.getAll()
+        this.professorListService.getProfessorList(this.user.id)
           .subscribe((res) => {
             this.showUsers = res;
             this.filteredUsers = Object.assign([], this.showUsers);
