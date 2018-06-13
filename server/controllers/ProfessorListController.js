@@ -78,7 +78,7 @@ class ProfessorListController {
 
   getAll() {
     const queryParams = {
-      where: { type: 2 }
+      where: { type: 2 },
     };
 
     return new Promise((resolve, reject) => {

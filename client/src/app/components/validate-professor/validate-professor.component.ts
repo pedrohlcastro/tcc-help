@@ -86,6 +86,7 @@ export class ValidateProfessorComponent implements OnInit {
         this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
+    
 
     let userUpdated = this.showUsers.find( (User)=> { return (User["id"] == teacherId)} );
     userUpdated["UserProfessor.StudentProfessor.activate"] = 1;
@@ -96,6 +97,10 @@ export class ValidateProfessorComponent implements OnInit {
     this.filteredUsers = Object.assign([], this.showUsers);
 
     this.alreadyAssociate = 1;
+  }
+
+  validateProfessor(teacherId) {
+    
   }
 
   removeIndication(professor_id){
