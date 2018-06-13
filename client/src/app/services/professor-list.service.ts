@@ -8,6 +8,14 @@ export class ProfessorListService {
   baseUrl = 'http://localhost:8000';
   constructor(private authService:AuthService, private http: Http) { }
 
+  getAll() {
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/professor_list`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+  
   getProfessorList(student_id){
     const options = this.authService.addAuthHeader(true);
     return this.http.get(`${this.baseUrl}/professor_list/${student_id}`, options)

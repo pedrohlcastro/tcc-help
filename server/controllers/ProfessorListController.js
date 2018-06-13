@@ -76,6 +76,18 @@ class ProfessorListController {
     });
   }
 
+  getAll() {
+    const queryParams = {
+      where: { type: 2 }
+    };
+
+    return new Promise((resolve, reject) => {
+      this.User.findAll(queryParams)
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  }
+
   inviteProfessor(req) {
     return new Promise((resolve, reject) => {
       this.smtpTransport.use('compile', hbs(this.handlebarsOptions));

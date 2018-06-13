@@ -6,11 +6,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { YesnoDialogComponent } from '../yesno-dialog/yesno-dialog.component'
 
 @Component({
-  selector: 'app-professor-list',
-  templateUrl: './professor-list.component.html',
-  styleUrls: ['./professor-list.component.scss']
+  selector: 'app-validate-professor',
+  templateUrl: './validate-professor.component.html',
+  styleUrls: ['./validate-professor.component.scss']
 })
-export class ProfessorListComponent implements OnInit {
+export class ValidateProfessorComponent implements OnInit {
   user;
   showUsers = [];
   filteredUsers;
@@ -30,16 +30,6 @@ export class ProfessorListComponent implements OnInit {
           });
         }
 
-        this.professorListService.checkAssociation(this.user.id)
-          .subscribe((res) => {
-            if (res !== null)
-              this.alreadyAssociate = 1;
-          },
-          error => {
-            console.log(error.statusText);
-          }
-        );
-
         this.professorListService.getAll()
           .subscribe((res) => {
             this.showUsers = res;
@@ -53,35 +43,6 @@ export class ProfessorListComponent implements OnInit {
             console.log(error.statusText);
             this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
           });
-      },
-      error => {
-        console.log(error.statusText);
-        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
-      }
-    );
-  }
-  
-  emailForm = new FormGroup({
-    email: new FormControl('',[
-      Validators.required,
-      Validators.email
-    ])
-  });
-
-  sendEmail = function(){
-    if (this.emailForm.invalid){
-      this.snackBar.open("O e-mail é invalido, favor tentar novamente.", 'Fechar', {duration: 3000});
-      return;
-    }
-    const userEmail = {
-      nameStudent: this.user.name,
-      email: this.emailForm.get("email").value
-    };
-
-    this.professorListService.inviteProfessor(userEmail)
-      .subscribe((res) => {
-        console.log(res.msg);
-        this.snackBar.open("O convite foi enviado através do e-mail.", 'Fechar', {duration: 3000});
       },
       error => {
         console.log(error.statusText);
