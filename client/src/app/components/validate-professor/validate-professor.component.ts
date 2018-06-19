@@ -99,9 +99,11 @@ export class ValidateProfessorComponent implements OnInit {
     this.alreadyAssociate = 1;
   }
 
+  /*
   validateProfessor(teacherId) {
-    
+    let this.va
   }
+  */
 
   removeIndication(professor_id){
     let dialogRef = this.dialog.open(YesnoDialogComponent, {
