@@ -49,6 +49,14 @@ export class ProfessorListService {
       });
   }
 
+  update(data){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.put(`${this.baseUrl}/professor_list`, data, options)
+    .map((res)=> {
+      return res.json();
+    });
+  }
+
   remove(params, student_id, professor_id){
     const options = this.authService.addAuthHeader(true);
     return this.http.put(`${this.baseUrl}/professor_list/${student_id}/${professor_id}`, params, options)
