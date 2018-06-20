@@ -14,7 +14,6 @@ export class ValidateProfessorComponent implements OnInit {
   user;
   showUsers = [];
   filteredUsers;
-  alreadyAssociate = 0;
   constructor(private authService: AuthService, private professorListService: ProfessorListService,
     private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
@@ -53,6 +52,16 @@ export class ValidateProfessorComponent implements OnInit {
 
   sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+  filterItem(value){
+    if(!value)
+      this.filteredUsers = this.showUsers;
+    else {
+      this.filteredUsers = Object.assign([], this.showUsers).filter(
+        item => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+      )
+    }
   }
 
   validateProfessor(teacherId) {
