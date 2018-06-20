@@ -1,6 +1,21 @@
 <mat-card class="card">
     <mat-card-content>
-      <h5>Deseja realmente concluir essa ação?</h5>
+      <div>
+        <h4>Selecione o professor do qual se deseja as regras:</h4>
+        <br>
+      </div>
+      <mat-radio-group class="example-radio-group" [(ngModel)]="selectedTeacher">
+        
+        <div class = "loop" *ngFor="let teacher of teachers; let i = index;" >
+
+        <mat-radio-button class="example-radio-button" [value]="teacher">
+            {{teacher["name"]}}
+          </mat-radio-button>
+
+        </div>
+        <mat-radio-button>Nenhum Específico</mat-radio-button>
+      
+      </mat-radio-group>
     </mat-card-content>
     <mat-card-actions>
       <br>
@@ -8,7 +23,7 @@
         <button mat-raised-button class="cancel-btn" color="warn" (click)="exit()">
           <i class="material-icons">cancel</i> Cancelar
         </button>
-        <button mat-raised-button class="confirm-btn" color="primary" (click)="confirm(1)">
+        <button mat-raised-button class="confirm-btn" color="primary" (click)="confirm(selectedTeacher)">
           <i class="material-icons">check</i> Confirmar
         </button>
       </div>

@@ -3,6 +3,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/ma
 import { ForumAnswersComponent } from '../forum-answers/forum-answers.component';
 import { FormControl, Validators } from '@angular/forms';
 import { CheckTccPageComponent } from '../check-tcc-page/check-tcc-page.component';
+import { ProfessorListService } from '../../services/professor-list.service';
+import {MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-choose-professor-dialog',
@@ -11,11 +13,25 @@ import { CheckTccPageComponent } from '../check-tcc-page/check-tcc-page.componen
 })
 export class ChooseProfessorDialogComponent implements OnInit {
 
-  constructor(private snackBar:MatSnackBar,
+  private teachers = [];
+  private selectedTeacher = String;
+
+  constructor(
+    private snackBar:MatSnackBar,
     public dialogRef: MatDialogRef<CheckTccPageComponent>,
-    @Inject(MAT_DIALOG_DATA) public dataReceive: any) { }
+    @Inject(MAT_DIALOG_DATA) public dataReceive: any,
+    private professorListService: ProfessorListService) { }
 
   ngOnInit() {
+
+    this.professorListService.getProfessorList(0)
+          .subscribe((res) => {
+            res.forEach(element => {
+              this.teachers.push(element);
+            });
+          }, error => {
+            this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
+          });       
   }
 
   confirm(value){
