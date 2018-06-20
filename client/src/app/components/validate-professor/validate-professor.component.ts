@@ -150,6 +150,10 @@ export class ValidateProfessorComponent implements OnInit {
         this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
+
+    let userUpdated = this.showUsers.find( (User)=> { return (User["id"] == teacherId)} );
+    userUpdated["validate_professor"] = 1;
+    this.filteredUsers = Object.assign([], this.showUsers);
   }
 
   invalidateProfessor(teacherId) {
@@ -169,5 +173,9 @@ export class ValidateProfessorComponent implements OnInit {
         this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
       }
     );
+
+    let userUpdated = this.showUsers.find( (User)=> { return (User["id"] == teacherId)} );
+    userUpdated["validate_professor"] = 0;
+    this.filteredUsers = Object.assign([], this.showUsers);
   }
 }
