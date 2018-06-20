@@ -32,7 +32,7 @@
                   </mat-card-content>
                   <div class="mat-card-actions">
                     <br>
-                    <button mat-raised-button class="centered-btn" color="primary" (click)="visualizeAprovedStudent(i)">
+                    <button mat-raised-button class="centered-btn" color="primary"  [routerLink]="['/student-tcc', student.id]">
                       <i class="material-icons">how_to_reg</i> Visualizar </button>
                   </div>
                 </mat-card>

@@ -51,11 +51,6 @@ export class StudentsListComponent implements OnInit {
     this.filteredDisconected = this.disconected;
 
   }
-  visualizeAprovedStudent(index) {
-    let element = this.aproved[index];
-    console.log(element);
-    /*continue*/
-  }
   
   handlePendentStudent(index, flag) {
     let dialogRef = this.dialog.open(YesnoDialogComponent, {

@@ -37,7 +37,6 @@ export class TccListComponent implements OnInit {
     error => {
       console.log(error.statusText);
       this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
-    }
-  );
+    });
   }
 }
