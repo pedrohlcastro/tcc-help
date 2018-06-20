@@ -6,6 +6,7 @@ import { TccService } from '../../services/tcc.service';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component';
+import { ChooseProfessorDialogComponent } from '../choose-professor-dialog/choose-professor-dialog.component';
 
 declare const $: any;
 
@@ -91,14 +92,21 @@ export class CheckTccPageComponent implements OnInit {
   }
 
   runAnalisys(){
-    this.callSuggestions = true;
-    this.tccService.runAnalisys(this.tccId, this.languageFormGroup.value.languages)
-      .subscribe((res) => {
-        this.getMatches();
-      }, (err) => {
-        this.callSuggestions = false;
-        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 5000});
-      });
+    let dialogRef = this.dialog.open(ChooseProfessorDialogComponent, {
+      width: '40%',
+      height: "30%",
+    });
+
+
+
+    // this.callSuggestions = true;
+    // this.tccService.runAnalisys(this.tccId, this.languageFormGroup.value.languages)
+    //   .subscribe((res) => {
+    //     this.getMatches();
+    //   }, (err) => {
+    //     this.callSuggestions = false;
+    //     this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 5000});
+    //   });
   }
 
   /**
