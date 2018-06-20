@@ -12,8 +12,9 @@
 
   <!-- ROTAS COMUNS USUARIO AUTENTICADO -->
   <a [routerLink]="['account-page']" *ngIf="isAuthenticated"><i class="material-icons">face</i>Perfil</a>
-  <a [routerLink]="['forum']" *ngIf="isAuthenticated"><i class="material-icons">forum</i>Fórum</a>
-  <a [routerLink]="['help-page']" *ngIf="isAuthenticated"><i class="material-icons">help</i>Ajuda</a>
+  <a [routerLink]="['forum']" *ngIf="isAuthenticated && !isAdmin"><i class="material-icons">forum</i>Fórum</a>
+  <a [routerLink]="['help-page']" *ngIf="isAuthenticated && !isAdmin"><i class="material-icons">help</i>Ajuda</a>
+  <a [routerLink]="['validate-professor']" *ngIf="isAuthenticated && isAdmin"><i class="material-icons">done_outline</i>Validar professor</a>
   <a (click)="signOut()" *ngIf="isAuthenticated"><i class="material-icons">input</i>Sair</a>
 </div>
 
