@@ -90,4 +90,12 @@ export class TccService {
         return res.json();
       });
   }
+
+  getAccessRights(tccId) {
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/access/${tccId}`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
 }

@@ -6,6 +6,7 @@ import { TccService } from '../../services/tcc.service';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component';
+import { TccStatsCardComponent } from '../tcc-stats-card/tcc-stats-card.component';
 
 declare const $: any;
 
@@ -309,6 +310,13 @@ export class CheckTccPageComponent implements OnInit {
     }
     if((this.currentPage*this.pageSize) >  this.rulesSpelling.length)
       this.currentPage = 0;
+  }
+
+  verStatistics(){
+    let dialogRef = this.dialog.open(TccStatsCardComponent, {
+      width: '75%',
+      data: { tccId: this.tccId }
+    });
   }
 }
 

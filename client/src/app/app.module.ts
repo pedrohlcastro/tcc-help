@@ -44,6 +44,7 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
 import { CommentService } from './services/comment.service';
 import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
 import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-card.component';
+import { TccGuard } from './guards/tcc-guard';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-car
     ForumAnswerDialogComponent,
     CommentDialogComponent,
     YesnoDialogComponent,
-    RejectDialogComponent
+    RejectDialogComponent,
+    TccStatsCardComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +104,8 @@ import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-car
     UserSignedInGuard,
     UserSignedInGuard,
     ProfessorSignedInGuard,
-    AdminSignedInGuard
+    AdminSignedInGuard,
+    TccGuard
   ],
   bootstrap: [AppComponent]
 })
