@@ -99,11 +99,24 @@ export class ValidateProfessorComponent implements OnInit {
     this.alreadyAssociate = 1;
   }
 
-  /*
   validateProfessor(teacherId) {
-    let this.va
+    
+    const requestUser = {
+      id: teacherId,
+      validate_professor: 1
+    };
+
+    this.authService.updateUser(requestUser)
+      .subscribe((res) => {
+        console.log(res.msg);
+        this.snackBar.open("Dados salvos com sucesso.", 'Fechar', {duration: 3000});
+      },
+      error => {
+        console.log(error.statusText);
+        this.snackBar.open("Não foi possível salvar os dados, favor tentar novamente.", 'Fechar', {duration: 3000});
+      }
+    );
   }
-  */
 
   removeIndication(professor_id){
     let dialogRef = this.dialog.open(YesnoDialogComponent, {

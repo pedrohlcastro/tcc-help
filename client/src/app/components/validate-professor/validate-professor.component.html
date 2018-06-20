@@ -28,7 +28,7 @@
 			</mat-card-content>
 			<div class="mat-card-actions btn-group">
 				<br>
-				<button *ngIf="user.validate_professor === 0" mat-raised-button class="btn" color="primary" (click)="sendIndication(user.id)">
+				<button *ngIf="user.validate_professor === 0" mat-raised-button class="btn" color="primary" (click)="validateProfessor(user.id)">
 				<i class="material-icons">done</i> Validar
 				</button>
 				<button *ngIf="user.validate_professor === 1" mat-raised-button class="btn" color="primary">
