@@ -2,9 +2,6 @@
     <br><br>
   <div *ngFor = 'let comment of comments'>
       <mat-card classclass="comment-card">
-        <button mat-raised-button class="remove-btn" color="primary" (click)="remove(comment.id)">
-                <i class="material-icons">remove</i> Remover
-            </button>
               
           <mat-card-header>
               <p>Enviado por: {{comment['CommentUser.name']}} - {{comment['CommentUser.email']}}  <span>às {{comment.date | date:'dd-MM-yyyy HH:mm': '+0000'}}</span></p> 
