@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Http, ResponseContentType } from '@angular/http';
 
 declare const $: any;
 declare var PDFJS: any;
 
 @Injectable()
 export class PdfService {
+  baseUrl = 'http://localhost:8000';
   url;
   workerUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.489/pdf.worker.min.js';
   numPages;
@@ -17,7 +20,7 @@ export class PdfService {
   pdfPageView;
   pageNumber = 1;
 
-  constructor() {  }
+  constructor(private authService:AuthService, private http: Http) {  }
 
   loadPDF(url: string) {
     this.url = url;
@@ -40,6 +43,35 @@ export class PdfService {
       this.pdfViewer.setDocument(this.pdfDoc);
       this.setControllers();
     });
+  }
+
+  downloadPDF(tccId, file_path){
+    const options = this.authService.addAuthHeader(true);
+    options.responseType = ResponseContentType.Blob;
+    return this.http.get(`${this.baseUrl}/tcc/file/${tccId}`, options)
+    .map((res)=> {
+      const blob = new Blob([res.blob()], { type: "application/pdf" });
+      const blobURL = URL.createObjectURL(blob);
+      
+      const tempLink = document.createElement('a');
+      tempLink.style.display = 'none';
+      tempLink.href = blobURL;
+      tempLink.setAttribute('download', file_path);
+
+      if (typeof tempLink.download === 'undefined') {
+        tempLink.setAttribute('target', '_blank');
+      }
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      setTimeout(() => {
+        // For Firefox it is necessary to delay revoking the ObjectURL
+        window.URL.revokeObjectURL(blobURL);
+      }, 100);
+    
+      return { response: blob };
+  });
+
   }
 
   setControllers() {

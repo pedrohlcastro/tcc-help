@@ -18,8 +18,9 @@
               <p><b>Visível para o professor: </b>{{object.tcc.visible_professor == 0 ? 'Não' : 'Sim'}} </p>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-button [routerLink]="['/comment-page' , object.tcc.id]"><i class="material-icons"></i>Comentários</button>
-                <button mat-button [routerLink]="['/check-tcc' , object.tcc.id]"><i class="material-icons"></i>Análise</button>
+                <button mat-button (click)="downloadFile(object.tcc.id, object.tcc.file_path)"><i class="material-icons">get_app</i></button>
+                <button mat-button [routerLink]="['/comment-page' , object.tcc.id]"><i class="material-icons">feedback</i></button>
+                <button mat-button [routerLink]="['/check-tcc' , object.tcc.id]"><i class="material-icons">send</i></button>
             </mat-card-actions>
           </mat-card>
         </div>

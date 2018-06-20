@@ -3,6 +3,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { TccService } from '../../services/tcc.service';
 import { ActivatedRoute } from "@angular/router";
 import { Router } from '@angular/router';
+import { PdfService } from '../../services/pdf-service';
 
 @Component({
   selector: 'app-tcc-list',
@@ -15,7 +16,8 @@ export class TccListComponent implements OnInit {
     private tccService: TccService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private pdfService: PdfService
   ) { }
 
   ngOnInit() {
@@ -27,4 +29,15 @@ export class TccListComponent implements OnInit {
       });
   }
 
+  downloadFile(tccId, file_path) {
+    return this.pdfService.downloadPDF(tccId, file_path)
+    .subscribe((res) => {
+      console.log(res);
+    },
+    error => {
+      console.log(error.statusText);
+      this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
+    }
+  );
+  }
 }
