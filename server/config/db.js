@@ -21,24 +21,46 @@ const createModels = (sequelize) => {
 
 
 export default () => {
+  let sequelize;
   if (!db) {
-    const sequelize = new Sequelize(
-      config.db,
-      config.db_user,
-      config.db_password,
-      {
-        host: 'mysql',
-        dialect: 'mysql',
-        operatorsAliases: false,
-        query: true,
-        logging: false,
-        pool: {
-          maxConnections: 100,
-          minConnections: 1,
-          maxIdleTime: 3600000000,
+    if (process.env.NODE_ENV !== 'production') {
+      sequelize = new Sequelize(
+        config.db,
+        config.db_user,
+        config.db_password,
+        {
+          host: 'mysql',
+          dialect: 'mysql',
+          operatorsAliases: false,
+          query: true,
+          logging: false,
+          pool: {
+            maxConnections: 100,
+            minConnections: 1,
+            maxIdleTime: 3600000000,
+          },
         },
-      },
-    );
+      );
+    } else {
+      sequelize = new Sequelize(
+        config.db,
+        config.db_user_prod,
+        config.db_password_prod,
+        {
+          host: config.db_url_prod,
+          dialect: 'mysql',
+          operatorsAliases: false,
+          query: true,
+          logging: false,
+          pool: {
+            maxConnections: 100,
+            minConnections: 1,
+            maxIdleTime: 3600000000,
+          },
+        },
+      );
+    }
+    
 
     db = {
       sequelize,

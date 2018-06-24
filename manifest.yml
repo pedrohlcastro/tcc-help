@@ -1,0 +1,7 @@
+---
+applications:
+- name: tcc-help
+  memory: 256M
+  instances: 1
+  random-route: true
+  buildpack: https://bitbucket.org/cf-utilities/cf-buildpack-multi
