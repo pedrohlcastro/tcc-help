@@ -524,7 +524,7 @@ class TccController {
   //     new Promise.reject(new Error('Acesso Negado'));
   //   }
   // }
-  
+
   getAllTccFromStudentProfessorId(studentProfessorId) {
     return new Promise((resolve, reject) => {
       try {
