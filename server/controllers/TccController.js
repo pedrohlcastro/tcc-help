@@ -501,29 +501,31 @@ class TccController {
     return this.CheckSpelling.count(params);
   }
 
-  // async checkAccessRights(tccId, userId) {
-  //   try {
-  //     const params = {
-  //       where: { id: tccId },
-  //       include: [{
-  //         model: this.StudentProfessor,
-  //         as: 'TccStudentProfessor',
-  //         attributes: ['professor_id', 'student_id'],
-  //       }],
-  //       raw: true,
-  //     };
-  //     const tcc = await this.Tcc.findOne(params);
-  //     if (tcc.TccStudentProfessor.student_id == userId) {
-  //       new Promise.resolve();
-  //     } else if (tcc.TccStudentProfessor.professor_id == userId && tcc.visible_professor == 1) {
-  //       new Promise.resolve();
-  //     } else {
-  //       new Promise.reject(new Error('Acesso Negado'));
-  //     }
-  //   } catch (err) {
-  //     new Promise.reject(new Error('Acesso Negado'));
-  //   }
-  // }
+  checkAccessRights(tccId, userId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const params = {
+          where: { id: tccId },
+          include: [{
+            model: this.StudentProfessor,
+            as: 'TccStudentProfessor',
+            attributes: ['professor_id', 'student_id'],
+          }],
+          raw: true,
+        };
+        const tcc = await this.Tcc.findOne(params);
+        if (tcc['TccStudentProfessor.student_id'] === userId) {
+          resolve({ status: 'Sucess' });
+        } else if (tcc['TccStudentProfessor.professor_id'] === userId && tcc.visible_professor === 1) {
+          resolve({ status: 'Sucess', allowModify: 0 });
+        } else {
+          reject(new Error('Acesso Negado'));
+        }
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
 
   getAllTccFromStudentProfessorId(studentProfessorId) {
     return new Promise((resolve, reject) => {

@@ -55,9 +55,9 @@ router.get('/getStatistics/:tccId', passport.authenticate('BasicBearer', { sessi
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
-router.get('access/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+router.get('/access/:tccId', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
   TccController.checkAccessRights(req.params.tccId, req.user.id)
-    .then(() => res.json({ status: 'Success' }))
+    .then(data => res.json(data))
     .catch(err => next({ err, msg: 'ACESSO NEGADO', status: 400 }));
 });
 
