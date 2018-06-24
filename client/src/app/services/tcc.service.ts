@@ -111,11 +111,10 @@ export class TccService {
     return this.http.get(`${this.baseUrl}/tcc/access/${tccId}`, options)
       .map((res) => {
         return res.json();
+      }, (err) => {
+        this.snackBar.open("Você não tem permissão para acessar essa página...", 'Fechar', {duration: 5000});
+        this.router.navigateByUrl('/account-page');
       })
-      .catch((err) => {
-          this.snackBar.open("Você não tem permissão para acessar essa página...", 'Fechar', {duration: 5000});
-          this.router.navigateByUrl('/account-page');
-      });
   }
 
   getTccVisibleToProfessor(studentProfessorId){
@@ -124,6 +123,22 @@ export class TccService {
       id: studentProfessorId
     };
     return this.http.post(`${this.baseUrl}/tcc/getTccVisibleToProfessor`, body, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
+  uploadPDF(formData: FormData) {
+    const headers = new Headers();
+    let options;
+    headers.append('enctype', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    if (userToken) {
+      headers.append('Authorization', userToken.token);
+    }
+    options = new RequestOptions({ headers: headers });
+    return this.http.post(`${this.baseUrl}/tcc/upload`, formData, options)
       .map((res) => {
         return res.json();
       });

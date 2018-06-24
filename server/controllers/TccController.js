@@ -3,6 +3,7 @@ import path from 'path';
 import async from 'async';
 import scissors from 'scissors';
 import pdfUtil from 'pdf-to-text';
+import crypto from 'crypto';
 /* eslint-disable */
 import Nodehun from 'nodehun';
 /* eslint-enable */
@@ -10,6 +11,7 @@ import db from '../config/db';
 import RuleController from '../controllers/RuleController';
 import CheckRulesController from './CheckRulesController';
 import CheckSpellingController from './CheckSpellingController';
+
 
 let dictPtBR;
 let dictEnUS;
@@ -92,7 +94,9 @@ class TccController {
         // PECORRE CADA REGEX
         async.forEach(rules, (rule, nextRegex) => {
           const regex = new RegExp(rule.regex, 'g');
-          pages.splice(0, 1); // remove page 0
+          if (pages.length > 1) {
+            pages.splice(0, 1); // remove page 0
+          }
           // PECORRE PAGINAS
           async.forEach(pages, (page, nextPage) => {
             const matches = page.match(regex);
@@ -538,6 +542,41 @@ class TccController {
         })
           .then(res => resolve(res))
           .catch(errTcc => reject(errTcc));
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  createTcc(file, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let association = await this.StudentProfessor.findOne({ where: { student_id: user.id } });
+        if (user.type === 2 && !association.id) {
+          const newAssociation = {
+            accept: 1,
+            activate: 1,
+            student_id: user.id,
+            professor_id: user.id,
+          };
+          await this.StudentProfessor.create(newAssociation);
+          association = await this.StudentProfessor.findOne({ where: { student_id: user.id } });
+        }
+        const fileName = `${crypto.randomBytes(16).toString('hex')}.pdf`;
+        const newTcc = {
+          file_path: fileName,
+          version: 1,
+          visible_professor: 0,
+          student_professor_id: association.id,
+        };
+        fs.writeFileSync(path.join(__dirname, `../upload/${fileName}`), file.data, 'utf8', (err) => {
+          if (err) {
+            reject(err);
+          }
+        });
+        this.Tcc.create(newTcc)
+          .then(() => resolve())
+          .catch(err => reject(err));
       } catch (err) {
         reject(err);
       }

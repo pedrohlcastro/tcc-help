@@ -8,6 +8,28 @@
   color: rgba(0,0,0,.54);
 }
 
+label {
+  position: fixed;
+  top: 70px;
+  left: 3%;
+  margin: 30px;
+  font-weight: bolder;
+  cursor: pointer;
+  background-color: #444444;
+  width: fit-content;
+  padding: 5px;
+  z-index: 3;
+
+  #input-lbl {
+    display:none;
+  }
+  span{
+    color:white;
+    font-weight:lighter;
+    padding:20px;
+    font-size:12pt;
+  }
+}
 button {
   background-color: $second-color;
   min-width: 2px;

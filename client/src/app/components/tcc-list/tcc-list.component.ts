@@ -21,6 +21,10 @@ export class TccListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getAllTcc();
+  }
+
+  getAllTcc(){
     this.tccService.getAllTcc()
       .subscribe((res) => {
         this.response = res;
@@ -38,5 +42,20 @@ export class TccListComponent implements OnInit {
       console.log(error.statusText);
       this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 3000});
     });
+  }
+
+  fileChange(event) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
+      formData.append('file', file, file.name);
+      this.tccService.uploadPDF(formData).subscribe((res) => {
+        this.snackBar.open('Documento Enviado com sucesso', 'Fechar', {duration: 3000});
+        this.getAllTcc();
+      }, (err) => {
+        this.snackBar.open('Ocorreu um erro. Tente novamente', 'Fechar', {duration: 3000});
+      });
+    }
   }
 }

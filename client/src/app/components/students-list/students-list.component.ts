@@ -4,6 +4,7 @@ import { StudentProfessorService } from '../../services/student-professor.servic
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../services/auth.service';
 import { YesnoDialogComponent } from '../yesno-dialog/yesno-dialog.component'
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-students-list',
@@ -26,26 +27,29 @@ export class StudentsListComponent implements OnInit {
   private filteredDisconected;
 
   ngOnInit() {
-    this.studentProfessorService.getMyStudents().subscribe(result => {
-      //console.log(result);
-      this.students = result;
-      for (let i = 0; i < this.students.length; i++) {
-        let element = this.students[i];
-        if (element["UserProfessor.StudentProfessor.activate"] === 0) {
-          this.disconected.push(element);
+    this.authService.getUserFromToken().subscribe((res) => {
+      const myId = res.id;
+      this.studentProfessorService.getMyStudents().subscribe(result => {
+        this.students = result;
+        for (let i = 0; i < this.students.length; i++) {
+          let element = this.students[i];
+          if (element["UserProfessor.StudentProfessor.activate"] === 0 && element["UserProfessor.StudentProfessor.student_id"] != myId) {
+            this.disconected.push(element);
+          }
+          else if (element["UserProfessor.StudentProfessor.accept"] === 1 && element["UserProfessor.StudentProfessor.student_id"] != myId) {
+            this.aproved.push(element);
+          }
+          else if (element["UserProfessor.StudentProfessor.accept"] === 0 && element["UserProfessor.StudentProfessor.student_id"] != myId) {
+            this.pendent.push(element);
+          }
         }
-        else if (element["UserProfessor.StudentProfessor.accept"] === 1) {
-          this.aproved.push(element);
-        }
-        else if (element["UserProfessor.StudentProfessor.accept"] === 0) {
-          this.pendent.push(element);
-        }
-      }
-    }, (err) => {
-      this.snackBar.open('Não foi possível recuperar os alunos.', 'Fechar', {
-        duration: 7000
-      });
+      }, (err) => {
+        this.snackBar.open('Não foi possível recuperar os alunos.', 'Fechar', {
+          duration: 7000
+        });
+      })
     })
+    
     this.filteredAproved = this.aproved;
     this.filteredPendent = this.pendent;
     this.filteredDisconected = this.disconected;

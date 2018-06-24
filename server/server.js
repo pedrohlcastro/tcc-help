@@ -6,6 +6,7 @@ import path from 'path';
 import compress from 'shrink-ray';
 import helmet from 'helmet';
 import passport from 'passport';
+import fileUploader from 'express-fileupload';
 import configEnv from './config/configEnv';
 import UserRoutes from './routes/UserRoutes';
 import configBearerStrategy from './config/auth/passportBearerConfig';
@@ -53,6 +54,7 @@ app.disable('x-powered-by');
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(fileUploader());
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, '../client/dist/')));

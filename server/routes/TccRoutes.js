@@ -81,4 +81,10 @@ router.post('/getTccVisibleToProfessor', (req, res, next) => {
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
+router.post('/upload', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  TccController.createTcc(req.files.file, req.user)
+    .then(() => res.json({ status: 'Success' }))
+    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+});
+
 export default router;
