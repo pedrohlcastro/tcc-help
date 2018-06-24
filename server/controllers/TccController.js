@@ -515,9 +515,9 @@ class TccController {
         };
         const tcc = await this.Tcc.findOne(params);
         if (tcc['TccStudentProfessor.student_id'] === userId) {
-          resolve({ status: 'Sucess' });
+          resolve({ status: 'Success' });
         } else if (tcc['TccStudentProfessor.professor_id'] === userId && tcc.visible_professor === 1) {
-          resolve({ status: 'Sucess', allowModify: 0 });
+          resolve({ status: 'Success', allowModify: 0 });
         } else {
           reject(new Error('Acesso Negado'));
         }

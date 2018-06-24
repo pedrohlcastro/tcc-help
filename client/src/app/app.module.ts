@@ -44,7 +44,6 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
 import { CommentService } from './services/comment.service';
 import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
 import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-card.component';
-import { TccGuard } from './guards/tcc-guard';
 import { TccListComponent } from './components/tcc-list/tcc-list.component';
 import { StudentTccComponent } from './components/student-tcc/student-tcc.component';
 
@@ -108,8 +107,7 @@ import { StudentTccComponent } from './components/student-tcc/student-tcc.compon
     UserSignedInGuard,
     UserSignedInGuard,
     ProfessorSignedInGuard,
-    AdminSignedInGuard,
-    TccGuard
+    AdminSignedInGuard
   ],
   bootstrap: [AppComponent]
 })

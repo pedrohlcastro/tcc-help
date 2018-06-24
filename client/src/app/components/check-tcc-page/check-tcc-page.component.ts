@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PdfService } from '../../services/pdf-service';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TccService } from '../../services/tcc.service';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
@@ -38,18 +38,30 @@ export class CheckTccPageComponent implements OnInit {
   rulesSpelling = [];
   filterType = '0';
   filterStatus = '0';
+  allowCheckErros = true;
   constructor(
     private pdfService: PdfService,
     private tccService: TccService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.tccId = params['id'];
+      this.tccService.getAccessRights(this.tccId).subscribe((res) => {
+        if(res.status != 'Success') {
+          this.snackBar.open("Você não tem permissão para acessar essa página...", 'Fechar', {duration: 5000});
+          this.router.navigateByUrl('/account-page');
+        } else {
+          if(res.allowModify == 0){
+            this.allowCheckErros = false;
+          }
+        }
+      });
     });
     this.getMatches();
     this.getPdfFile();

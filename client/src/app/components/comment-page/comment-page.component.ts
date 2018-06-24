@@ -4,6 +4,7 @@ import { CommentDialogComponent } from '../comment-dialog/comment-dialog.compone
 import { CommentService } from '../../services/comment.service';
 import {Router, ActivatedRoute, Params} from '@angular/router'
 import { AuthService } from '../../services/auth.service';
+import { TccService } from '../../services/tcc.service';
 
 @Component({
   selector: 'app-comment-page',
@@ -14,13 +15,25 @@ export class CommentPageComponent implements OnInit {
   comments = [];
   tccId;
   user;
-  constructor(private dialog: MatDialog, private commentService: CommentService,
-    private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar,
-    private authService: AuthService) { }
+  constructor(
+    private dialog: MatDialog,
+    private commentService: CommentService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private tccService: TccService
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.tccId = params['id'];
+      this.tccService.getAccessRights(this.tccId).subscribe((res) => {
+        if(res.status != 'Success') {
+          this.snackBar.open("Você não tem permissão para acessar essa página...", 'Fechar', {duration: 5000});
+          this.router.navigateByUrl('/account-page');
+        }
+      });
     });
 
     this.authService.getUserFromToken()

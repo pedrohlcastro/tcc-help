@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Observable, Observer, Subscriber, Subject, BehaviorSubject } from 'rxjs/Rx';
+import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { AuthService } from './auth.service';
 
@@ -8,7 +10,12 @@ import { AuthService } from './auth.service';
 export class TccService {
   baseUrl = 'http://localhost:8000';
 
-  constructor(private authService:AuthService, private http: Http) { }
+  constructor(
+    private authService:AuthService,
+    private http: Http,
+    private router: Router,
+    private snackBar: MatSnackBar,
+  ) { }
 
   getMatches(tccId){
     const options = this.authService.addAuthHeader(true);
@@ -101,9 +108,13 @@ export class TccService {
 
   getAccessRights(tccId) {
     const options = this.authService.addAuthHeader(true);
-    return this.http.get(`${this.baseUrl}/access/${tccId}`, options)
+    return this.http.get(`${this.baseUrl}/tcc/access/${tccId}`, options)
       .map((res) => {
         return res.json();
+      })
+      .catch((err) => {
+          this.snackBar.open("Você não tem permissão para acessar essa página...", 'Fechar', {duration: 5000});
+          this.router.navigateByUrl('/account-page');
       });
   }
 

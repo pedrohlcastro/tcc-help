@@ -18,7 +18,6 @@ import { CheckTccPageComponent } from './components/check-tcc-page/check-tcc-pag
 import { CommentPageComponent } from './components/comment-page/comment-page.component';
 import { ProfessorSignedInGuard } from './guards/professor-signed-in-guard';
 import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-card.component';
-import { TccGuard } from './guards/tcc-guard';
 import { TccListComponent } from './components/tcc-list/tcc-list.component';
 import { StudentTccComponent } from './components/student-tcc/student-tcc.component';
 
@@ -38,7 +37,7 @@ const ROUTES: Routes = [
     { path: 'students-list', component: StudentsListComponent, canActivate: [UserSignedInGuard]},
     { path: 'professor-list', component: ProfessorListComponent, canActivate: [UserSignedInGuard]},
     { path: 'forum-answers/:id', component: ForumAnswersComponent, canActivate: [UserSignedInGuard]},
-    { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [TccGuard]},
+    { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: []},
     { path: 'tcc-list', component: TccListComponent, canActivate: [UserSignedInGuard]},
     { path: 'student-tcc/:id', component: StudentTccComponent, canActivate: [UserSignedInGuard]}
   ];
