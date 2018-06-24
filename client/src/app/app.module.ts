@@ -45,6 +45,8 @@ import { CommentService } from './services/comment.service';
 import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
 import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-card.component';
 import { TccGuard } from './guards/tcc-guard';
+import { TccListComponent } from './components/tcc-list/tcc-list.component';
+import { StudentTccComponent } from './components/student-tcc/student-tcc.component';
 
 
 @NgModule({
@@ -71,7 +73,9 @@ import { TccGuard } from './guards/tcc-guard';
     YesnoDialogComponent,
     ProfessorListComponent,
     RejectDialogComponent,
-    TccStatsCardComponent
+    TccStatsCardComponent,
+    TccListComponent,
+    StudentTccComponent
   ],
   entryComponents: [
     RuleDialogComponent,

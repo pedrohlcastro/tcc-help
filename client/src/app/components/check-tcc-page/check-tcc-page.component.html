@@ -83,7 +83,7 @@
         <mat-spinner *ngIf="callSuggestions"></mat-spinner>
       </form>
     </ng-template>
-    <button mat-raised-button color="primary" class="btc-send" (click)="sendToProfessor()">Enviar para professor <i class="material-icons">send</i></button>
-    <button mat-raised-button color="primary" class="btc-send" (click)="verStatistics()">Estatisticas <i class="material-icons">send</i></button>
+    <button mat-raised-button color="primary" class="btc-send" (click)="sendToProfessor()" matTooltip="Enviar para professor"> <i class="material-icons">send</i></button>
+    <button mat-raised-button color="primary" class="btc-stats" (click)="verStatistics()" matTooltip="Ver Estatisticas"><i class="material-icons">bar_chart</i></button>
   </div>
 </div>

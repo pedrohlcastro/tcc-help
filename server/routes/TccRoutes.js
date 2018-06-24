@@ -67,4 +67,18 @@ router.get('/getRulesSpelling/:tccId', passport.authenticate('BasicBearer', { se
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
 });
 
+router.get('/getAllTcc', passport.authenticate('BasicBearer', { session: false }), (req, res, next) => {
+  const userId = req.user.id;
+  TccController.getAllTccFromUserId(userId)
+    .then(data => res.json(data))
+    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+});
+
+router.post('/getTccVisibleToProfessor', (req, res, next) => {
+  const studentProfessorId = req.body.id;
+  TccController.getAllTccFromStudentProfessorId(studentProfessorId)
+    .then(data => res.json(data))
+    .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));
+});
+
 export default router;

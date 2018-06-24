@@ -90,10 +90,29 @@ export class TccService {
         return res.json();
       });
   }
+  
+  getAllTcc(){
+    const options = this.authService.addAuthHeader(true);
+    return this.http.get(`${this.baseUrl}/tcc/getAllTcc`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
 
   getAccessRights(tccId) {
     const options = this.authService.addAuthHeader(true);
     return this.http.get(`${this.baseUrl}/access/${tccId}`, options)
+      .map((res) => {
+        return res.json();
+      });
+  }
+
+  getTccVisibleToProfessor(studentProfessorId){
+    const options = this.authService.addAuthHeader(true);
+    let body = {
+      id: studentProfessorId
+    };
+    return this.http.post(`${this.baseUrl}/tcc/getTccVisibleToProfessor`, body, options)
       .map((res) => {
         return res.json();
       });

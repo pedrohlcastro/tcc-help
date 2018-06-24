@@ -12,6 +12,7 @@
 
   <!-- ROTAS COMUNS USUARIO AUTENTICADO -->
   <a [routerLink]="['account-page']" *ngIf="isAuthenticated"><i class="material-icons">face</i>Perfil</a>
+  <a [routerLink]="['tcc-list']" *ngIf="isAuthenticated"><i class="material-icons">library_books</i>TCCs</a>
   <a [routerLink]="['forum']" *ngIf="isAuthenticated"><i class="material-icons">forum</i>Fórum</a>
   <a [routerLink]="['help-page']" *ngIf="isAuthenticated"><i class="material-icons">help</i>Ajuda</a>
   <a (click)="signOut()" *ngIf="isAuthenticated"><i class="material-icons">input</i>Sair</a>

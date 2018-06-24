@@ -19,6 +19,8 @@ import { CommentPageComponent } from './components/comment-page/comment-page.com
 import { ProfessorSignedInGuard } from './guards/professor-signed-in-guard';
 import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-card.component';
 import { TccGuard } from './guards/tcc-guard';
+import { TccListComponent } from './components/tcc-list/tcc-list.component';
+import { StudentTccComponent } from './components/student-tcc/student-tcc.component';
 
 const ROUTES: Routes = [
     { path: '', component: HomePageComponent },
@@ -37,6 +39,8 @@ const ROUTES: Routes = [
     { path: 'professor-list', component: ProfessorListComponent, canActivate: [UserSignedInGuard]},
     { path: 'forum-answers/:id', component: ForumAnswersComponent, canActivate: [UserSignedInGuard]},
     { path: 'check-tcc/:id', component: CheckTccPageComponent, canActivate: [TccGuard]},
+    { path: 'tcc-list', component: TccListComponent, canActivate: [UserSignedInGuard]},
+    { path: 'student-tcc/:id', component: StudentTccComponent, canActivate: [UserSignedInGuard]}
   ];
   
 @NgModule({
