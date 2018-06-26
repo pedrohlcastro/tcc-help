@@ -43,9 +43,9 @@ export default () => {
       );
     } else {
       sequelize = new Sequelize(
-        config.db,
+        config.db_name,
         config.db_user_prod,
-        config.db_password_prod,
+        config.db_pass_prod,
         {
           host: config.db_url_prod,
           dialect: 'mysql',
@@ -60,7 +60,7 @@ export default () => {
         },
       );
     }
-    
+
 
     db = {
       sequelize,

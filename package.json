@@ -7,7 +7,9 @@
     "test-integration": "sleep 5&&mocha --opts server/test/integration/mocha.opts server/test/integration/**/*.js",
     "test-unit": "sleep 15&&mocha --opts server/test/unit/mocha.opts server/test/unit/**/*.js",
     "lint": "eslint 'server/**/*.js' --fix",
-    "pre-commit-control": "docker exec tcchelp_app_1 npm run lint"
+    "pre-commit-control": "docker exec tcchelp_app_1 npm run lint",
+    "start": "NODE_ENV=production node dist/index.js",
+    "build": "babel server -d dist --compilers js:babel-register --require babel-polyfill --copy-files"
   },
   "repository": {
     "type": "git",

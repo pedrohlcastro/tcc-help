@@ -36,6 +36,7 @@ build/Release
 node_modules/
 jspm_packages/
 database/
+server/
 
 # Typescript v1 declaration files
 typings/
@@ -59,4 +60,12 @@ typings/
 .env
 
 package-lock.json
-
+pre-commit
+manage.sh
+License
+Dockerfile
+docker-compose.yml
+docker-compose.test-unit.yml
+docker-compose.test-integration.yml
+.travis.yml
+.eslintrc.json

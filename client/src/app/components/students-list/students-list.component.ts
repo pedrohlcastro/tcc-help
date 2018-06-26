@@ -22,9 +22,9 @@ export class StudentsListComponent implements OnInit {
   private aproved = [];
   private pendent = [];
   private disconected = [];
-  private filteredAproved;
-  private filteredPendent;
-  private filteredDisconected;
+  filteredAproved;
+  filteredPendent;
+  filteredDisconected;
 
   ngOnInit() {
     this.authService.getUserFromToken().subscribe((res) => {

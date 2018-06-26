@@ -9,7 +9,8 @@
     "email": "contatotcchelp@gmail.com",
     "email_password": "senha_b4n4n4",
     "email_service": "Gmail",
+    "db_name":"ibmsl_1c4f5a5c19def5337b47",
     "db_user_prod": "bb83f27eca0439",
-    "db_user_prod": "0fd2a9cd",
+    "db_pass_prod": "0fd2a9cd",
     "db_url_prod": "us-cdbr-sl-dfw-01.cleardb.net"
 }

@@ -13,7 +13,7 @@ export class ForumAnswersComponent implements OnInit {
 
   answers = [];
   private topicId;
-  private topic;
+  topic;
 
   constructor(private dialog: MatDialog, private forumService: ForumService,
      private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
