@@ -98,18 +98,4 @@ export class CommentPageComponent implements OnInit {
       }
     });
   }
-
-  remove(id){
-    this.commentService.removeComment(id).subscribe(result =>{
-      this.snackBar.open('Comentário excluído com sucesso.', 'Fechar', {
-        duration: 7000
-      });
-      this.getComments();
-}, (err) => {
-      this.snackBar.open('Não foi possível excluir o comentário, favor tentar novamente.', 'Fechar', {
-        duration: 7000
-      });
-    });
-
-  }
 }

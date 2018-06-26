@@ -1,0 +1,46 @@
+<div class="container">
+	<button [routerLink]="['/account-page']" class="back-btn" mat-button><i class="material-icons">arrow_back</i> Voltar</button>
+	<div class="header-bar">
+		<div class="row">
+			<mat-form-field class="search-input">
+			<input #myInput type="text" matInput placeholder="Buscar" (input)="filterItem(myInput.value)">
+			<i class="material-icons" matSuffix>search</i>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="users">
+		<div class="row" >
+		
+		<div class="col-xl-3 col-lg-3" *ngFor="let user of filteredUsers; let i = index;">
+			<mat-card>
+			<mat-card-content>
+				<button *ngIf="user.validate_professor === 1" mat-raised-button class="remove-btn" color="primary" (click)="invalidateProfessor(user.id)">
+						<i class="material-icons">remove</i> Remover
+				</button>
+		
+				<div mat-card-avatar class="avatar"></div>
+				<br>
+				<br>
+				<mat-card-title>
+					<b>{{user.name}}</b>
+				</mat-card-title>
+	
+			</mat-card-content>
+			<div class="mat-card-actions btn-group">
+				<br>
+				<button *ngIf="user.validate_professor === 0" mat-raised-button class="btn" color="primary" (click)="validateProfessor(user.id)">
+				<i class="material-icons">done</i> Validar
+				</button>
+				<button *ngIf="user.validate_professor === 1" mat-raised-button class="btn" color="primary">
+				<i class="material-icons">done_all</i> Aprovado
+				</button>
+			</div>
+			</mat-card>
+		</div>
+
+		</div>
+	</div>
+</div>
+	
+	
+	
