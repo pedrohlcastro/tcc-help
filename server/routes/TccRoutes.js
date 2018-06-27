@@ -44,6 +44,11 @@ router.post('/runAnalisys/:tccId', passport.authenticate('BasicBearer', { sessio
   const userId = req.user.id;
   let professorId;
   if (req.user.type === 2) professorId = userId;
+  else if (req.body.professorId) {
+    /* eslint-disable */
+    professorId = req.body.professorId;
+    /* eslint-enable */
+  }
   TccController.runAnalisys(req.params.tccId, userId, req.body, professorId)
     .then(() => res.json({ result: 'Success', status: 200 }))
     .catch(err => next({ err, msg: 'Error running DB query', status: 500 }));

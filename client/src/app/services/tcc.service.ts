@@ -78,7 +78,7 @@ export class TccService {
       });
   }
 
-  runAnalisys(tccId, languages, professorId=null){
+  runAnalisys(tccId, languages, professorId){
     const options = this.authService.addAuthHeader(true);
     const body = {
       languages,

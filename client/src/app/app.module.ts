@@ -47,6 +47,7 @@ import { TccStatsCardComponent } from './components/tcc-stats-card/tcc-stats-car
 import { TccListComponent } from './components/tcc-list/tcc-list.component';
 import { StudentTccComponent } from './components/student-tcc/student-tcc.component';
 import { ValidateProfessorComponent } from './components/validate-professor/validate-professor.component';
+import { ChooseProfessorDialogComponent } from './components/choose-professor-dialog/choose-professor-dialog.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { ValidateProfessorComponent } from './components/validate-professor/vali
     TccStatsCardComponent,
     TccListComponent,
     StudentTccComponent,
-    ValidateProfessorComponent
+    ValidateProfessorComponent,
+    ChooseProfessorDialogComponent
   ],
   entryComponents: [
     RuleDialogComponent,
@@ -85,7 +87,8 @@ import { ValidateProfessorComponent } from './components/validate-professor/vali
     CommentDialogComponent,
     YesnoDialogComponent,
     RejectDialogComponent,
-    TccStatsCardComponent
+    TccStatsCardComponent,
+    ChooseProfessorDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -550,9 +550,15 @@ class TccController {
 
   createTcc(file, user) {
     return new Promise(async (resolve, reject) => {
+      const params = {
+        where: {
+          student_id: user.id,
+        },
+        raw: true,
+      };
+      let association = await this.StudentProfessor.findOne(params);
       try {
-        let association = await this.StudentProfessor.findOne({ where: { student_id: user.id } });
-        if (user.type === 2 && !association.id) {
+        if (user.type === 2 && !association) {
           const newAssociation = {
             accept: 1,
             activate: 1,
@@ -560,7 +566,7 @@ class TccController {
             professor_id: user.id,
           };
           await this.StudentProfessor.create(newAssociation);
-          association = await this.StudentProfessor.findOne({ where: { student_id: user.id } });
+          association = await this.StudentProfessor.findOne(params);
         }
         const fileName = `${crypto.randomBytes(16).toString('hex')}.pdf`;
         const newTcc = {

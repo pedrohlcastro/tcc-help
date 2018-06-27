@@ -7,6 +7,8 @@ import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component';
 import { TccStatsCardComponent } from '../tcc-stats-card/tcc-stats-card.component';
+import { ChooseProfessorDialogComponent } from '../choose-professor-dialog/choose-professor-dialog.component';
+import { ProfessorListService } from '../../services/professor-list.service';
 
 declare const $: any;
 
@@ -29,6 +31,7 @@ export class CheckTccPageComponent implements OnInit {
   languageFormGroup : FormGroup;
   languages: any;
   languageError = true;
+  teachers = [];
    
   pageSize = 10;
   currentPage = 0;
@@ -104,14 +107,33 @@ export class CheckTccPageComponent implements OnInit {
   }
 
   runAnalisys(){
-    this.callSuggestions = true;
-    this.tccService.runAnalisys(this.tccId, this.languageFormGroup.value.languages)
-      .subscribe((res) => {
-        this.getMatches();
-      }, (err) => {
-        this.callSuggestions = false;
-        this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 5000});
-      });
+    let dialogRef = this.dialog.open(ChooseProfessorDialogComponent, {
+      width: '40%',
+      height: "75%",
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+      if(result!=false){
+        let professorID;
+        if(result==null){
+          professorID = null;
+        }
+        else{
+          professorID = result.id;
+        }
+        console.log(professorID);
+
+        this.callSuggestions = true;
+        this.tccService.runAnalisys(this.tccId, this.languageFormGroup.value.languages, professorID)
+          .subscribe((res) => {
+            this.getMatches();
+          }, (err) => {
+            this.callSuggestions = false;
+            this.snackBar.open("Ocorreu algum erro, favor tentar novamente.", 'Fechar', {duration: 5000});
+          });
+      }
+    });    
   }
 
   /**
